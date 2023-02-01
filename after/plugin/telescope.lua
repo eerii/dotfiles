@@ -1,6 +1,8 @@
--- Load fzf
+-- Load extensions
 
-require('telescope').load_extension('fzf')
+local tls = require('telescope')
+tls.load_extension('fzf')
+tls.load_extension('dap')
 
 -- Telescope Keymaps
 
