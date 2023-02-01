@@ -47,26 +47,59 @@ require('packer').startup(function(use)
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
 
+    -- Dressing (prettier ui)
+    use 'stevearc/dressing.nvim'
+
+    -- Notifications
+    use 'rcarriga/nvim-notify'
 
 	--------------
 	-- Features --
-	--------------
+	-------------- 
 
 	-- Telescope (fuzzy search)
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.1',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
-	use {
-		'nvim-telescope/telescope-fzf-native.nvim', -- Use the fzf algorithm for search
-		run = 'make', cond = vim.fn.executable 'make' == 1
+		requires = {
+			'nvim-lua/plenary.nvim',
+        },
+		config = function()
+			local telescope = require('telescope')
+			telescope.load_extension('dap')
+			telescope.load_extension('notify')
+            telescope.load_extension('neoclip')
+        end
 	}
 
 	-- Treesitter (syntax, indent, more)
-	use (
+	use {
 		'nvim-treesitter/nvim-treesitter',
-		{ run = ':TSUpdate' }
-	)
+		run = ':TSUpdate',
+        config = function()
+            require('nvim-treesitter').setup {
+                ensure_installed = {
+                    "python",
+                    "c", "cpp", "make", "cmake", "glsl",
+                    "javascript", "typescript", "css", "html", "json", "yaml",
+                    "latex", "bibtex", "markdown",
+                    "java", "sql",
+                    "lua", "vim", "help" },
+                sync_install = false,
+                auto_install = true,
+                highlight = {
+                    enable = true,
+                    additional_vim_regex_highlighting = false,
+                },
+                indent = {
+                    enable = true,
+                },
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {},
+                },
+            }
+        end
+    }
 
 	-- LSP (using lsp-zero)
 	use {
@@ -74,21 +107,21 @@ require('packer').startup(function(use)
 		branch = 'v1.x',
 		requires = {
 			-- LSP Support
-			{'neovim/nvim-lspconfig'}, -- Configures language servers
-			{'williamboman/mason.nvim'}, -- Installs and updates LSPs
-			{'williamboman/mason-lspconfig.nvim'},
+			'neovim/nvim-lspconfig', -- Configures language servers
+			'williamboman/mason.nvim', -- Installs and updates LSPs
+			'williamboman/mason-lspconfig.nvim',
 
 			-- Autocompletion
-			{'hrsh7th/nvim-cmp'}, -- Autocompletes based on sources (bellow)
-			{'hrsh7th/cmp-nvim-lsp'}, -- Data sent by the language server
-			{'hrsh7th/cmp-buffer'}, -- Suggestions from current buffer
-			{'hrsh7th/cmp-path'}, -- Suggestions from the filesystem
-			{'saadparwaiz1/cmp_luasnip'}, -- Snippets in the suggestions
-			{'hrsh7th/cmp-nvim-lua'}, -- Provides completions based on neovim lua api
+			'hrsh7th/nvim-cmp', -- Autocompletes based on sources (bellow)
+			'hrsh7th/cmp-nvim-lsp', -- Data sent by the language server
+			'hrsh7th/cmp-buffer', -- Suggestions from current buffer
+			'hrsh7th/cmp-path', -- Suggestions from the filesystem
+			'saadparwaiz1/cmp_luasnip', -- Snippets in the suggestions
+			'hrsh7th/cmp-nvim-lua', -- Provides completions based on neovim lua api
 
 			-- Snippets
-			{'L3MON4D3/LuaSnip'}, -- Snippet engine
-			{'rafamadriz/friendly-snippets'}, -- Provides snippets
+			'L3MON4D3/LuaSnip', -- Snippet engine
+			'rafamadriz/friendly-snippets', -- Provides snippets
 		}
 	}
 
@@ -101,9 +134,25 @@ require('packer').startup(function(use)
             'nvim-telescope/telescope-dap.nvim', -- Telescope functions for DAPs
             'weissle/persistent-breakpoints.nvim', -- Save breakpoints automatically
             'mfussenegger/nvim-dap-python', -- DAP for python
+            'jbyuki/one-small-step-for-vimkind', -- DAP for lua and neovim
+            'mfussenegger/nvim-jdtls', -- DAP for java
+            'jay-babu/mason-nvim-dap.nvim' -- Installs DAPs
         }
     }
-    use "jay-babu/mason-nvim-dap.nvim"
+
+    -- Overseer (task manager)
+    use {
+        'stevearc/overseer.nvim',
+        config = function()
+            require('overseer').setup {
+                dap = true,
+                templates = {
+                    'builtin',
+                    'ccppbuild'
+                }
+            }
+        end
+    }
 
 	-- Navigate using Ctrl+HJKL, compatible with tmux
 	use 'christoomey/vim-tmux-navigator'
@@ -111,16 +160,36 @@ require('packer').startup(function(use)
 	-- Undotree (undo history)
 	use 'mbbill/undotree'
 
+    -- Clipboard manager
+    use {
+        'acksld/nvim-neoclip.lua',
+        requires = {
+            {'kkharji/sqlite.lua', module = 'sqlite'}, -- Persist history between sessions
+        },
+        config = function()
+            require('neoclip').setup{
+                history = 256,
+                enable_persistent_history = true,
+            }
+        end,
+    }
 	-- Git
-	use 'tpope/vim-fugitive' -- Git commands in vim
-	use 'tpope/vim-rhubarb' -- GitHub integrations for fugitive
-	use 'lewis6991/gitsigns.nvim' -- Git blame and +/-
+	use {
+        'tpope/vim-fugitive', -- Git commands in vim
+        requires = {
+            'tpope/vim-rhubarb', -- GitHub integrations for fugitive
+            'lewis6991/gitsigns.nvim', -- Git blame and +/-
+        },
+        config = function()
+            vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it [S]tatus' })
+        end
+    }
 
 	-- Autosave
 	use {
 		'pocco81/auto-save.nvim',
 		config = function()
-			require("auto-save").setup {
+			require('auto-save').setup {
 				execution_message = {
 					message = function()
 						return ('🌿')
@@ -138,7 +207,20 @@ require('packer').startup(function(use)
         event = 'VimEnter',
         config = function()
             vim.defer_fn(function()
-                require('copilot').setup()
+                require('copilot').setup{
+                    cmp = {
+                        enabled = true,
+                        method = 'getCompletionsCycling',
+                    },
+                    suggestion = { enabled = false },
+                    server_opts_overrides = {
+                        settings = {
+                            advanced = {
+                                 inlineSuggestCount = 3,
+                            },
+                        },
+                    },
+                }
             end, 100)
         end,
     }
@@ -171,6 +253,31 @@ require('packer').startup(function(use)
         'nvim-tree/nvim-tree.lua',
         requires = { 'nvim-tree/nvim-web-devicons' },
         tag = 'nightly',
+        config = function()
+            require('nvim-tree').setup {
+                update_focused_file = { enable = true },
+                git = { show_on_dirs = false },
+                view = {
+                    signcolumn = "auto",
+                },
+                renderer = {
+                    icons = {
+                        glyphs = {
+                            git = {
+                                unstaged = "○",
+                                untracked = "✻",
+                            }
+                        }
+                    }
+                },
+                filters = { dotfiles = true },
+                actions = {
+                    open_file = {
+                        quit_on_open = true,
+                    },
+                }
+            }            
+        end
     }
 
     -- Tabs
