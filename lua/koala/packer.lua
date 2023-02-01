@@ -47,26 +47,89 @@ require('packer').startup(function(use)
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
 
+    -- Dressing (prettier ui)
+    use 'stevearc/dressing.nvim'
+
+    -- Notifications
+    use {
+        'rcarriga/nvim-notify',
+        config = function()
+            require('notify').setup({
+                background_colour = '#040c1a',
+            })
+        end
+    }
 
 	--------------
 	-- Features --
-	--------------
+	-------------- 
 
 	-- Telescope (fuzzy search)
 	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.1',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
-	use {
-		'nvim-telescope/telescope-fzf-native.nvim', -- Use the fzf algorithm for search
-		run = 'make', cond = vim.fn.executable 'make' == 1
+		'nvim-telescope/telescope.nvim',
+        branch = '0.1.x',
+		requires = {
+			'nvim-lua/plenary.nvim',
+            {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+        },
+		config = function()
+			local telescope = require('telescope')
+            telescope.setup {
+                defaults = {
+                    mappings = {
+                        i = {
+                            ["<C-h>"] = "which_key"
+                        }
+                    }
+                },
+                extensions = {
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = false,
+                        override_file_sorter = true,
+                        case_mode = "smart_case",
+                    },
+                }
+            }
+            telescope.load_extension('fzf')
+			telescope.load_extension('dap')
+			telescope.load_extension('notify')
+            telescope.load_extension('neoclip')
+        end
 	}
 
 	-- Treesitter (syntax, indent, more)
-	use (
+	use {
 		'nvim-treesitter/nvim-treesitter',
-		{ run = ':TSUpdate' }
-	)
+		run = ':TSUpdate',
+        requires = {
+            'nvim-treesitter/nvim-treesitter-context'
+        },
+        config = function()
+            require('nvim-treesitter').setup {
+                ensure_installed = {
+                    "python",
+                    "c", "cpp", "make", "cmake", "glsl",
+                    "javascript", "typescript", "css", "html", "json", "yaml",
+                    "latex", "bibtex", "markdown",
+                    "java", "sql",
+                    "lua", "vim", "help" },
+                sync_install = false,
+                auto_install = true,
+                highlight = {
+                    enable = true,
+                    additional_vim_regex_highlighting = false,
+                },
+                indent = {
+                    enable = true,
+                },
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {},
+                },
+            }
+        end
+    }
 
 	-- LSP (using lsp-zero)
 	use {
@@ -74,23 +137,27 @@ require('packer').startup(function(use)
 		branch = 'v1.x',
 		requires = {
 			-- LSP Support
-			{'neovim/nvim-lspconfig'}, -- Configures language servers
-			{'williamboman/mason.nvim'}, -- Installs and updates LSPs
-			{'williamboman/mason-lspconfig.nvim'},
+			'neovim/nvim-lspconfig', -- Configures language servers
+			'williamboman/mason.nvim', -- Installs and updates LSPs
+			'williamboman/mason-lspconfig.nvim',
 
 			-- Autocompletion
-			{'hrsh7th/nvim-cmp'}, -- Autocompletes based on sources (bellow)
-			{'hrsh7th/cmp-nvim-lsp'}, -- Data sent by the language server
-			{'hrsh7th/cmp-buffer'}, -- Suggestions from current buffer
-			{'hrsh7th/cmp-path'}, -- Suggestions from the filesystem
-			{'saadparwaiz1/cmp_luasnip'}, -- Snippets in the suggestions
-			{'hrsh7th/cmp-nvim-lua'}, -- Provides completions based on neovim lua api
+			'hrsh7th/nvim-cmp', -- Autocompletes based on sources (bellow)
+			'hrsh7th/cmp-nvim-lsp', -- Data sent by the language server
+			'hrsh7th/cmp-buffer', -- Suggestions from current buffer
+			'hrsh7th/cmp-path', -- Suggestions from the filesystem
+			'saadparwaiz1/cmp_luasnip', -- Snippets in the suggestions
+			'hrsh7th/cmp-nvim-lua', -- Provides completions based on neovim lua api
 
 			-- Snippets
-			{'L3MON4D3/LuaSnip'}, -- Snippet engine
-			{'rafamadriz/friendly-snippets'}, -- Provides snippets
+			'L3MON4D3/LuaSnip', -- Snippet engine
+			'rafamadriz/friendly-snippets', -- Provides snippets
+
+            -- Other
+            'folke/neodev.nvim', --Support signature help
 		}
 	}
+    use 'mfussenegger/nvim-jdtls'
 
     -- DAP (debugger)
     use {
@@ -99,28 +166,90 @@ require('packer').startup(function(use)
             'thehamsta/nvim-dap-virtual-text', -- Adds virual text
             'rcarriga/nvim-dap-ui', -- UI for debugging
             'nvim-telescope/telescope-dap.nvim', -- Telescope functions for DAPs
+            'thehamsta/nvim-dap-virtual-text', -- Virtual text for DAPs
             'weissle/persistent-breakpoints.nvim', -- Save breakpoints automatically
             'mfussenegger/nvim-dap-python', -- DAP for python
+            'jbyuki/one-small-step-for-vimkind', -- DAP for lua and neovim
+            'jay-babu/mason-nvim-dap.nvim' -- Installs DAPs
         }
     }
-    use "jay-babu/mason-nvim-dap.nvim"
+
+    -- Overseer (task manager)
+    use {
+        'stevearc/overseer.nvim',
+        config = function()
+            require('overseer').setup {
+                dap = true,
+                templates = {
+                    'builtin',
+                    'ccppbuild',
+                    'javabuild'
+                },
+            }
+        end
+    }
+
+    -- Jupiter notebooks
+    --[[ use {
+        'luk400/vim-jukit',
+        setup = function ()
+            vim.g.jukit_terminal = 'tmux'
+        end
+    } ]]
+
+    -- Markdown
+    use({
+        'iamcco/markdown-preview.nvim',
+        run = 'cd app && npm install',
+        setup = function()
+            vim.g.mkdp_filetypes = { 'markdown' }
+        end,
+        ft = { 'markdown' },
+    })
+    use({
+        'jakewvincent/mkdnflow.nvim',
+        config = function()
+            require('mkdnflow').setup {
+                mappings = {
+                    MkdnEnter = {{'i', 'n', 'v'}, '<C-CR>'}
+                }
+            }
+        end
+    })
 
 	-- Navigate using Ctrl+HJKL, compatible with tmux
-	use 'christoomey/vim-tmux-navigator'
+	--[[ use 'christoomey/vim-tmux-navigator' ]]
 
 	-- Undotree (undo history)
 	use 'mbbill/undotree'
 
+    -- Clipboard manager
+    use {
+        'acksld/nvim-neoclip.lua',
+        requires = {
+            {'kkharji/sqlite.lua', module = 'sqlite'}, -- Persist history between sessions
+        },
+        config = function()
+            require('neoclip').setup {
+                history = 256,
+                enable_persistent_history = true,
+            }
+        end,
+    }
 	-- Git
-	use 'tpope/vim-fugitive' -- Git commands in vim
-	use 'tpope/vim-rhubarb' -- GitHub integrations for fugitive
-	use 'lewis6991/gitsigns.nvim' -- Git blame and +/-
+	use {
+        'tpope/vim-fugitive', -- Git commands in vim
+        requires = {
+            'tpope/vim-rhubarb', -- GitHub integrations for fugitive
+            'lewis6991/gitsigns.nvim', -- Git blame and +/-
+        }
+    }
 
 	-- Autosave
 	use {
 		'pocco81/auto-save.nvim',
 		config = function()
-			require("auto-save").setup {
+			require('auto-save').setup {
 				execution_message = {
 					message = function()
 						return ('🌿')
@@ -138,7 +267,20 @@ require('packer').startup(function(use)
         event = 'VimEnter',
         config = function()
             vim.defer_fn(function()
-                require('copilot').setup()
+                require('copilot').setup {
+                    cmp = {
+                        enabled = true,
+                        method = 'getCompletionsCycling',
+                    },
+                    suggestion = { enabled = false },
+                    server_opts_overrides = {
+                        settings = {
+                            advanced = {
+                                 inlineSuggestCount = 3,
+                            },
+                        },
+                    },
+                }
             end, 100)
         end,
     }
@@ -160,9 +302,20 @@ require('packer').startup(function(use)
 
     -- Autoclose tags
     use {
-        'm4xshen/autoclose.nvim',
+        'windwp/nvim-autopairs',
         config = function()
-            require('autoclose').setup{}
+            require('nvim-autopairs').setup {
+                check_ts = true,
+                disable_filetype = { 'TelescopePrompt', 'vim', 'NvimTree', 'dap-repl' },
+            }
+        end
+    }
+
+    -- Surround tag manager
+    use {
+        'kylechui/nvim-surround',
+        config = function()
+            require('nvim-surround').setup()
         end
     }
 
@@ -171,12 +324,48 @@ require('packer').startup(function(use)
         'nvim-tree/nvim-tree.lua',
         requires = { 'nvim-tree/nvim-web-devicons' },
         tag = 'nightly',
+        config = function()
+            require('nvim-tree').setup {
+                update_focused_file = { enable = true },
+                git = { show_on_dirs = false },
+                view = {
+                    signcolumn = "auto",
+                },
+                renderer = {
+                    icons = {
+                        glyphs = {
+                            git = {
+                                unstaged = "○",
+                                untracked = "✻",
+                            }
+                        }
+                    }
+                },
+                filters = { dotfiles = true },
+                actions = {
+                    open_file = {
+                        quit_on_open = true,
+                    },
+                }
+            }
+        end
     }
 
     -- Tabs
     use {
         'romgrk/barbar.nvim',
         requires = 'nvim-web-devicons'
+    }
+
+    -- Autosave sessions
+    use {
+        'rmagatti/auto-session',
+        config = function()
+            require('auto-session').setup {
+                log_level = 'error',
+                auto_session_suppress_dirs = { '~/', '~/Downloads', '/'},
+            }
+        end
     }
 
 	----------

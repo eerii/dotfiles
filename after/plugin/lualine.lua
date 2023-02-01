@@ -1,4 +1,5 @@
 local lualine = require('lualine')
+local overseer = require('overseer')
 
 lualine.setup {
     options = {
@@ -17,6 +18,13 @@ lualine.setup {
             { 'diagnostics', sources = { 'nvim_lsp' } }
         },
         lualine_x = {
+            { 'overseer', colored = true,
+                symbols = {
+                    [overseer.STATUS.FAILURE] = " ",
+                    [overseer.STATUS.CANCELED] = " ",
+                    [overseer.STATUS.SUCCESS] = " ",
+                    [overseer.STATUS.RUNNING] = " ",
+                }},
             { 'encoding', colored = true },
             { 'filetype', colored = true },
         },
@@ -28,5 +36,5 @@ lualine.setup {
             { 'location', separator = { right = '' } },
         },
     },
-    extensions = { 'nvim-tree' }
+    extensions = { 'nvim-tree', 'nvim-dap-ui', 'fugitive' }
 }

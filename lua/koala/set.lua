@@ -1,5 +1,8 @@
 -- Vim Options
 
+-- Terminal zsh
+vim.o.shell = '/bin/zsh'
+
 -- Indentation
 vim.o.tabstop = 4 -- Number of spaces
 vim.o.shiftwidth = 0 -- Same as tabstop
@@ -22,6 +25,7 @@ vim.o.undofile = true
 
 -- Incremental search
 vim.o.incsearch = true
+vim.o.hlsearch = false
 
 -- Minimum padding when scrolling
 vim.o.scrolloff = 8
