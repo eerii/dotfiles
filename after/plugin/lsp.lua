@@ -1,5 +1,6 @@
 local lsp = require('lsp-zero')
 local cmp = require('cmp')
+local mason_dap = require('mason-nvim-dap')
 
 -- LSP zero recommended settings
 lsp.preset('recommended')
@@ -28,7 +29,7 @@ lsp.set_preferences({
 })
 
 -- New keybindings
-lsp.on_attach(function(client, bufnr)
+lsp.on_attach(function(_, bufnr)
 	vim.keymap.set("n", "<leader>gd", function() vim.lsp.buf.definition() end, { buffer = bufnr, remap = false, desc = '[G]et [D]efinition' })
 	vim.keymap.set("n", "<leader>h", function() vim.lsp.buf.hover() end, { buffer = bufnr, remap = false, desc = '[H]over' })
 	vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, { buffer = bufnr, remap = false, desc = '[V]iew [W]ork [S]pace' })
@@ -41,7 +42,6 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 -- Setup cmp sources
-
 local has_words_before = function()
     if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -69,7 +69,19 @@ lsp.setup_nvim_cmp({
                 fallback()
             end
         end),
-    }), 
+    }),
 })
 
+-- LSP zero setup
 lsp.setup()
+
+-- Load mason DAP support
+mason_dap.setup{ automatic_setup = true }
+mason_dap.setup_handlers()
+
+-- Diagnostic override settings
+vim.diagnostic.config {
+    virtual_text = true,
+    update_in_insert = true,
+    float = { focusable = true },
+}

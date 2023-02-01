@@ -31,6 +31,23 @@ require('packer').startup(function(use)
 		end
 	}
 
+    -- Icons
+    use {
+        'nvim-tree/nvim-web-devicons',
+        config = function()
+            require('nvim-web-devicons').setup({
+                color_icons = true,
+            })
+        end
+    }
+
+    -- Lualine
+    use {
+        'hoob3rt/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
+
+
 	--------------
 	-- Features --
 	--------------
@@ -74,6 +91,19 @@ require('packer').startup(function(use)
 			{'rafamadriz/friendly-snippets'}, -- Provides snippets
 		}
 	}
+
+    -- DAP (debugger)
+    use {
+        'mfussenegger/nvim-dap',
+        requires = {
+            'thehamsta/nvim-dap-virtual-text', -- Adds virual text
+            'rcarriga/nvim-dap-ui', -- UI for debugging
+            'nvim-telescope/telescope-dap.nvim', -- Telescope functions for DAPs
+            'weissle/persistent-breakpoints.nvim', -- Save breakpoints automatically
+            'mfussenegger/nvim-dap-python', -- DAP for python
+        }
+    }
+    use "jay-babu/mason-nvim-dap.nvim"
 
 	-- Navigate using Ctrl+HJKL, compatible with tmux
 	use 'christoomey/vim-tmux-navigator'
@@ -120,9 +150,48 @@ require('packer').startup(function(use)
         end
     }
 
+    -- Comments
+    use {
+        'numtostr/comment.nvim',
+        config = function()
+            require('comment').setup()
+        end
+    }
+
+    -- Autoclose tags
+    use {
+        'm4xshen/autoclose.nvim',
+        config = function()
+            require('autoclose').setup{}
+        end
+    }
+
+    -- File explorer
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = { 'nvim-tree/nvim-web-devicons' },
+        tag = 'nightly',
+    }
+
+    -- Tabs
+    use {
+        'romgrk/barbar.nvim',
+        requires = 'nvim-web-devicons'
+    }
+
 	----------
 	-- Misc --
 	----------
+
+    -- Keymaps
+    use {
+        'folke/which-key.nvim',
+        config = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 500
+            require('which-key').setup()
+        end
+    }
 
 	-- Vim Games
 	use 'theprimeagen/vim-be-good'
