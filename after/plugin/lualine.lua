@@ -36,5 +36,5 @@ lualine.setup {
             { 'location', separator = { right = '' } },
         },
     },
-    extensions = { 'nvim-tree' }
+    extensions = { 'nvim-tree', 'nvim-dap-ui', 'fugitive' }
 }

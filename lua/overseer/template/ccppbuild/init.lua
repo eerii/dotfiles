@@ -1,1 +1,1 @@
-return { 'ccppbuild.build_gcc' }
+return { 'ccppbuild.build_gcc', 'ccppbuild.build_make' }

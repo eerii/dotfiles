@@ -1,4 +1,5 @@
 local lsp = require('lsp-zero')
+
 local cmp = require('cmp')
 local mason_dap = require('mason-nvim-dap')
 
@@ -8,12 +9,19 @@ lsp.preset('recommended')
 -- Default language servers (WIP)
 lsp.ensure_installed({
 	'clangd',
-	'tsserver',
 	'sumneko_lua',
-    'jdtls'
+    'tsserver',
+    'eslint',
+    'html',
+    'cssls'
 })
 
--- Fix undefined vim
+-- Configure neodev
+require('neodev').setup({
+    library = { plugins = { 'nvim-dap-ui' }, types = true },
+})
+
+-- Configure sumneko_lua
 lsp.configure('sumneko_lua', {
 	settings = {
 		Lua = {
@@ -24,9 +32,26 @@ lsp.configure('sumneko_lua', {
 	}
 })
 
--- Configure jdtls
-lsp.configure('jdtls', {
+-- Configure python
+lsp.configure('pylsp', {
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    ignore = {'E265', 'E302', 'E305'},
+                }
+            }
+        }
+    }
+})
 
+-- Configure typescript
+lsp.configure('tsserver', {
+    settings = {
+        completions = {
+            completeFunctionCalls = true
+        }
+    }
 })
 
 -- Disable predefined keybindings
@@ -51,13 +76,16 @@ lsp.setup_nvim_cmp({
         { name = 'luasnip', keyword_length = 2 },
     },
     mapping = lsp.defaults.cmp_mappings({
-        ['<CR>'] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
-        }),
         ['<Tab>'] = vim.schedule_wrap(function(fallback)
             if cmp.visible() and has_words_before() then
                 cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            else
+                fallback()
+            end
+        end),
+        ['<Esc>'] = vim.schedule_wrap(function(fallback)
+            if cmp.visible() then
+                cmp.close()
             else
                 fallback()
             end
@@ -70,6 +98,9 @@ lsp.setup_nvim_cmp({
         ghost_text = true,
     }
 })
+
+-- Setup autopairs
+cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
 
 -- LSP zero setup
 lsp.setup()

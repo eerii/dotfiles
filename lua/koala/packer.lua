@@ -51,7 +51,14 @@ require('packer').startup(function(use)
     use 'stevearc/dressing.nvim'
 
     -- Notifications
-    use 'rcarriga/nvim-notify'
+    use {
+        'rcarriga/nvim-notify',
+        config = function()
+            require('notify').setup({
+                background_colour = '#040c1a',
+            })
+        end
+    }
 
 	--------------
 	-- Features --
@@ -59,12 +66,32 @@ require('packer').startup(function(use)
 
 	-- Telescope (fuzzy search)
 	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.1',
+		'nvim-telescope/telescope.nvim',
+        branch = '0.1.x',
 		requires = {
 			'nvim-lua/plenary.nvim',
+            {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
         },
 		config = function()
 			local telescope = require('telescope')
+            telescope.setup {
+                defaults = {
+                    mappings = {
+                        i = {
+                            ["<C-h>"] = "which_key"
+                        }
+                    }
+                },
+                extensions = {
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = false,
+                        override_file_sorter = true,
+                        case_mode = "smart_case",
+                    },
+                }
+            }
+            telescope.load_extension('fzf')
 			telescope.load_extension('dap')
 			telescope.load_extension('notify')
             telescope.load_extension('neoclip')
@@ -75,6 +102,9 @@ require('packer').startup(function(use)
 	use {
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate',
+        requires = {
+            'nvim-treesitter/nvim-treesitter-context'
+        },
         config = function()
             require('nvim-treesitter').setup {
                 ensure_installed = {
@@ -122,8 +152,12 @@ require('packer').startup(function(use)
 			-- Snippets
 			'L3MON4D3/LuaSnip', -- Snippet engine
 			'rafamadriz/friendly-snippets', -- Provides snippets
+
+            -- Other
+            'folke/neodev.nvim', --Support signature help
 		}
 	}
+    use 'mfussenegger/nvim-jdtls'
 
     -- DAP (debugger)
     use {
@@ -132,10 +166,10 @@ require('packer').startup(function(use)
             'thehamsta/nvim-dap-virtual-text', -- Adds virual text
             'rcarriga/nvim-dap-ui', -- UI for debugging
             'nvim-telescope/telescope-dap.nvim', -- Telescope functions for DAPs
+            'thehamsta/nvim-dap-virtual-text', -- Virtual text for DAPs
             'weissle/persistent-breakpoints.nvim', -- Save breakpoints automatically
             'mfussenegger/nvim-dap-python', -- DAP for python
             'jbyuki/one-small-step-for-vimkind', -- DAP for lua and neovim
-            'mfussenegger/nvim-jdtls', -- DAP for java
             'jay-babu/mason-nvim-dap.nvim' -- Installs DAPs
         }
     }
@@ -148,14 +182,43 @@ require('packer').startup(function(use)
                 dap = true,
                 templates = {
                     'builtin',
-                    'ccppbuild'
-                }
+                    'ccppbuild',
+                    'javabuild'
+                },
             }
         end
     }
 
+    -- Jupiter notebooks
+    --[[ use {
+        'luk400/vim-jukit',
+        setup = function ()
+            vim.g.jukit_terminal = 'tmux'
+        end
+    } ]]
+
+    -- Markdown
+    use({
+        'iamcco/markdown-preview.nvim',
+        run = 'cd app && npm install',
+        setup = function()
+            vim.g.mkdp_filetypes = { 'markdown' }
+        end,
+        ft = { 'markdown' },
+    })
+    use({
+        'jakewvincent/mkdnflow.nvim',
+        config = function()
+            require('mkdnflow').setup {
+                mappings = {
+                    MkdnEnter = {{'i', 'n', 'v'}, '<C-CR>'}
+                }
+            }
+        end
+    })
+
 	-- Navigate using Ctrl+HJKL, compatible with tmux
-	use 'christoomey/vim-tmux-navigator'
+	--[[ use 'christoomey/vim-tmux-navigator' ]]
 
 	-- Undotree (undo history)
 	use 'mbbill/undotree'
@@ -167,7 +230,7 @@ require('packer').startup(function(use)
             {'kkharji/sqlite.lua', module = 'sqlite'}, -- Persist history between sessions
         },
         config = function()
-            require('neoclip').setup{
+            require('neoclip').setup {
                 history = 256,
                 enable_persistent_history = true,
             }
@@ -179,10 +242,7 @@ require('packer').startup(function(use)
         requires = {
             'tpope/vim-rhubarb', -- GitHub integrations for fugitive
             'lewis6991/gitsigns.nvim', -- Git blame and +/-
-        },
-        config = function()
-            vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { desc = '[G]it [S]tatus' })
-        end
+        }
     }
 
 	-- Autosave
@@ -207,7 +267,7 @@ require('packer').startup(function(use)
         event = 'VimEnter',
         config = function()
             vim.defer_fn(function()
-                require('copilot').setup{
+                require('copilot').setup {
                     cmp = {
                         enabled = true,
                         method = 'getCompletionsCycling',
@@ -242,9 +302,20 @@ require('packer').startup(function(use)
 
     -- Autoclose tags
     use {
-        'm4xshen/autoclose.nvim',
+        'windwp/nvim-autopairs',
         config = function()
-            require('autoclose').setup{}
+            require('nvim-autopairs').setup {
+                check_ts = true,
+                disable_filetype = { 'TelescopePrompt', 'vim', 'NvimTree', 'dap-repl' },
+            }
+        end
+    }
+
+    -- Surround tag manager
+    use {
+        'kylechui/nvim-surround',
+        config = function()
+            require('nvim-surround').setup()
         end
     }
 
@@ -276,7 +347,7 @@ require('packer').startup(function(use)
                         quit_on_open = true,
                     },
                 }
-            }            
+            }
         end
     }
 
@@ -284,6 +355,17 @@ require('packer').startup(function(use)
     use {
         'romgrk/barbar.nvim',
         requires = 'nvim-web-devicons'
+    }
+
+    -- Autosave sessions
+    use {
+        'rmagatti/auto-session',
+        config = function()
+            require('auto-session').setup {
+                log_level = 'error',
+                auto_session_suppress_dirs = { '~/', '~/Downloads', '/'},
+            }
+        end
     }
 
 	----------

@@ -8,7 +8,7 @@ return {
         return {
             cmd = { '/usr/local/bin/gcc-12' },
             args = { file, '-o', './bin/' .. filename, '-g', '-Wall' },
-            components = { { 'on_output_quickfix' }, 'default' },
+            components = { 'mkdir_bin', 'on_output_quickfix', 'default' },
             cwd = vim.fn.getcwd(),
         }
     end,
@@ -16,4 +16,3 @@ return {
     tags = { overseer.TAG.BUILD },
     condition = { filetype = { 'c' } },
 }
-
