@@ -3,7 +3,8 @@ return {
     constructor = function (_)
         return {
             on_init = function(_, _)
-                io.popen('mkdir -p bin'):close()
+                local dir = vim.fn.expand('%:p:h')
+                io.popen('mkdir -p ' .. dir .. '/bin'):close()
             end,
         }
     end
