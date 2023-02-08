@@ -16,6 +16,7 @@ my tiny dotfile setup
         - [debugging](#debugging)
         - [other](#other)
     - [important keybindings](#important-keybindings)
+- iterm2
 
 <img width="550" alt="neovim" src="https://user-images.githubusercontent.com/22449369/217314340-8e948cc9-386c-497e-a47c-2f8ca16254be.png">
 
@@ -72,6 +73,7 @@ my tiny dotfile setup
 - [comment](https://github.com/numtostr/comment.nvim): toggle comment lines and blocks
 - [auto-session](https://github.com/rmagatti/auto-session): save and reload neovim sessions
 - [which-key](https://github.com/folke/which-key.nvim): show keybindings
+- [config-local](https://github.com/klen/nvim-config-local): load local configurations
 - [vim-be-good](https://github.com/theprimeagen/vim-be-good): games to learn vim
 
 ### important keybindings

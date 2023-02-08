@@ -20,7 +20,7 @@ vim.o.wrap = false
 -- No backups but long undos
 vim.o.swapfile = false
 vim.o.backup = false
-vim.o.undodir = os.getenv('HOME') .. '/.vim/undodir'
+vim.o.undodir = os.getenv('HOME') .. '/.local/share/nvim/undodir'
 vim.o.undofile = true
 
 -- Incremental search
@@ -29,6 +29,9 @@ vim.o.hlsearch = false
 
 -- Minimum padding when scrolling
 vim.o.scrolloff = 8
+
+-- Always show the sign column
+vim.o.signcolumn = 'yes'
 
 -- Fast updates
 vim.o.updatetime = 50
