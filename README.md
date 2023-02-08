@@ -1,20 +1,37 @@
-# neovim 🌿
+# dotfiles 🌿
 
-my tiny neovim setup
+my tiny dotfile setup
+
+## contents
+
+- zsh
+    - oh-my-zsh
+    - powerlevel10k
+- tmux
+- [neovim](#neovim)
+    - [plugins](#plugins)
+        - [customization](#customization)
+        - [navigation and search](#navigation-and-search)
+        - [code](#code)
+        - [debugging](#debugging)
+        - [other](#other)
+    - [important keybindings](#important-keybindings)
 
 <img width="550" alt="neovim" src="https://user-images.githubusercontent.com/22449369/217314340-8e948cc9-386c-497e-a47c-2f8ca16254be.png">
 
-## plugins ✨
+## neovim
+
+### plugins
 
 - [lazy](https://github.com/folke/lazy.nvim): plugin manager
 
-### customization 🎨
+#### customization
 
 - [onedark](https://github.com/navarasu/onedark.nvim): color theme
 - [lualine](https://github.com/hoob3rt/lualine.nvim): bottom bar customization
 - [nvim-notify](https://github.com/rcarriga/nvim-notify): beautiful notifications
 
-### navigation and search 🕵️
+#### navigation and search
 
 - [telescope](https://github.com/nvim-telescope/telescope.nvim): fuzzy finder (and much more)
     - [fzf-native](https://github.com/nvim-telescope/telescope-fzf-native.nvim): better search with fzf
@@ -23,7 +40,7 @@ my tiny neovim setup
 - [nvim-tree](https://github.com/nvim-tree/nvim-tree.lue): file explorer
 - [barbar](romgrk/barbar.nvim): show opened files on tabline
 
-### code 🐠
+#### code
 
 - [treesitter](https://github.com/nvim-treesitter/nvim-treesitter): better syntax highlighting
 - [lsp-zero](https://github.com/vonheikemen/lsp-zero.nvim): simple lsp configuration
@@ -37,8 +54,9 @@ my tiny neovim setup
 - [mkdnflow](https://github.com/jakewvincent/mkdnflow.nvim): several tools for markdown
 - [nvim-autopairs](https://github.com/windwp/nvim-autopairs): automatically close quotes or brackets
 - [nvim-surround](https://github.com/kylechui/nvim-surround): add, remove and change surrounding quotes or brackets
+- [dadbod](https://github.com/tpope/vim-dadbod): database queries
 
-### debugging 🐞
+#### debugging
 
 - [nvim-dap](https://github.com/mfussenegger/nvim-dap): debug adapter provider support
     - [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui): ui for debugging
@@ -46,7 +64,7 @@ my tiny neovim setup
     - [nvim-dap-python](https://github.com/mfussenegger/nvim-dap-python): preconfigured dap for python
 - [overseer](https://github.com/stevearc/overseer.nvim): task runner that integrates with nvim-dap
 
-### other 🌈
+#### other
 - [undotree](https://github.com/mbbill/undotree): see undo history
 - [autosave](https://github.com/pocco81/auto-save.nvim): save file continuolsy
 - [vim-fugitive](https://github.com/tpope/vim-fugitive) and [vim-rhubarb](https://github.com/tpope/vim-rhubarb): git and github commands
@@ -56,12 +74,6 @@ my tiny neovim setup
 - [which-key](https://github.com/folke/which-key.nvim): show keybindings
 - [vim-be-good](https://github.com/theprimeagen/vim-be-good): games to learn vim
 
-## important keybindings 🌺
+### important keybindings
 
 - todo
-
-## how to use 🍊
-
-clone this repository in `.config/nvim` and reload your neovim configuration
-
-use `:Lazy sync` to install everything

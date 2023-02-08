@@ -282,6 +282,13 @@ end
 
 map('n', '<leader>md', '<Plug>MarkdownPreviewToggle', { desc = '[M]ark[d]own preview toggle' })
 
+---------------
+-- Databases --
+---------------
+
+map('n', '<leader>sq', '<Cmd>DBUIToggle<CR>', { desc = '[SQ]L Database UI Toggle' })
+
+---
 
 return {
     dap = dap_keymap,

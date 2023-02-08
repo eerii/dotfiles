@@ -1,5 +1,6 @@
 local lsp = require('lsp-zero')
 local cmp = require('cmp')
+local neodev = require('neodev')
 
 -- Settings
 
@@ -31,6 +32,13 @@ local lsp_config = {
     set_lsp_keymaps = false,
 }
 
+local neodev_config = {
+    library = {
+        plugins = { 'nvim-dap-ui' },
+        types = true
+    }
+}
+
 local has_words_before = function()
     if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -54,12 +62,16 @@ local cmp_config = {
                 fallback()
             end
         end),
-        ['<S-CR>'] = vim.schedule_wrap(function(fallback)
+        ['<S-CR>'] = vim.schedule_wrap(function(fallback) -- don't select anything
             if cmp.visible() then
                 cmp.close()
             end
             fallback()
         end),
+        ["<CR>"] = cmp.mapping.confirm({ -- copilot-cmp
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = false,
+        }),
     }),
     window = {
         border = 'rounded',
@@ -85,6 +97,9 @@ local lsp_zero = function ()
         'cssls'
     })
 
+    -- Configure neodev
+    neodev.setup(neodev_config)
+
     -- Configure LSPs
     lsp.configure('sumneko_lua', { settings = lua_settings })
     lsp.configure('pylsp', { settings = python_settings })
@@ -96,6 +111,9 @@ local lsp_zero = function ()
 
     -- Setup LSP
     lsp.setup()
+
+    -- Fix for autopairs with cmp
+    cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
 end
 
 return {

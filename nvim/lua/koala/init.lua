@@ -23,6 +23,11 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup('koala.plugins', {
     checker = { enabled = true },
     change_detection = { enabled = false },
+    dev = {
+        path = '~/Programacion/neovim',
+        patterns = {},
+        fallback = false,
+    }
 })
 
 -- Mappings

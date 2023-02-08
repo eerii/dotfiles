@@ -228,7 +228,8 @@ return {
                                 }
                             }
                         },
-                        config = true
+                        config = true,
+                        --dev = true,
                     },
                 },
             },
@@ -239,10 +240,13 @@ return {
                 dependencies = {
                     'rafamadriz/friendly-snippets',
                 },
+                config = function()
+                    require('luasnip.loaders.from_vscode').lazy_load()
+                    require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})
+                end
             },
 
-            -- Other
-            { 'folke/neodev.nvim', opts = { library = { plugins = { 'nvim-dap-ui' }, types = true } }}, --Support signature help
+            'folke/neodev.nvim' --Support signature help for lua
         },
         config = function()
             require('koala.lsp').lsp_zero()
@@ -282,6 +286,19 @@ return {
         'luk400/vim-jukit',
         ft = { 'jupyter' }
     }, ]]
+
+    -- Database queries
+    {
+        'tpope/vim-dadbod',
+        dependencies = {
+            {
+                'kristijanhusak/vim-dadbod-ui',
+                config = function()
+                    vim.g.dadbod_ui_auto_execute_table_helpers = 0
+                end,
+            }
+        },
+    },
 
     -- Autoclose tags
     {
