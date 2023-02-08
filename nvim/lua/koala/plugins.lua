@@ -442,6 +442,14 @@ return {
         end
     },
 
+    -- Load local vim configurations
+    {
+        'klen/nvim-config-local',
+        opts = {
+            config_files = { '.nvim.lua' }
+        }
+    },
+
 	-- Vim Games
 	'theprimeagen/vim-be-good',
 }

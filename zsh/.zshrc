@@ -23,7 +23,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Plugins
 plugins=(
   git
-  z
   sudo
   history
   macos
@@ -36,6 +35,9 @@ ZSH_COMPDUMP="$XDG_CACH_HOME/zsh"
 
 # Homebrew Completion
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+# Zoxide fuzzy searcher
+eval "$(zoxide init zsh)"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -60,10 +62,11 @@ alias n="nvim"
 export EDITOR="nvim"
 
 # Tmux
-alias ts="tmux new -s"
+alias ts "tmux new -s"
 alias ta="tmux attach -t"
-alias td="tmux detach"
 alias tl="tmux list-sessions"
+alias td="tmux detach"
+bindkey -s '^S' 'tss\n'
 
 # LaTeX
 export PATH="/Library/TeX/texbin:$PATH"

@@ -89,7 +89,7 @@ map('n', '<M-h>', ':TmuxNavigateLeft<CR>', { desc = 'Tmux navigate left' })
 map('n', '<M-j>', ':TmuxNavigateDown<CR>', { desc = 'Tmux navigate down' })
 map('n', '<M-k>', ':TmuxNavigateUp<CR>', { desc = 'Tmux navigate up' })
 map('n', '<M-l>', ':TmuxNavigateRight<CR>', { desc = 'Tmux navigate right' })
-map('n', '<M-H>', ':TmuxNavigatePrevious<CR>', { desc = 'Tmux navigate previous' })
+map('n', '<M-g>', ':TmuxNavigatePrevious<CR>', { desc = 'Tmux navigate previous' })
 
 ------------------
 -- Undo history --
