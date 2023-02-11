@@ -6,8 +6,7 @@
 #   - carlos becker (https://carlosbecker.com/posts/tmux-sessionizer/)
 #   - edward rees (https://edward-rees.com/terminal-tricks/)
 
-# Is tmux running and are we inside a tmux session
-is_running=$(ps aux | grep '[t]mux new-session')
+# Tmux is inside
 if tmux info &> /dev/null; then
     is_inside="true"
 fi
@@ -62,6 +61,7 @@ else
             zoxide query -l -s "$p";
         done |
         sort -rnk1 |
+        uniq |
         awk '{$1=""}1' |
         awk '{$1=$1}1'
     )
@@ -71,7 +71,7 @@ else
         echo $dir |
         tabulate |
         column -t -s' ' |
-        fzf-tmux -p 50%,50% --no-sort --header-lines=1 --ansi --reverse --height=100%
+        fzf-tmux -p 80%,80% --no-sort --header-lines=1 --ansi --reverse --height=100%
     )
 
     # Clean the output of fzf
@@ -88,6 +88,9 @@ fi
 if [[ $dir == ~/Uni/* ]]; then
     dir="$dir/Practicas"
 fi
+
+# Is tmux running
+is_running=$(ps aux | grep '[t]mux new-session')
 
 # If tmux is not running at all
 if [[ -z $TMUX ]] && [[ -z $is_running ]]; then

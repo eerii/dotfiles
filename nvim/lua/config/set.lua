@@ -29,16 +29,14 @@ vim.o.hlsearch = false
 
 -- Minimum padding when scrolling
 vim.o.scrolloff = 8
+vim.o.sidescrolloff = 4
 
 -- Always show the sign column
 vim.o.signcolumn = 'yes'
 
--- Fast updates
+-- Fast updates and scrolling
 vim.o.updatetime = 50
-
--- Disable netrw (to avoid conflicts with nvim-tree.lua)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+vim.o.lazyredraw = true
 
 -- Set termgui colors
 vim.o.termguicolors = true
@@ -46,8 +44,13 @@ vim.o.termguicolors = true
 -- Python 3
 vim.g.python3_host_prog = '/usr/local/bin/python3.11'
 
--- Diagnostics
+-- Disable netrw banner
+vim.g.netrw_banner = 0
 
+-- Set zsh as the shell
+vim.g.shell = '/bin/zsh'
+
+-- Diagnostics
 vim.diagnostic.config {
     virtual_text = true,
     update_in_insert = true,
