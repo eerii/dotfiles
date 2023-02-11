@@ -62,7 +62,7 @@ alias n="nvim"
 export EDITOR="nvim"
 
 # Tmux
-alias ts "tmux new -s"
+alias ts="tmux new -s"
 alias ta="tmux attach -t"
 alias tl="tmux list-sessions"
 alias td="tmux detach"

@@ -36,10 +36,6 @@ vim.o.signcolumn = 'yes'
 -- Fast updates
 vim.o.updatetime = 50
 
--- Disable netrw (to avoid conflicts with nvim-tree.lua)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 -- Set termgui colors
 vim.o.termguicolors = true
 
@@ -47,7 +43,6 @@ vim.o.termguicolors = true
 vim.g.python3_host_prog = '/usr/local/bin/python3.11'
 
 -- Diagnostics
-
 vim.diagnostic.config {
     virtual_text = true,
     update_in_insert = true,
