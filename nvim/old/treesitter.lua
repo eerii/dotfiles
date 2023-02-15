@@ -5,7 +5,7 @@
 return {
     {
         'nvim-treesitter/playground',
-        cmd = 'TSPlaygroundToggle' 
+        cmd = 'TSPlaygroundToggle'
     },
     {
         'nvim-treesitter/nvim-treesitter-context', -- Function namespaces

@@ -140,5 +140,9 @@ return {
     {
         'mfussenegger/nvim-jdtls',
         ft = 'java'
+    },
+    {
+        'tikhomirov/vim-glsl',
+        ft = 'glsl'
     }
 }

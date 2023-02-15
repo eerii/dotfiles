@@ -12,9 +12,4 @@ require('lazy').setup('plugins', {
     checker = { enabled = true },
     change_detection = { enabled = true, notify = false },
     install = { colorscheme = { 'kanagawa' } },
-    dev = {
-        path = '~/Programacion/neovim',
-        patterns = {},
-        fallback = false
-    },
 })

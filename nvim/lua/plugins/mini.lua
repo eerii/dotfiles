@@ -8,7 +8,8 @@ return {
         config = function()
             require('mini.pairs').setup()
         end,
-        event = 'InsertEnter'
+        event = 'InsertEnter',
+        enable = false
     },
     {
         'echasnovski/mini.surround',

@@ -71,7 +71,7 @@ else
         echo $dir |
         tabulate |
         column -t -s' ' |
-        fzf-tmux -p 50%,50% --no-sort --header-lines=1 --ansi --reverse --height=100%
+        fzf-tmux -p 80%,80% --no-sort --header-lines=1 --ansi --reverse --height=100%
     )
 
     # Clean the output of fzf

@@ -13,7 +13,7 @@ local config = {
         '/usr/local/bin/jdtls',
         '-data', workspace,
     },
-    root_dir = vim.fs.dirname(vim.fs.find({'.gradlew', '.git', 'mvnw'}, { upward = true })[1]),
+    root_dir = vim.fs.dirname(vim.fs.find({'.gradlew', '.git', 'mvnw', 'build.xml'}, { upward = true })[1]),
     settings = {
         java = {
 

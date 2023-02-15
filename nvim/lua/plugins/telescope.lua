@@ -15,6 +15,19 @@ return {
                     require('telescope').load_extension('fzf')
                 end
             },
+            {
+                'acksld/nvim-neoclip.lua',
+                dependencies = {
+                    'kkharji/sqlite.lua', -- Persist history between sessions
+                },
+                config = function()
+                    require('neoclip').setup {
+                        history = 256,
+                        enable_persistent_history = true,
+                    }
+                    require('telescope').load_extension('neoclip')
+                end
+            },
         },
         opts = {
             defaults = {
@@ -38,18 +51,15 @@ return {
                 }
             }
         },
-        config = function()
-            local t = require('telescope')
-            t.load_extension('neoclip') -- Already loaded on VeryLazy
-            t.load_extension('notify') -- Already loaded on VeryLazy
-        end,
         keys = function()
             local has_telescope, telescope = pcall(require, 'telescope.builtin')
             if (not has_telescope) then return {} end
+            local has_nc, nc = pcall(require, 'neoclip')
+            if not has_nc then return {} end
 
             return {
                 -- Search for files (or only git files)
-                { '<C-s>', telescope.find_files, desc = 'Search files' },
+                { '<C-s>', function() telescope.find_files{ follow = true } end, desc = 'Search files' },
                 { '<leader>sf', telescope.git_files, desc = '[S]earch only git [F]iles' },
 
                 -- Live grep and search string
@@ -94,19 +104,12 @@ return {
 
                 { '<leader>sy', telescope.lsp_document_symbols, desc = 'LSP [S]ymbols [D]ocument' },
                 { '<leader>sw', telescope.lsp_workspace_symbols, desc = 'LSP [S]ymbols [W]orkspace' },
+
+                -- Neoclip
+                { '<C-p>', function() nc.toggle() end, desc = 'Toggle Copy-[P]aste History' }
             }
         end
     },
-    -- Replaced by oil.nvim
-    --[[ {
-        'nvim-telescope/telescope-file-browser.nvim',
-        config = function()
-            require('telescope').load_extension('file_browser')
-        end,
-        keys = {
-            { '<C-t>', ':Telescope file_browser path=%:p:h<CR>', desc = 'Telescope file browser' },
-        }
-    } ]]--
     {
         'stevearc/oil.nvim',
         cmd = 'Oil',

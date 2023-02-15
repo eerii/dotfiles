@@ -23,10 +23,14 @@ return {
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
             'saadparwaiz1/cmp_luasnip',
+            'onsails/lspkind.nvim'
         },
         opts = function()
             local cmp = require('cmp')
             local luasnip = require('luasnip')
+
+            vim.api.nvim_set_hl(0, 'CmpItemKindCopilot', { fg = '#26C281' })
+
             return {
                 completion = {
                     completeopt = 'menu,menuone,noinsert',
@@ -37,45 +41,48 @@ return {
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
-                    ['<Tab>'] = vim.schedule_wrap(function(fallback)
+                    ['<Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif luasnip.expand_or_locally_jumpable() then
+                            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                        elseif luasnip.expand_or_jumpable() then
                             luasnip.expand_or_jump()
-                        elseif has_words_before() then
-                            cmp.complete()
                         else
                             fallback()
                         end
                     end, { 'i', 's' }),
-                    ["<S-Tab>"] = vim.schedule_wrap(function(fallback)
+                    ['<S-Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
-                            cmp.select_prev_item()
+                            cmp.abort()
                         elseif luasnip.jumpable(-1) then
                             luasnip.jump(-1)
                         else
                             fallback()
                         end
                     end, { 'i', 's' }),
-                    ['<S-CR>'] = vim.schedule_wrap(function(fallback) -- don't select anything
-                        if cmp.visible() then
-                            cmp.close()
-                        end
-                        fallback()
-                    end),
-                    ['<CR>'] = cmp.mapping.confirm({ -- copilot-cmp
-                        behavior = cmp.ConfirmBehavior.Replace,
-                        select = false,
-                    }),
+                    ['<S-CR>'] = cmp.mapping(function(_)
+                        cmp.complete()
+                    end, { 'i', 's' })
                 }),
                 sources = cmp.config.sources({
                     { name = 'copilot', max_item_count = 3 },
                     { name = 'nvim_lsp' },
                     { name = 'nvim_lsp_signature_help' },
-                    { name = 'luasnip' },
-                    { name = 'buffer', max_item_count = 5 },
-                    { name = 'path' },
+                    { name = 'luasnip', max_item_count = 5 },
+                    { name = 'buffer', max_item_count = 3 },
+                    { name = 'path', max_item_count = 3 },
                 }),
+                formatting = {
+                    format = require('lspkind').cmp_format({
+                        symbol_map = { Copilot = '' },
+                        mode = 'symbol',
+                        maxwidth = 32,
+                        ellipsis_char = '…',
+
+                        before = function(_, vim_item)
+                            return vim_item
+                        end,
+                    })
+                },
                 window = {
                     --completion = {},
                     --documentation = { border = 'rounded' },
@@ -126,6 +133,7 @@ return {
                     method = 'getCompletionsCycling',
                 },
                 suggestion = { enabled = false },
+                panel = { enabled = false },
                 server_opts_overrides = {
                     settings = {
                         advanced = {
@@ -133,11 +141,11 @@ return {
                         }
                     }
                 },
-                filetypes = { markdown = true }
-            }
+                filetypes = { markdown = true },
+            },
         },
         config = true,
-        event = 'InsertEnter'
+        event = 'InsertEnter',
     },
     {
         'kdheepak/cmp-latex-symbols',

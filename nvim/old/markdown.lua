@@ -12,12 +12,6 @@ return {
         enable = false
     },
     {
-        'ellisonleao/glow.nvim', -- Preview right in CMD (not working right now)
-        config = true,
-        cmd = 'Glow',
-        enable = false
-    },
-    {
         'jakewvincent/mkdnflow.nvim',
         opts = {
             mappings = {

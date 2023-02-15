@@ -35,6 +35,7 @@ ZSH_COMPDUMP="$XDG_CACH_HOME/zsh"
 
 # Homebrew Completion
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+export PATH="/usr/local/sbin:$PATH"
 
 # Zoxide fuzzy searcher
 eval "$(zoxide init zsh)"
@@ -57,6 +58,9 @@ alias pip3="pip"
 # Compilers
 export SDKROOT="`xcrun --show-sdk-path`"
 
+# Make with Bear (for compile commands)
+alias bmake="bear -- make -j 8"
+
 # Nvim
 alias n="nvim"
 export EDITOR="nvim"
@@ -67,6 +71,13 @@ alias ta="tmux attach -t"
 alias tl="tmux list-sessions"
 alias td="tmux detach"
 bindkey -s '^S' 'tss\n'
+
+# Rclone script
+alias rc="~/Programacion/dotfiles/zsh/rc"
+
+# TLDR man pages
+alias tldrf='tldr --list | fzf-tmux -p 80%,80% --height 100% --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
+bindkey -s '^T' 'tldrf\n'
 
 # LaTeX
 export PATH="/Library/TeX/texbin:$PATH"

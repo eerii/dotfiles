@@ -4,8 +4,8 @@ return {
     name = 'make build',
     builder = function(_)
         return {
-            cmd = { 'make' },
-            args = { '-j', 4 },
+            cmd = { 'bear' },
+            args = { '--', 'make', '-j', 8 },
             components = { 'on_output_quickfix', 'default' },
             cwd = vim.fn.expand('%:p:h'),
         }

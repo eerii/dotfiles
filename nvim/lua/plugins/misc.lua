@@ -3,7 +3,7 @@
 
 return {
     -- Keymaps
-    {
+     {
         'folke/which-key.nvim',
         config = function()
             vim.o.timeout = true
