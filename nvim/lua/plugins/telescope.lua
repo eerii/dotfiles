@@ -28,6 +28,13 @@ return {
                     require('telescope').load_extension('neoclip')
                 end
             },
+            {
+                'mrjones2014/dash.nvim',
+                build = 'make install',
+                config = function()
+                    require('telescope').load_extension('dash')
+                end
+            }
         },
         opts = {
             defaults = {
@@ -48,7 +55,8 @@ return {
                 },
                 file_browser = {
                     hijack_netrw = true,
-                }
+                },
+                dash = {}
             }
         },
         keys = function()
@@ -106,7 +114,10 @@ return {
                 { '<leader>sw', telescope.lsp_workspace_symbols, desc = 'LSP [S]ymbols [W]orkspace' },
 
                 -- Neoclip
-                { '<C-p>', function() nc.toggle() end, desc = 'Toggle Copy-[P]aste History' }
+                { '<C-p>', function() nc.toggle() end, desc = 'Toggle Copy-[P]aste History' },
+
+                -- Dash
+                { '<leader>dh', ':Telescope dash search<CR>', desc = '[D]ash [H]elp' }
             }
         end
     },

@@ -18,12 +18,12 @@ return {
                 }
             },
             'williamboman/mason-lspconfig.nvim',
-            'hrsh7th/cmp-nvim-lsp',
+            --'hrsh7th/cmp-nvim-lsp',
         },
         opts = {
             diagnostics = {
                 underline = true,
-                update_in_insert = false,
+                update_in_insert = true,
                 virtual_text = { spacing = 4, prefix = '●' },
                 severity_sort = true,
             },
@@ -70,12 +70,12 @@ return {
 
             -- Options
             local servers = opts.servers
-            local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+            --local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
             -- Setup servers
             local setup = function(server)
                 local server_opts = vim.tbl_deep_extend('force', {
-                    capabilities = vim.deepcopy(capabilities),
+                    --capabilities = vim.deepcopy(capabilities),
                 }, servers[server] or {})
 
                 if opts.setup[server] then

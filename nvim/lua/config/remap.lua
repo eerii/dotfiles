@@ -3,6 +3,8 @@
 local map = vim.keymap.set
 
 -- Move selected lines with J/K
+map('n', 'J', ":m +1<CR>", { desc = 'Move line down' })
+map('n', 'K', ":m -2<CR>", { desc = 'Move line up' })
 map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
 map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
 
@@ -12,8 +14,8 @@ map('n', '<C-d>', '<C-d>zz', { desc = 'Half page down' })
 map('n', '<C-u>', '<C-u>zz', { desc = 'Half page up' })
 
 -- Add lines bellow/above the cursor with Enter/Shift-Enter (also tab the line)
-map('n', '<Enter>', 'o<Esc>', { desc = 'Add line bellow' })
-map('n', '<S-Enter>', 'O<Esc>', { desc = 'Add line above' })
+map('n', '<Enter>', 'o<Esc>^Da', { desc = 'Add line bellow' })
+map('n', '<S-Enter>', 'O<Esc>^Da', { desc = 'Add line above' })
 
 -- Search terms stay centered
 map('n', 'n', 'nzzzv', { desc = 'Search next' })

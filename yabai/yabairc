@@ -34,10 +34,12 @@ yabai -m config window_gap                  10
 yabai -m rule --add app="Ajustes del Sistema"               manage=off
 yabai -m rule --add app="Raycast"                           manage=off
 yabai -m rule --add app="Telegram"                          manage=off
+yabai -m rule --add app="Whatsapp"                          manage=off
+yabai -m rule --add app="Dash"                              manage=off
 yabai -m rule --add app="main"                              manage=off
-yabai -m rule --add app="^Finder$" --add title="Copiar"     manage=off
-yabai -m rule --add app="^Finder$" --add title="Mover"      manage=off
-yabai -m rule --add app="^Finder$" --add title="Papelera"   manage=off
+yabai -m rule --add app="^Finder$" title="Copiar"           manage=off
+yabai -m rule --add app="^Finder$" title="Mover"            manage=off
+yabai -m rule --add app="^Finder$" title="Papelera"         manage=off
 
 # Fix for Orion Popups
 yabai -m rule --add app="Orion" title="Completions" mouse_follows_focus=off

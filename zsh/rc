@@ -21,6 +21,10 @@ rclone copy -P -l -M -u -v $1 $2 \
     --exclude node_modules/ \
     --exclude .next/ \
     --exclude .cache/ \
+    --exclude .ipynb_checkpoints/ --exclude "**pygtex" --exclude "**synctex**" \
+    --exclude .cmake/ --exclude CMakeFiles/ \
+    --exclude .gradle/ \
+    --exclude "**.scriv/" \
     --checkers 16 \
     --user-agent "ISV|rclone.org|rclone/v1.55.1" \
     ${@:3}

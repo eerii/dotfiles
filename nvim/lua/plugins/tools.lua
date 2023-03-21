@@ -42,4 +42,32 @@ return {
         'mbbill/undotree',
         keys = { { '<leader>u', ':UndotreeToggle<CR>', desc = 'Toggle [U]ndo Tree' } }
     },
+
+    -- Rust crates
+    {
+        'saecki/crates.nvim',
+        config = true,
+        ft = 'toml',
+        keys = function()
+            local crates, has_crates = pcall(require, 'crates')
+            if not has_crates then return {} end
+
+            return {
+                { '<leader>cu', function()
+                    crates.update_crate()
+                    crates.upgrade_crate()
+                end, desc = 'Update Rust Crate' },
+                { '<leader>cU', function()
+                    crates.update_all_crates()
+                    crates.upgrade_all_crates()
+                end, desc = 'Update All Rust Crates' },
+                { '<leader>cp', function() crates.show_crate_popup() end, desc = 'Rust Crate Info' },
+                { '<leader>cf', function() crates.show_features_popup() end, desc = 'Rust Crate Features' },
+                { '<leader>cv', function() crates.show_versions_popup() end, desc = 'Rust Crate Versions' },
+                { '<leader>cd', function() crates.show_dependencies_popup() end, desc = 'Rust Crate Dependencies' },
+                { '<leader>cr', function() crates.open_repository() end, desc = 'Show Rust Crate Repository' },
+                { '<leader>cw', function() crates.open_crates_io() end, desc = 'Show Rust Crate in Crates.io' }
+            }
+        end
+    }
 }

@@ -9,7 +9,7 @@ return {
             require('mini.pairs').setup()
         end,
         event = 'InsertEnter',
-        enable = false
+        enabled = false
     },
     {
         'echasnovski/mini.surround',
