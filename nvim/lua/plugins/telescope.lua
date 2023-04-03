@@ -1,13 +1,13 @@
--- Telescope
--- https://github.com/nvim-telescope/require('telescope')nvim
--- Fuzzy finder and picker, powers many other utilities
-
 return {
+    -- Telescope
+    -- https://github.com/nvim-telescope/telescope.nvim
+    -- Fuzzy finder and picker, powers many other utilities
     {
-		'nvim-telescope/telescope.nvim',
+        'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
-		dependencies = {
-			'nvim-lua/plenary.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'jvgrootveld/telescope-zoxide',
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
                 build = 'make',
@@ -18,7 +18,7 @@ return {
             {
                 'acksld/nvim-neoclip.lua',
                 dependencies = {
-                    'kkharji/sqlite.lua', -- Persist history between sessions
+                    'kkharji/sqlite.lua',
                 },
                 config = function()
                     require('neoclip').setup {
@@ -26,13 +26,40 @@ return {
                         enable_persistent_history = true,
                     }
                     require('telescope').load_extension('neoclip')
+                    require('telescope').load_extension('zoxide')
                 end
             },
             {
-                'mrjones2014/dash.nvim',
-                build = 'make install',
+                'theprimeagen/harpoon',
                 config = function()
-                    require('telescope').load_extension('dash')
+                    require('harpoon').setup()
+                    require('telescope').load_extension('harpoon')
+                end,
+                dependencies = { 'nvim-lua/plenary.nvim' },
+                keys = function()
+                    local has_ui, ui = pcall(require, 'harpoon.ui')
+                    if not has_ui then return {} end
+                    local has_mark, mark = pcall(require, 'harpoon.mark')
+                    if not has_mark then return {} end
+                    local has_cmd, cmd = pcall(require, 'harpoon.cmd-ui')
+                    if not has_cmd then return {} end
+
+                    return {
+                        { '<C-m>', mark.add_file,         desc = "Add harpoon [M]ark" },
+                        { '<C-n>', ui.toggle_quick_menu,  desc = "Toggle harpoon [N]avigation menu" },
+                        { '<C-,>', ui.nav_next,           desc = "Navigate to next harpoon mark" },
+                        { '<C-.>', ui.nav_prev,           desc = "Navigate to previous harpoon mark" },
+                        { '<C-1>', function() ui.nav_file(1) end, desc = "Navigate to harpoon [T]ag 1" },
+                        { '<C-2>', function() ui.nav_file(2) end, desc = "Navigate to harpoon [T]ag 2" },
+                        { '<C-3>', function() ui.nav_file(3) end, desc = "Navigate to harpoon [T]ag 3" },
+                        { '<C-4>', function() ui.nav_file(4) end, desc = "Navigate to harpoon [T]ag 4" },
+                        { '<C-5>', function() ui.nav_file(5) end, desc = "Navigate to harpoon [T]ag 5" },
+                        { '<C-6>', function() ui.nav_file(6) end, desc = "Navigate to harpoon [T]ag 6" },
+                        { '<C-7>', function() ui.nav_file(7) end, desc = "Navigate to harpoon [T]ag 7" },
+                        { '<C-8>', function() ui.nav_file(8) end, desc = "Navigate to harpoon [T]ag 8" },
+                        { '<C-9>', function() ui.nav_file(9) end, desc = "Navigate to harpoon [T]ag 9" },
+                        { '<C-e>', cmd.toggle_quick_menu, desc = "Toggle harpoon command menu" },
+                    }
                 end
             }
         },
@@ -41,9 +68,12 @@ return {
                 mappings = {
                     i = { ['<C-w>'] = 'which_key' }
                 },
-                layout_strategy = 'horizontal',
+                layout_strategy = 'horizontal_merged',
                 layout_config = {
                     prompt_position = 'top'
+                },
+                file_ignore_patterns = {
+                    'lib'
                 }
             },
             extensions = {
@@ -56,9 +86,26 @@ return {
                 file_browser = {
                     hijack_netrw = true,
                 },
-                dash = {}
+                zoxide = {}
             }
         },
+        config = function (_, opts)
+            require('telescope.pickers.layout_strategies').horizontal_merged = function(picker, max_columns, max_lines, layout_config)
+                local layout = require('telescope.pickers.layout_strategies').horizontal(picker, max_columns, max_lines, layout_config)
+
+                layout.results.title = ''
+                layout.results.line = layout.results.line - 1
+                layout.results.height = layout.results.height + 1
+
+                layout.prompt.borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
+                layout.results.borderchars = { '─', '│', '─', '│', '├', '┤', '╯', '╰' }
+
+                return layout
+            end
+
+            require('telescope').setup(opts)
+        end,
+        cmd = { 'Telescope' },
         keys = function()
             local has_telescope, telescope = pcall(require, 'telescope.builtin')
             if (not has_telescope) then return {} end
@@ -66,33 +113,37 @@ return {
             if not has_nc then return {} end
 
             return {
-                -- Search for files (or only git files)
-                { '<C-s>', function() telescope.find_files{ follow = true } end, desc = 'Search files' },
-                { '<leader>sf', telescope.git_files, desc = '[S]earch only git [F]iles' },
+                -- Search for files
+                { '<C-s>', function() telescope.find_files{ follow = true, hidden = false } end, desc = 'Search files' },
+                { 'gfh', function() telescope.find_files{ follow = true, hidden = true } end, desc = '[S]earch [H]idden [F]iles' },
+                { 'gfg', telescope.git_files, desc = '[S]earch only git [F]iles' },
+
+                -- Search for folders using zoxide
+                { '<C-z>', ':Telescope zoxide list<CR>', desc = '[S]earch [Z]oxide path' },
 
                 -- Live grep and search string
-                { '<leader>sg', telescope.live_grep, desc = '[S]earch [G]rep' },
-                { '<leader>ss', telescope.grep_string, desc = '[S]earch [S]tring' },
+                { '<C-g>', telescope.live_grep, desc = '[S]earch [G]rep' },
+                { '<leader>s', telescope.grep_string, desc = '[S]earch [S]tring under cursor' },
 
                 -- Keymap, command and vim options
-                { '<leader>sm', telescope.keymaps, desc = '[S]earch [M]appings' },
-                { '<leader>sc', telescope.commands, desc = '[S]earch [C]ommands' },
-                { '<leader>so', telescope.vim_options, desc = '[S]earch [O]ptions' },
+                { 'gm', telescope.keymaps, desc = '[S]earch [M]appings' },
+                { 'gc', telescope.commands, desc = '[S]earch [C]ommands' },
+                { 'go', telescope.vim_options, desc = '[S]earch [O]ptions' },
 
                 -- Buffers
-                { '<leader>sb', telescope.buffers, desc = '[S]earch [B]uffers' },
+                { 'gb', telescope.buffers, desc = '[S]earch [B]uffers' },
 
                 -- Search help
-                { '<leader>sh', telescope.man_pages, desc = '[S]earch [H]elp' },
+                { 'gH', telescope.man_pages, desc = '[S]earch [H]elp' },
 
                 -- Treesitter
-                { '<C-f>', telescope.treesitter, desc = '[Tr]eesitter (Function variables)' },
+                { 'gv', telescope.treesitter, desc = '[S]earch Treesitter [V]ariables' },
 
-                -- Neoclip clipboard (add load extension)
-                { '<leader>sp', ':Telescope neoclip<CR>', desc = '[S]earch [P]aste clipboard history' },
+                -- Neoclip clipboard
+                { 'gp', ':Telescope neoclip<CR>', desc = '[S]earch [P]aste clipboard history' },
 
                 -- Notify history
-                { '<leader>sn', ':Telescope notify<CR>', desc = '[S]earch [N]otifications' },
+                { 'gN', ':Telescope notify<CR>', desc = '[S]earch [N]otifications' },
 
                 -- Git
                 { '<leader>gs', telescope.git_status, desc = '[G]it [S]tatus' },
@@ -100,45 +151,22 @@ return {
                 { '<leader>gc', telescope.git_commits, desc = '[G]it [C]ommits' },
 
                 -- Diagnostics
-                { '<leader>sd', telescope.diagnostics, desc = '[S]earch [D]iagnostics' },
+                { '<leader>d', telescope.diagnostics, desc = 'Search [D]iagnostics' },
 
                 -- LSP
-                { 'gd', telescope.lsp_definitions, desc = 'LSP [D]efinition' },
-                { 'gr', telescope.lsp_references, desc = 'LSP [R]eferences' },
-                { 'gt', telescope.lsp_type_definitions, desc = 'LSP [T]ype definitions' },
+                { '<leader>ld', telescope.lsp_definitions, desc = '[L]SP [D]efinition' },
+                { 'gR', telescope.lsp_references, desc = 'LSP [R]eferences' },
+                { 'gT', telescope.lsp_type_definitions, desc = 'LSP [T]ype definitions' },
 
-                { '<leader>ci', telescope.lsp_incoming_calls, desc = 'LSP [I]ncoming [C]alls' },
-                { '<leader>co', telescope.lsp_outgoing_calls, desc = 'LSP [O]utgoing [C]alls' },
+                { 'gI', telescope.lsp_incoming_calls, desc = 'LSP [I]ncoming calls' },
+                { 'gO', telescope.lsp_outgoing_calls, desc = 'LSP [O]utgoing calls' },
 
-                { '<leader>sy', telescope.lsp_document_symbols, desc = 'LSP [S]ymbols [D]ocument' },
-                { '<leader>sw', telescope.lsp_workspace_symbols, desc = 'LSP [S]ymbols [W]orkspace' },
+                { 'gy', telescope.lsp_document_symbols, desc = 'LSP [S]ymbols [D]ocument' },
+                { 'gw', telescope.lsp_workspace_symbols, desc = 'LSP [S]ymbols [W]orkspace' },
 
-                -- Neoclip
-                { '<C-p>', function() nc.toggle() end, desc = 'Toggle Copy-[P]aste History' },
-
-                -- Dash
-                { '<leader>dh', ':Telescope dash search<CR>', desc = '[D]ash [H]elp' }
+                -- Harpoon
+                { 'gM', ':Telescope harpoon marks<CR>', desc = "Get harpoon [M]arks" },
             }
         end
-    },
-    {
-        'stevearc/oil.nvim',
-        cmd = 'Oil',
-        keys = { { '<C-t>', ':Oil --float<CR>', desc = 'Oil file browser' } },
-        opts = {
-            keymaps = {
-                ['<C-w>'] = 'actions.show_help',
-                ['<CR>'] = 'actions.select',
-                ['p'] = 'actions.preview',
-                ['q'] = 'actions.close',
-                ['R'] = 'actions.refresh',
-                ['-'] = 'actions.parent',
-                ['_'] = 'actions.open_cwd',
-                ['`'] = 'actions.cd',
-                ['H'] = 'actions.toggle_hidden',
-            },
-            view_options = { show_hidden = true },
-            float = { padding = 4, max_width = 160, max_height = 40 }
-        },
     }
 }

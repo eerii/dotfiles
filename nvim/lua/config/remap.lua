@@ -1,10 +1,18 @@
 -- Remaps
-
 local map = vim.keymap.set
 
+-- Commands with ;
+map('n', ';', ':', { desc = 'Commands with ;' })
+
+-- Disable arrow keys on normal mode
+map('n', '<Up>', '<nop>', { desc = 'Disable arrow keys' })
+map('n', '<Down>', '<nop>', { desc = 'Disable arrow keys' })
+map('n', '<Left>', '<nop>', { desc = 'Disable arrow keys' })
+map('n', '<Right>', '<nop>', { desc = 'Disable arrow keys' })
+
 -- Move selected lines with J/K
-map('n', 'J', ":m +1<CR>", { desc = 'Move line down' })
-map('n', 'K', ":m -2<CR>", { desc = 'Move line up' })
+map('n', 'J', ':m +1<CR>', { desc = 'Move line down' })
+map('n', 'K', ':m -2<CR>', { desc = 'Move line up' })
 map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
 map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
 
@@ -42,8 +50,34 @@ map('i', 'jj', '<Esc>', { desc = 'Map jj to <Esc>' })
 -- Redo with U
 map('n', 'U', '<C-r>', { desc = 'Redo' })
 
+-- Go to previous buffer fast
+map('n', '<C-x>', '<C-^>', { desc = 'Go to previous buffer' })
+
 -- Open lazy plugin window
-map('n', '<leader>l', ':Lazy<CR>', { desc = 'Lazy plugin manager' })
+map('n', '<leader>L', ':Lazy<CR>', { desc = '[L]azy plugin manager' })
 
 -- New file with nf
 map('n', '<leader>nf', ':enew<CR>', { desc = '[N]ew [F]ile' })
+
+-- Terminal
+map('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal' })
+map('t', '<C-v><Esc>', '<Esc>', { desc = 'Send escape to terminal' })
+map('t', '<D-v>', '<C-\\><C-n>"+pi', { desc = 'Paste in terminal mode' })
+
+-- Toggle line padding
+map('n', '<leader>tl', function ()
+    if vim.o.linespace > 0 then
+        vim.o.linespace = 0
+    else
+        vim.o.linespace = 8
+    end
+end, { desc = '[T]oggle [L]ine padding' })
+
+-- Toggle mouse
+map('n', '<leader>tm', function ()
+    if vim.o.mouse == 'a' then
+        vim.o.mouse = ''
+    else
+        vim.o.mouse = 'a'
+    end
+end, { desc = '[T]oggle [M]ouse' })
