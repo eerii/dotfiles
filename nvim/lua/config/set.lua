@@ -1,7 +1,8 @@
 -- Vim Options
 
--- Terminal zsh
-vim.o.shell = '/bin/zsh'
+-- Autowrite files
+vim.o.autowrite = true
+vim.o.confirm = true
 
 -- Indentation
 vim.o.tabstop = 4 -- Number of spaces
@@ -38,17 +39,20 @@ vim.o.signcolumn = 'yes'
 vim.o.updatetime = 50
 vim.o.lazyredraw = true
 
+-- Disable mouse
+vim.o.mouse = ''
+
 -- Set termgui colors
 vim.o.termguicolors = true
+
+-- Terminal zsh
+vim.g.shell = '/bin/zsh'
 
 -- Python 3
 vim.g.python3_host_prog = '/usr/local/bin/python3.11'
 
 -- Disable netrw banner
 vim.g.netrw_banner = 0
-
--- Set zsh as the shell
-vim.g.shell = '/bin/zsh'
 
 -- Diagnostics
 vim.diagnostic.config {

@@ -1,148 +1,154 @@
--- LSP
--- Smart language features
-
--- Setup
---  · nvim-lspconfig (configures neovim lsp)
---  · mason (install language servers)
-
 return {
+    -- LSP Support
     {
-        'neovim/nvim-lspconfig',
+        'vonheikemen/lsp-zero.nvim',
+        branch = 'v2.x',
         dependencies = {
+            'neovim/nvim-lspconfig',
             {
                 'williamboman/mason.nvim',
-                cmd = 'Mason',
-                keys = { { '<leader>m', ':Mason<CR>', desc = '[M]ason Language Servers' } },
-                opts = {
-                    ensure_installed = {}
-                }
+                build = ':MasonUpdate',
+                cmd = { 'Mason', 'MasonUpdate' },
+                keys = { { '<leader>M', ':Mason<CR>', desc = '[M]ason Language Servers' } },
             },
             'williamboman/mason-lspconfig.nvim',
-            --'hrsh7th/cmp-nvim-lsp',
-        },
-        opts = {
-            diagnostics = {
-                underline = true,
-                update_in_insert = true,
-                virtual_text = { spacing = 4, prefix = '●' },
-                severity_sort = true,
-            },
-            servers = {
-                -- Lua
-                lua_ls = {
-                    settings = {
-                        Lua = {
-                            runtime = { version = 'LuaJIT' },
-                            diagnostics = {
-                                globals = { 'vim', 'use' }
-                            }
+            'hrsh7th/nvim-cmp',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lsp-signature-help',
+            'onsails/lspkind.nvim',
+            'l3mon4d3/luasnip',
+            'tzachar/fuzzy.nvim',
+            'tzachar/cmp-fuzzy-buffer',
+            'simrat39/rust-tools.nvim',
+            {
+                'zbirenbaum/copilot.lua',
+                opts = {
+                    suggestion = {
+                        enabled = true,
+                        auto_trigger = false,
+                        keymap = {
+                            accept = false,
                         }
+                    },
+                    panel = {
+                        enabled = true,
+                        auto_refresh = true,
+                    },
+                    filetypes = {
+                        markdown = true,
                     }
                 },
-                -- Python
-                pylsp = {
-                    settings = {
-                        pylsp = {
-                            plugins = {
-                                pycodestyle = {
-                                    ignore = {'E265', 'E302', 'E305'},
-                                }
-                            }
-                        }
-                    }
-                },
-                -- Typescript
-                tsserver = {
-                    settings = {
-                        completions = {
-                            completefunctioncalls = true
-                        }
+                keys = {
+                    {
+                        '<C-w>',
+                        function()
+                            require('cmp').close()
+                            require('copilot.suggestion').next()
+                        end,
+                        desc = 'Trigger Copilot',
+                        mode = 'i'
+                    },
+                    {
+                        '<leader>cp',
+                        function()
+                            require('copilot.panel').open()
+                        end,
+                        desc = 'Copilot panel',
+                    },
+                    {
+                        '<leader>cs',
+                        ':Copilot<CR>',
+                        desc = 'Copilot status',
+                    },
+                    {
+                        '<leader>ct',
+                        ':Copilot toggle<CR>',
+                        desc = 'Copilot toggle',
                     }
                 }
-            },
-            setup = {
-                -- Additional server setup
-            },
-        },
-        config = function(_, opts)
-            -- Diagnostics
-            vim.diagnostic.config(opts.diagnostics)
-
-            -- Options
-            local servers = opts.servers
-            --local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-            -- Setup servers
-            local setup = function(server)
-                local server_opts = vim.tbl_deep_extend('force', {
-                    --capabilities = vim.deepcopy(capabilities),
-                }, servers[server] or {})
-
-                if opts.setup[server] then
-                    if opts.setup[server](server, server_opts) then
-                        return
-                    end
-                elseif opts.setup['*'] then
-                    if opts.setup['*'](server, server_opts) then
-                        return
-                    end
-                end
-                require('lspconfig')[server].setup(server_opts)
-            end
-
-            -- Get servers
-            local mlc = require('mason-lspconfig')
-            local available = mlc.get_available_servers()
-            local ensure_installed = {}
-            for server, server_opts in pairs(servers) do
-                if server_opts then
-                    server_opts = server_opts == true and {} or server_opts
-                    -- Run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-                    if server_opts.mason == false or not vim.tbl_contains(available, server) then
-                        setup(server)
-                    else
-                        ensure_installed[#ensure_installed + 1] = server
-                    end
-                end
-            end
-
-            -- Setup mason and lsp
-            mlc.setup({ ensure_installed = ensure_installed })
-            mlc.setup_handlers({ setup })
-        end,
-        event = { 'BufReadPre', 'BufNewFile' },
-        keys = {
-            { '[d', vim.diagnostic.goto_next, desc = 'LSP next [D]iagnostic' },
-            { ']d', vim.diagnostic.goto_prev, desc = 'LSP previous [D]iagnostic' },
-
-            { '<leader>d', vim.diagnostic.open_float, desc = 'LSP show line [D]iagnostics' },
-            { '<leader>h', vim.lsp.buf.hover, desc = 'LSP [H]over info' },
-            { '<leader>lsp', ':LspInfo<CR>', desc = '[LSP] Info' },
-
-            { 'gD', vim.lsp.buf.declaration, desc = 'LSP [G]o to [D]eclaration' },
-            { 'gI', vim.lsp.buf.implementation, desc = 'LSP [G]o to [I]mplementation' },
-            { 'gh', vim.lsp.buf.signature_help, desc = 'LSP [G]et [H]over signature help' },
-            { mode = 'i', '<C-h>', vim.lsp.buf.signature_help, desc = 'LSP [G]et [H]over signature help' },
-
-            { '<C-n>', vim.lsp.buf.rename, desc = 'LSP re[N]ame' },
-            { '<leader>ca', vim.lsp.buf.code_action, desc = 'LSP [C]ode [A]ctions' },
-            { '<leader>ff', vim.lsp.buf.format, desc = 'LSP [F]ormat [F]ile' },
-        }
-    },
-    {
-        'folke/neodev.nvim',
-        opts = {
-            experimental = {
-                pathStrict = true,
             }
         },
-    },
-    {
-        'mfussenegger/nvim-jdtls',
-        ft = 'java'
-    },
-    {
-        'tikhomirov/vim-glsl',
-        ft = 'glsl'
+        config = function()
+            local lsp = require('lsp-zero').preset({})
+
+            lsp.on_attach(function(_, _)
+                --lsp.default_keymaps({buffer = buf})
+            end)
+
+            lsp.format_mapping('<leader>f', {
+                servers = {
+                    ['lua_ls'] = { 'lua' },
+                    ['rust_analyzer'] = { 'rust' },
+                }
+            })
+
+            local config = require('lspconfig')
+            config.lua_ls.setup(lsp.nvim_lua_ls())
+
+            lsp.skip_server_setup({ 'rust_analyzer' })
+            lsp.setup()
+
+            local rt = require('rust-tools')
+            local cargo_env = { CARGO_TARGET_DIR = './target.nosync' }
+            rt.setup({
+                server = {
+                    settings = {
+                        ['rust-analyzer'] = {
+                            cargo = { extraEnv = cargo_env },
+                            server = { extraEnv = cargo_env },
+                            runnableEnv = cargo_env,
+                            checkOnSave = { command = 'clippy' }
+                        }
+                    },
+                    on_attach = function(_, bufnr)
+                        vim.keymap.set('n', '<leader>ca', rt.hover_actions.hover_actions, { buffer = bufnr })
+                    end
+                },
+            })
+
+            local cmp = require('cmp')
+            local copilot = require('copilot.suggestion')
+
+            cmp.setup({
+                sources = cmp.config.sources({
+                    -- { name = 'copilot',                 max_item_count = 3 },
+                    { name = 'nvim_lsp',                max_item_count = 3 },
+                    { name = 'nvim_lsp_signature_help', max_item_count = 3 },
+                    --{ name = 'luasnip', max_item_count = 3 },
+                    { name = 'fuzzy_buffer',            max_item_count = 3 },
+                }),
+                mapping = cmp.mapping.preset.insert({
+                    ['<Tab>'] = cmp.mapping(function(fallback)
+                        if copilot.is_visible() then
+                            copilot.accept()
+                        elseif cmp.visible() then
+                            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
+                    ['<C-h>'] = cmp.mapping(function(_)
+                        if cmp.visible() then
+                            cmp.abort()
+                        else
+                            if copilot.is_visible() then
+                                copilot.dismiss()
+                            end
+                            cmp.complete()
+                        end
+                    end, { 'i', 's' }),
+                }),
+            })
+        end,
+        event = { 'BufEnter' },
+        keys = {
+            { '[d',          vim.diagnostic.goto_next,   desc = 'LSP next [D]iagnostic' },
+            { ']d',          vim.diagnostic.goto_prev,   desc = 'LSP previous [D]iagnostic' },
+            { 'gd',          vim.diagnostic.open_float,  desc = 'LSP show line [D]iagnostics' },
+            { 'gh',          vim.lsp.buf.hover,          desc = '[L]SP [H]over info' },
+            { '<leader>lsp', ':LspInfo<CR>',             desc = '[LSP] Info' },
+            { '<leader>li',  vim.lsp.buf.implementation, desc = '[L]SP [I]mplementation' },
+            { '<leader>ca',  vim.lsp.buf.code_action,    desc = 'LSP [C]ode [A]ctions' },
+        }
     }
 }

@@ -1,50 +1,50 @@
-# New line at the start and after each clear
-print ""
-function clear() {
-    command clear
-    print ""
-}
+# Zellij
+alias zj="zellij"
+alias zs="zellij --session $1"
+alias ze="zellij --layout editor --session $1"
+alias zr="zellij run --"
+alias zrf="zellij run --floating --"
 
-# Enable Powerlevel10k instant prompt (should be at the top)
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+export ZELLIJ_RUNNER_LAYOUTS_DIR=~/.config/zellij/layouts
+export ZELLIJ_RUNNER_BANNERS_DIR=~/.config/zellij/banners
+export ZELLIJ_RUNNER_ROOT_DIR=Programacion
+export ZELLIJ_RUNNER_MAX_DIRS_DEPTH=3
 
-# ·········
-# Oh My Zsh
-# ·········
+bindkey -s '' 'zellij-runner\n'
 
-# Path
-export ZSH="$HOME/.oh-my-zsh"
-
-# Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# eval "$(zellij setup --generate-auto-start zsh)"
 
 # Plugins
-plugins=(
-  git
-  sudo
-  history
-  macos
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-)
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# History
+export HISTFILE=~/.zsh_history
+export HISTSIZE=100000
+export SAVEHIST=$HISTSIZE
 
 # Cache
-ZSH_COMPDUMP="$XDG_CACH_HOME/zsh"
+export ZSH_COMPDUMP="$XDG_CACH_HOME/zsh"
+
+# Completions
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+fi
 
 # Homebrew Completion
-FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+export FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 export PATH="/usr/local/sbin:$PATH"
 
 # Zoxide fuzzy searcher
 eval "$(zoxide init zsh)"
 
-source $ZSH/oh-my-zsh.sh
-
-# ···········
-# User Config
-# ···········
+# Keybinds for zsh history
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 # PGP
 export GPG_TTY=$(tty)export PATH="/usr/local/opt/tcl-tk/bin:$PATH"
@@ -57,50 +57,56 @@ alias pip3="pip"
 
 # Compilers
 export SDKROOT="`xcrun --show-sdk-path`"
-
-# Make with Bear (for compile commands)
+export CARGO_TARGET_DIR="./target.nosync"
 alias bmake="bear -- make -j 8"
 
 # Nvim
 alias n="nvim"
-export EDITOR="nvim"
+export EDITOR="/usr/local/bin/nvim"
 
-# Tmux
-alias ts="tmux new -s"
-alias ta="tmux attach -t"
-alias tl="tmux list-sessions"
-alias td="tmux detach"
-bindkey -s '^S' 'tss\n'
+# Unix replacements
+alias ls="exa"
+alias l='exa -l --all --group-directories-first --git'
+alias cat="bat"
+alias cd="z"
+alias du="dust"
+alias find="fd"
+alias grep="rg"
+alias rm="rip"
 
 # Rclone script
 alias rc="~/Programacion/dotfiles/zsh/rc"
 
 # TLDR man pages
 alias tldrf='tldr --list | fzf-tmux -p 80%,80% --height 100% --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
-bindkey -s '^T' 'tldrf\n'
 
-# LaTeX
+# PATH
 export PATH="/Library/TeX/texbin:$PATH"
-
-# Java
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
-
-# Postgres
 export PATH="/usr/local/opt/postgresql@15/bin:$PATH"
-
-# Ruby
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/Users/jose/.cargo/bin:$PATH"
 
-# Git all in one
-function G() {
-    git add .;
-    git commit -m "$1";
+# LOCALE
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Fix less
+export LESSCHARSET="utf-8"
+
+# Git
+alias ga='git add'
+alias gc='git commit'
+alias gc!='git commit --amend'
+alias gca='git commit -a -m'
+alias gp='git push'
+alias gp!='git push --force'
+alias gs='git status'
+G() {
+    git commit -a -m '$1';
     git push;
 }
 
-# iTerm2 integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# p10k configuration
-alias p10k-update="git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k pull"
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Starship prompt
+eval "$(starship init zsh)"
+source ~/Programacion/dotfiles/zsh/transient.zsh

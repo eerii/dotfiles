@@ -1,13 +1,13 @@
--- Telescope
--- https://github.com/nvim-telescope/require('telescope')nvim
--- Fuzzy finder and picker, powers many other utilities
-
 return {
+    -- Telescope
+    -- https://github.com/nvim-telescope/telescope.nvim
+    -- Fuzzy finder and picker, powers many other utilities
     {
 		'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
+            'jvgrootveld/telescope-zoxide',
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
                 build = 'make',
@@ -18,7 +18,7 @@ return {
             {
                 'acksld/nvim-neoclip.lua',
                 dependencies = {
-                    'kkharji/sqlite.lua', -- Persist history between sessions
+                    'kkharji/sqlite.lua',
                 },
                 config = function()
                     require('neoclip').setup {
@@ -26,13 +26,7 @@ return {
                         enable_persistent_history = true,
                     }
                     require('telescope').load_extension('neoclip')
-                end
-            },
-            {
-                'mrjones2014/dash.nvim',
-                build = 'make install',
-                config = function()
-                    require('telescope').load_extension('dash')
+                    require('telescope').load_extension('zoxide')
                 end
             }
         },
@@ -44,6 +38,9 @@ return {
                 layout_strategy = 'horizontal',
                 layout_config = {
                     prompt_position = 'top'
+                },
+                file_ignore_patterns = {
+                    'lib'
                 }
             },
             extensions = {
@@ -56,9 +53,10 @@ return {
                 file_browser = {
                     hijack_netrw = true,
                 },
-                dash = {}
+                zoxide = {}
             }
         },
+        cmd = { 'Telescope' },
         keys = function()
             local has_telescope, telescope = pcall(require, 'telescope.builtin')
             if (not has_telescope) then return {} end
@@ -66,33 +64,37 @@ return {
             if not has_nc then return {} end
 
             return {
-                -- Search for files (or only git files)
-                { '<C-s>', function() telescope.find_files{ follow = true } end, desc = 'Search files' },
-                { '<leader>sf', telescope.git_files, desc = '[S]earch only git [F]iles' },
+                -- Search for files
+                { '<C-s>', function() telescope.find_files{ follow = true, hidden = false } end, desc = 'Search files' },
+                { 'gfh', function() telescope.find_files{ follow = true, hidden = true } end, desc = '[S]earch [H]idden [F]iles' },
+                { 'gfg', telescope.git_files, desc = '[S]earch only git [F]iles' },
+
+                -- Search for folders using zoxide
+                { '<C-z>', ':Telescope zoxide list<CR>', desc = '[S]earch [Z]oxide path' },
 
                 -- Live grep and search string
-                { '<leader>sg', telescope.live_grep, desc = '[S]earch [G]rep' },
-                { '<leader>ss', telescope.grep_string, desc = '[S]earch [S]tring' },
+                { '<C-g>', telescope.live_grep, desc = '[S]earch [G]rep' },
+                { '<leader>s', telescope.grep_string, desc = '[S]earch [S]tring under cursor' },
 
                 -- Keymap, command and vim options
-                { '<leader>sm', telescope.keymaps, desc = '[S]earch [M]appings' },
-                { '<leader>sc', telescope.commands, desc = '[S]earch [C]ommands' },
-                { '<leader>so', telescope.vim_options, desc = '[S]earch [O]ptions' },
+                { 'gm', telescope.keymaps, desc = '[S]earch [M]appings' },
+                { 'gc', telescope.commands, desc = '[S]earch [C]ommands' },
+                { 'go', telescope.vim_options, desc = '[S]earch [O]ptions' },
 
                 -- Buffers
-                { '<leader>sb', telescope.buffers, desc = '[S]earch [B]uffers' },
+                { 'gb', telescope.buffers, desc = '[S]earch [B]uffers' },
 
                 -- Search help
-                { '<leader>sh', telescope.man_pages, desc = '[S]earch [H]elp' },
+                { 'gH', telescope.man_pages, desc = '[S]earch [H]elp' },
 
                 -- Treesitter
-                { '<C-f>', telescope.treesitter, desc = '[Tr]eesitter (Function variables)' },
+                { 'gv', telescope.treesitter, desc = '[S]earch Treesitter [V]ariables' },
 
-                -- Neoclip clipboard (add load extension)
-                { '<leader>sp', ':Telescope neoclip<CR>', desc = '[S]earch [P]aste clipboard history' },
+                -- Neoclip clipboard
+                { 'gp', ':Telescope neoclip<CR>', desc = '[S]earch [P]aste clipboard history' },
 
                 -- Notify history
-                { '<leader>sn', ':Telescope notify<CR>', desc = '[S]earch [N]otifications' },
+                { 'gN', ':Telescope notify<CR>', desc = '[S]earch [N]otifications' },
 
                 -- Git
                 { '<leader>gs', telescope.git_status, desc = '[G]it [S]tatus' },
@@ -100,45 +102,19 @@ return {
                 { '<leader>gc', telescope.git_commits, desc = '[G]it [C]ommits' },
 
                 -- Diagnostics
-                { '<leader>sd', telescope.diagnostics, desc = '[S]earch [D]iagnostics' },
+                { '<leader>d', telescope.diagnostics, desc = 'Search [D]iagnostics' },
 
                 -- LSP
-                { 'gd', telescope.lsp_definitions, desc = 'LSP [D]efinition' },
-                { 'gr', telescope.lsp_references, desc = 'LSP [R]eferences' },
-                { 'gt', telescope.lsp_type_definitions, desc = 'LSP [T]ype definitions' },
+                { '<leader>ld', telescope.lsp_definitions, desc = '[L]SP [D]efinition' },
+                { 'gR', telescope.lsp_references, desc = 'LSP [R]eferences' },
+                { 'gT', telescope.lsp_type_definitions, desc = 'LSP [T]ype definitions' },
 
-                { '<leader>ci', telescope.lsp_incoming_calls, desc = 'LSP [I]ncoming [C]alls' },
-                { '<leader>co', telescope.lsp_outgoing_calls, desc = 'LSP [O]utgoing [C]alls' },
+                { 'gI', telescope.lsp_incoming_calls, desc = 'LSP [I]ncoming calls' },
+                { 'gO', telescope.lsp_outgoing_calls, desc = 'LSP [O]utgoing calls' },
 
-                { '<leader>sy', telescope.lsp_document_symbols, desc = 'LSP [S]ymbols [D]ocument' },
-                { '<leader>sw', telescope.lsp_workspace_symbols, desc = 'LSP [S]ymbols [W]orkspace' },
-
-                -- Neoclip
-                { '<C-p>', function() nc.toggle() end, desc = 'Toggle Copy-[P]aste History' },
-
-                -- Dash
-                { '<leader>dh', ':Telescope dash search<CR>', desc = '[D]ash [H]elp' }
+                { 'gy', telescope.lsp_document_symbols, desc = 'LSP [S]ymbols [D]ocument' },
+                { 'gw', telescope.lsp_workspace_symbols, desc = 'LSP [S]ymbols [W]orkspace' },
             }
         end
-    },
-    {
-        'stevearc/oil.nvim',
-        cmd = 'Oil',
-        keys = { { '<C-t>', ':Oil --float<CR>', desc = 'Oil file browser' } },
-        opts = {
-            keymaps = {
-                ['<C-w>'] = 'actions.show_help',
-                ['<CR>'] = 'actions.select',
-                ['p'] = 'actions.preview',
-                ['q'] = 'actions.close',
-                ['R'] = 'actions.refresh',
-                ['-'] = 'actions.parent',
-                ['_'] = 'actions.open_cwd',
-                ['`'] = 'actions.cd',
-                ['H'] = 'actions.toggle_hidden',
-            },
-            view_options = { show_hidden = true },
-            float = { padding = 4, max_width = 160, max_height = 40 }
-        },
     }
 }
