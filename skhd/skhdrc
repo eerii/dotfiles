@@ -1,9 +1,0 @@
-# Hotkey configurator for macOS
-
-# Open Terminal
-alt - c : ~/.config/skhd/launch_iterm.sh
-# alt - n : cd ~ && neovide --novsync
-
-# Remap brackets
-# alt - 0x21 : skhd -t "["
-# alt - 0x27 : skhd -t "{"

@@ -39,8 +39,11 @@ vim.o.signcolumn = 'yes'
 vim.o.updatetime = 50
 vim.o.lazyredraw = true
 
--- Disable mouse
-vim.o.mouse = ''
+-- Line padding
+vim.o.linespace = 4
+
+-- Hide cmd line
+vim.o.cmdheight = 0
 
 -- Set termgui colors
 vim.o.termguicolors = true

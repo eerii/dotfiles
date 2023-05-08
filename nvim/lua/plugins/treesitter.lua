@@ -7,11 +7,6 @@ return {
         dependencies = {
             -- Refactoring
             'nvim-treesitter/nvim-treesitter-refactor',
-            -- Show named scopes
-            {
-                'nvim-treesitter/nvim-treesitter-context',
-                config = true
-            },
             -- Headlines for markdown
             {
                 'lukas-reineke/headlines.nvim',
@@ -19,13 +14,11 @@ return {
                     require('headlines').setup({
                         markdown = {
                             dash_string = "—",
-                            fat_headline_upper_string = "▄",
-                            fat_headline_lower_string = "▀",
+                            fat_headlines = false,
                         },
                         rmd = {
                             dash_string = "—",
-                            fat_headline_upper_string = "▄",
-                            fat_headline_lower_string = "▀",
+                            fat_headlines = false,
                         }
                     })
 
@@ -33,7 +26,9 @@ return {
                     vim.cmd [[highlight Dash guifg=#D19A66 gui=bold]]
                 end,
                 ft = { "markdown", "rmd" }
-            }
+            },
+            -- Textobjects
+            'nvim-treesitter/nvim-treesitter-textobjects'
         },
         build = function()
             require('nvim-treesitter.install').update({ with_sync = true })

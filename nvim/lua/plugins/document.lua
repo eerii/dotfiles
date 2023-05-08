@@ -32,7 +32,8 @@ return {
     {
         'klen/nvim-config-local',
         opts = {
-            config_files = { '.nvim.lua' }
+            config_files = { '.nvim.lua' },
+            silent = true
         },
         event = 'VimEnter'
     },

@@ -62,3 +62,22 @@ map('n', '<leader>nf', ':enew<CR>', { desc = '[N]ew [F]ile' })
 -- Terminal
 map('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal' })
 map('t', '<C-v><Esc>', '<Esc>', { desc = 'Send escape to terminal' })
+map('t', '<D-v>', '<C-\\><C-n>"+pi', { desc = 'Paste in terminal mode' })
+
+-- Toggle line padding
+map('n', '<leader>tl', function ()
+    if vim.o.linespace > 0 then
+        vim.o.linespace = 0
+    else
+        vim.o.linespace = 8
+    end
+end, { desc = '[T]oggle [L]ine padding' })
+
+-- Toggle mouse
+map('n', '<leader>tm', function ()
+    if vim.o.mouse == 'a' then
+        vim.o.mouse = ''
+    else
+        vim.o.mouse = 'a'
+    end
+end, { desc = '[T]oggle [M]ouse' })

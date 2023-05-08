@@ -1,19 +1,20 @@
 if vim.g.neovide then
     -- Window
-    local alpha = function()
-        return string.format('%x', math.floor(255 * (vim.g.transparency or 0.8)))
-    end
-    vim.g.neovide_transparency = 0.0
-    vim.g.transparency = 0.98
-    vim.g.neovide_background_color = '#0f1117' .. alpha()
+    vim.g.neovide_transparency = 0.9
+    vim.g.neovide_background_color = '#121217FF'
     vim.g.neovide_remember_window_size = true
+    vim.g.neovide_refresh_rate = 30
+
+    -- Padding
+    vim.g.neovide_padding_right = 4
+    vim.g.neovide_padding_left = 12
 
     -- Font
-    vim.o.guifont = "SFMono Nerd Font:h14"
+    vim.o.guifont = "SF Mono, Hack Nerd Font:h14"
 
     -- Panels
-    --vim.g.neovide_floating_blur_amount_x = 2.0
-    --vim.g.neovide_floating_blur_amount_y = 2.0
+    vim.g.neovide_floating_blur_amount_x = 2.0
+    vim.g.neovide_floating_blur_amount_y = 2.0
 
     -- Mouse and cursor
     vim.g.neovide_hide_mouse_when_typing = false

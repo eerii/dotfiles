@@ -3,10 +3,10 @@ return {
     -- https://github.com/nvim-telescope/telescope.nvim
     -- Fuzzy finder and picker, powers many other utilities
     {
-		'nvim-telescope/telescope.nvim',
+        'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
-		dependencies = {
-			'nvim-lua/plenary.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
             'jvgrootveld/telescope-zoxide',
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
@@ -28,6 +28,39 @@ return {
                     require('telescope').load_extension('neoclip')
                     require('telescope').load_extension('zoxide')
                 end
+            },
+            {
+                'theprimeagen/harpoon',
+                config = function()
+                    require('harpoon').setup()
+                    require('telescope').load_extension('harpoon')
+                end,
+                dependencies = { 'nvim-lua/plenary.nvim' },
+                keys = function()
+                    local has_ui, ui = pcall(require, 'harpoon.ui')
+                    if not has_ui then return {} end
+                    local has_mark, mark = pcall(require, 'harpoon.mark')
+                    if not has_mark then return {} end
+                    local has_cmd, cmd = pcall(require, 'harpoon.cmd-ui')
+                    if not has_cmd then return {} end
+
+                    return {
+                        { '<C-m>', mark.add_file,         desc = "Add harpoon [M]ark" },
+                        { '<C-n>', ui.toggle_quick_menu,  desc = "Toggle harpoon [N]avigation menu" },
+                        { '<C-,>', ui.nav_next,           desc = "Navigate to next harpoon mark" },
+                        { '<C-.>', ui.nav_prev,           desc = "Navigate to previous harpoon mark" },
+                        { '<C-1>', function() ui.nav_file(1) end, desc = "Navigate to harpoon [T]ag 1" },
+                        { '<C-2>', function() ui.nav_file(2) end, desc = "Navigate to harpoon [T]ag 2" },
+                        { '<C-3>', function() ui.nav_file(3) end, desc = "Navigate to harpoon [T]ag 3" },
+                        { '<C-4>', function() ui.nav_file(4) end, desc = "Navigate to harpoon [T]ag 4" },
+                        { '<C-5>', function() ui.nav_file(5) end, desc = "Navigate to harpoon [T]ag 5" },
+                        { '<C-6>', function() ui.nav_file(6) end, desc = "Navigate to harpoon [T]ag 6" },
+                        { '<C-7>', function() ui.nav_file(7) end, desc = "Navigate to harpoon [T]ag 7" },
+                        { '<C-8>', function() ui.nav_file(8) end, desc = "Navigate to harpoon [T]ag 8" },
+                        { '<C-9>', function() ui.nav_file(9) end, desc = "Navigate to harpoon [T]ag 9" },
+                        { '<C-e>', cmd.toggle_quick_menu, desc = "Toggle harpoon command menu" },
+                    }
+                end
             }
         },
         opts = {
@@ -35,7 +68,7 @@ return {
                 mappings = {
                     i = { ['<C-w>'] = 'which_key' }
                 },
-                layout_strategy = 'horizontal',
+                layout_strategy = 'horizontal_merged',
                 layout_config = {
                     prompt_position = 'top'
                 },
@@ -56,6 +89,22 @@ return {
                 zoxide = {}
             }
         },
+        config = function (_, opts)
+            require('telescope.pickers.layout_strategies').horizontal_merged = function(picker, max_columns, max_lines, layout_config)
+                local layout = require('telescope.pickers.layout_strategies').horizontal(picker, max_columns, max_lines, layout_config)
+
+                layout.results.title = ''
+                layout.results.line = layout.results.line - 1
+                layout.results.height = layout.results.height + 1
+
+                layout.prompt.borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
+                layout.results.borderchars = { '─', '│', '─', '│', '├', '┤', '╯', '╰' }
+
+                return layout
+            end
+
+            require('telescope').setup(opts)
+        end,
         cmd = { 'Telescope' },
         keys = function()
             local has_telescope, telescope = pcall(require, 'telescope.builtin')
@@ -114,6 +163,9 @@ return {
 
                 { 'gy', telescope.lsp_document_symbols, desc = 'LSP [S]ymbols [D]ocument' },
                 { 'gw', telescope.lsp_workspace_symbols, desc = 'LSP [S]ymbols [W]orkspace' },
+
+                -- Harpoon
+                { 'gM', ':Telescope harpoon marks<CR>', desc = "Get harpoon [M]arks" },
             }
         end
     }
