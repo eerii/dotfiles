@@ -36,6 +36,7 @@ return {
             'paopaol/cmp-doxygen',
             'simrat39/rust-tools.nvim',
             'smiteshp/nvim-navic',
+            'p00f/clangd_extensions.nvim',
             {
                 'quarto-dev/quarto-nvim',
                 dependencies = { {
@@ -115,7 +116,7 @@ return {
             local config = require('lspconfig')
             config.lua_ls.setup(lsp.nvim_lua_ls())
 
-            lsp.skip_server_setup({ 'rust_analyzer' })
+            lsp.skip_server_setup({ 'rust_analyzer', 'clangd' })
             lsp.setup()
 
             local signs = { Error = '', Warn = '', Hint = '', Info = '' }
@@ -140,6 +141,15 @@ return {
                         vim.keymap.set('n', '<leader>ca', rt.hover_actions.hover_actions, { buffer = bufnr })
                     end
                 },
+            })
+
+            local cld = require('clangd_extensions')
+            cld.setup({
+                server = {
+                    capabilities = {
+                        offset_encoding = "utf-8"
+                    }
+                }
             })
 
             local cmp = require('cmp')

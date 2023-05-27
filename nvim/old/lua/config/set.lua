@@ -21,7 +21,7 @@ vim.o.wrap = false
 -- No backups but long undos
 vim.o.swapfile = false
 vim.o.backup = false
-vim.o.undodir = os.getenv('HOME') .. '/.local/share/nvim/undodir'
+vim.o.undodir = os.getenv("HOME") .. "/.local/share/nvim/undodir"
 vim.o.undofile = true
 
 -- Incremental search
@@ -33,7 +33,7 @@ vim.o.scrolloff = 8
 vim.o.sidescrolloff = 4
 
 -- Always show the sign column
-vim.o.signcolumn = 'yes'
+vim.o.signcolumn = "yes"
 
 -- Fast updates and scrolling
 vim.o.updatetime = 50
@@ -49,17 +49,17 @@ vim.o.cmdheight = 0
 vim.o.termguicolors = true
 
 -- Terminal zsh
-vim.g.shell = '/bin/zsh'
+vim.g.shell = "/bin/zsh"
 
 -- Python 3
-vim.g.python3_host_prog = '/usr/local/bin/python3.11'
+vim.g.python3_host_prog = "/usr/local/bin/python3.11"
 
 -- Disable netrw banner
 vim.g.netrw_banner = 0
 
 -- Diagnostics
-vim.diagnostic.config {
-    virtual_text = true,
-    update_in_insert = true,
-    float = { focusable = true },
-}
+vim.diagnostic.config({
+	virtual_text = true,
+	update_in_insert = true,
+	float = { focusable = true },
+})

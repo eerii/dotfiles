@@ -8,7 +8,6 @@ layout {
 
 
     tab name="terminal" split_direction="vertical" {
-        pane
-        pane size="30%"
+        pane borderless=true
     }
 }

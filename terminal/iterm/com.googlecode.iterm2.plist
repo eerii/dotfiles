@@ -10,11 +10,6 @@
 	<false/>
 	<key>Command</key>
 	<string></string>
-	<key>Coprocess MRU</key>
-	<array>
-		<string>./bin/main</string>
-		<string>ant run</string>
-	</array>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>kanagawa</key>
