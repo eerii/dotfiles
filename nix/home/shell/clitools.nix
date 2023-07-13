@@ -2,6 +2,7 @@
 {
     home.packages = with pkgs; [
         wget # retrieve files
+        aria # improved file downloader
         inetutils # telnet, ping, ifconfig...
 
         bat # cat
@@ -34,5 +35,7 @@
         "gp!" = "git push --force";
         gs = "git status";
         lg = "lazygit";
+
+        a2 = "aria2c";
     };
 }

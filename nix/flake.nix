@@ -51,13 +51,18 @@
                         imports = [
                             self.nixosModules.common
                             self.nixosModules.darwin
+                            self.darwinModules.home-manager
                             ./hosts/eve/default.nix
                         ];
                     };
                 };
+
+                # enable flakes
+                nix.settings.experimental-features = [ "nix-command" "flakes" ];
             };
 
             perSystem = { self', inputs', system, pkgs, ... }:
                 (import ./dev/rust.nix {inherit inputs system pkgs;});
+
         };
 }

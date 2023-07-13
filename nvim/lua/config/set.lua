@@ -18,12 +18,6 @@ vim.o.relativenumber = true
 -- No line wrap
 vim.o.wrap = false
 
--- No backups but long undos
-vim.o.swapfile = false
-vim.o.backup = false
-vim.o.undodir = os.getenv("HOME") .. "/.local/share/nvim/undodir"
-vim.o.undofile = true
-
 -- Incremental search
 vim.o.incsearch = true
 vim.o.hlsearch = false
@@ -34,10 +28,6 @@ vim.o.sidescrolloff = 4
 
 -- Always show the sign column
 vim.o.signcolumn = "yes"
-
--- Fast updates and scrolling
-vim.o.updatetime = 50
-vim.o.lazyredraw = true
 
 -- Line padding
 vim.o.linespace = 4
@@ -50,9 +40,6 @@ vim.o.termguicolors = true
 
 -- Terminal zsh
 vim.g.shell = "/bin/zsh"
-
--- Python 3
-vim.g.python3_host_prog = "/usr/local/bin/python3.11"
 
 -- Disable netrw banner
 vim.g.netrw_banner = 0

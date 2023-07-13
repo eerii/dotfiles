@@ -1,9 +1,24 @@
 return {
-    -- Kanawara theme
+    -- Rose pine theme
+	{
+		"rose-pine/neovim",
+		name = "rose-pine",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("rose-pine").setup{
+				disable_background = true
+			}
+			vim.cmd("colorscheme rose-pine")
+		end,
+	},
+
+    -- Kanawaga theme
     {
         'rebelot/kanagawa.nvim',
-        lazy = false,
-        priority = 1000,
+        enabled = false,
+        --lazy = false,
+        --priority = 1000,
         config = function()
             require('kanagawa').setup {
                 --transparent = true,
@@ -42,14 +57,21 @@ return {
     -- Evangelion theme
     {
         'nyngwang/nvimgelion',
+        enabled = false,
+        --lazy = false,
+        --priority = 1000,
         config = true
     },
 
     -- Catppuccin theme
     {
         'catppuccin/nvim',
+        enabled = false,
+        --lazy = false,
+        --priority = 1000,
         opts = {
             flavour = 'mocha'
         }
     }
+
 }

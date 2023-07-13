@@ -21,10 +21,6 @@ map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 map("n", "<C-d>", "<C-d>zz", { desc = "Half page down" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Half page up" })
 
--- Add lines bellow/above the cursor with Enter/Shift-Enter (also tab the line)
-map("n", "<Enter>", "o<Esc>^Da", { desc = "Add line bellow" })
-map("n", "<S-Enter>", "O<Esc>^Da", { desc = "Add line above" })
-
 -- Search terms stay centered
 map("n", "n", "nzzzv", { desc = "Search next" })
 map("n", "N", "Nzzzv", { desc = "Search previous" })
@@ -54,30 +50,12 @@ map("n", "U", "<C-r>", { desc = "Redo" })
 map("n", "<C-x>", "<C-^>", { desc = "Go to previous buffer" })
 
 -- Open lazy plugin window
-map("n", "<leader>L", ":Lazy<CR>", { desc = "[L]azy plugin manager" })
+map("n", "<leader>L", ":Lazy<CR>", { desc = "Lazy plugin manager" })
 
 -- New file with nf
-map("n", "<leader>nf", ":enew<CR>", { desc = "[N]ew [F]ile" })
+map("n", "<leader>n", ":enew<CR>", { desc = "New file" })
 
 -- Terminal
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal" })
 map("t", "<C-v><Esc>", "<Esc>", { desc = "Send escape to terminal" })
 map("t", "<D-v>", '<C-\\><C-n>"+pi', { desc = "Paste in terminal mode" })
-
--- Toggle line padding
-map("n", "<leader>tl", function()
-	if vim.o.linespace > 0 then
-		vim.o.linespace = 0
-	else
-		vim.o.linespace = 8
-	end
-end, { desc = "[T]oggle [L]ine padding" })
-
--- Toggle mouse
-map("n", "<leader>tm", function()
-	if vim.o.mouse == "a" then
-		vim.o.mouse = ""
-	else
-		vim.o.mouse = "a"
-	end
-end, { desc = "[T]oggle [M]ouse" })

@@ -10,6 +10,7 @@
                     ./shell/zellij.nix
                     ./shell/clitools.nix
                     ./virt/qemu.nix
+                    ./media/ffmpeg.nix
                 ];
 
                 # home manager can manage itself
