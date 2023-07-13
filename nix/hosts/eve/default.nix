@@ -20,13 +20,10 @@
         onActivation.autoUpdate = true;
         onActivation.upgrade = true;
         casks = [
-            "altserver"
             "autofirma"
-            "element"
             "firefox"
             "font-sf-mono-nerd-font"
             "git-credential-manager-core"
-            "iina"
             "iterm2"
             "keka"
             "maccy"

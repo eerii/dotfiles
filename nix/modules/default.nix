@@ -13,6 +13,7 @@
                 # system packages
                 environment.systemPackages = with pkgs; [
                     git
+                    vim
                 ];
 
                 # extra modules
@@ -23,7 +24,12 @@
 
             # linux specific modules
             linux = { pkgs, ... }: {
-
+                home-manager.users.${config.users.me} = {
+                    imports = [
+                        self.homeModules.common
+                        self.homeModules.linux
+                    ];
+                };
             };
 
             # macos specific modules

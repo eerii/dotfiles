@@ -33,7 +33,16 @@
 
             flake = {
                 # linux
-                nixosConfigurations = {};
+                nixosConfigurations = {
+                    # my macbook on nixos
+                    circe = self.nixos-flake.lib.mkLinuxSystem {
+                        imports = [
+                            self.nixosModules.common
+                            self.nixosModules.linux
+                            ./hosts/circe/default.nix
+                        ];
+                    };
+                };
 
                 # macos
                 darwinConfigurations = {
@@ -42,7 +51,6 @@
                         imports = [
                             self.nixosModules.common
                             self.nixosModules.darwin
-                            self.darwinModules.home-manager
                             ./hosts/eve/default.nix
                         ];
                     };
