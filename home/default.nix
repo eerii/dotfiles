@@ -5,10 +5,10 @@
             common = { pkgs, ... }: {
                 # load modules
                 imports = [
-                    ./direnv.nix
                     ./shell/zsh.nix
-                    ./shell/zellij.nix
                     ./shell/clitools.nix
+                    ./shell/direnv.nix
+                    ./zellij/zellij.nix
                     ./virt/qemu.nix
                     ./media/ffmpeg.nix
                 ];
