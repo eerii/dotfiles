@@ -4,7 +4,6 @@
         modules = {
             common = { pkgs, ... }: {
                 # nix
-                services.nix-daemon.enable = true; # make sure it always runs
                 nix = {
                     package = pkgs.nixVersions.unstable;
                     settings.experimental-features = [ "nix-command" "flakes" ];
@@ -17,9 +16,8 @@
                     vim
                 ];
 
-                # extra modules
                 imports = [
-                    
+                    ./fonts
                 ];
             };
 
@@ -31,10 +29,17 @@
                         self.homeModules.linux
                     ];
                 };
+
+                imports = [
+                    ./wayland.nix
+                    ./greetd.nix
+                ];
             };
 
             # macos specific modules
             darwin = { pkgs, ... }: {
+                services.nix-daemon.enable = true; # make sure it always runs
+
                 home-manager.users.${config.users.me} = {
                     imports = [
                         self.homeModules.common

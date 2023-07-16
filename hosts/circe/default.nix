@@ -1,11 +1,16 @@
 { pkgs, flake, ... }:
 {
+    imports = [./hardware-configuration.nix];
+
     # my user
     users.users.${flake.config.users.me} = {
         name = flake.config.users.me;
         home = "/home/${flake.config.users.me}";
         extraGroups = [ "wheel" "networkmanager" ];
+        shell = pkgs.zsh;
+	isNormalUser = true;
     };
+    security.sudo.enable = true;
 
     # custom home manager
     home-manager.users.${flake.config.users.me} = { pkgs, ... }: {
@@ -22,7 +27,7 @@
             efi = {
                 canTouchEfiVariables = true;
                 efiSysMountPoint = "/boot/efi";
-            };
+		    };
         };
     };
 
@@ -35,6 +40,12 @@
     # locale
     time.timeZone = "Europe/Madrid";
     i18n.defaultLocale = "es_ES.UTF-8";
+
+    # programs
+    programs = {
+        hyprland.enable = true;
+        zsh.enable = true;
+    };
 
     # version control for nixos
     system.stateVersion = "23.05";

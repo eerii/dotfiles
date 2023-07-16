@@ -4,9 +4,7 @@
         enable = true;
     };
 
-    home.file = {
-        ".config/zellij" = {
-            source = config.lib.file.mkOutOfStoreSymlink ../zellij;
-        };
+    home.file.".config/zellij" = {
+        source = config.lib.file.mkOutOfStoreSymlink ../zellij;
     };
 }
