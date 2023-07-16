@@ -1,5 +1,7 @@
 { pkgs, flake, ... }:
 {
+    imports = [./hardware-configuration.nix];
+
     # my user
     users.users.${flake.config.users.me} = {
         name = flake.config.users.me;

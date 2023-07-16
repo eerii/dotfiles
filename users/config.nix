@@ -1,9 +1,8 @@
 {
-    me = "jose";
+    me = "eko";
     users = {
-        jose = {
-            name = "José Pazos Pérez";
-            email = "jose.pazos.perez@rai.usc.es";
+        eko = {
+            name = "eko";
             sshKeys = [];
         };
     };

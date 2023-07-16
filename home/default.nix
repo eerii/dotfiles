@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, inputs, ... }:
 {
     flake = {
         homeModules = {
@@ -22,7 +22,13 @@
             };
 
             # linux specific home modules
-            linux = {};
+            linux = {
+                imports = [
+                    inputs.hyprland.homeManagerModules.default
+                    ./wayland
+                    ./terminal/kitty.nix
+                ];
+            };
 
             # macos specific home modules
             darwin = {};

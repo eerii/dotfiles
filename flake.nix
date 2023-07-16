@@ -5,20 +5,29 @@
         nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
         # nix-darwin: nixos-like configuration for macos
-        nix-darwin.url = "github:lnl7/nix-darwin/master";
-        nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+        nix-darwin = {
+            url = "github:lnl7/nix-darwin/master";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
         # home-manager: user environment and dotfile management with nix
-        home-manager.url = "github:nix-community/home-manager/master";
-        home-manager.inputs.nixpkgs.follows = "nixpkgs";
+        home-manager = {
+            url = "github:nix-community/home-manager/master";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
         # flake-parts and nixos-flakes: unify home manager, nixos and darwin
         flake-parts.url = "github:hercules-ci/flake-parts";
         nixos-flake.url = "github:srid/nixos-flake";
 
+        # other packages
+        hyprland.url = "github:hyprwm/Hyprland";
+
         # dev toolchain
-        rust-overlay.url = "github:oxalica/rust-overlay";
-        rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+        rust-overlay = {
+            url = "github:oxalica/rust-overlay";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = inputs@{ self, ... }:
