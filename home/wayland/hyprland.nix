@@ -2,14 +2,13 @@
 {
     wayland.windowManager.hyprland = {
         enable = true;
-        systemdIntegration = true;
         extraConfig = ''
 
 # Monitor
 monitor=,preferred,auto,auto
 
 # Launch
-exec-once = waybar
+# exec-once = waybar
 
 # Environment
 env = XCURSOR_SIZE,24

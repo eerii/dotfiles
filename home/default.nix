@@ -8,6 +8,7 @@
                     ./shell/zsh.nix
                     ./shell/clitools.nix
                     ./shell/direnv.nix
+                    ./terminal/kitty.nix
                     ./zellij
                     ./nvim
                     ./virt/qemu.nix
@@ -26,7 +27,6 @@
                 imports = [
                     inputs.hyprland.homeManagerModules.default
                     ./wayland
-                    ./terminal/kitty.nix
                 ];
             };
 

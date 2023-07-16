@@ -1106,6 +1106,8 @@
 		<dict>
 			<key>ASCII Anti Aliased</key>
 			<true/>
+			<key>ASCII Ligatures</key>
+			<false/>
 			<key>Allow modifyOtherKeys</key>
 			<true/>
 			<key>Ambiguous Double Width</key>
@@ -1539,7 +1541,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>SFMonoNerdFontComplete-Regular 13</string>
+			<string>LigaSFMonoNerdFont-Regular 13</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Option Key Sends</key>

@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
     me = "eko";
     users = {

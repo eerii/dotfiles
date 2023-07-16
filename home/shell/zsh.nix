@@ -67,9 +67,9 @@
                 ahead =	"⇡$count";
                 behind = "⇣$count";
                 diverged = "⇡$ahead_count⇣$behind_count";
-                up_to_date = "";
+                up_to_date = "";
                 untracked = "?$count";
-                stashed = "";
+                stashed = "";
                 modified = "!$count";
                 staged = "+$count";
                 renamed = "";
@@ -78,7 +78,7 @@
 
             cmd_duration = {
                 min_time = 100;
-                format = "[ ]($style)[[神](bg:#2f3447 fg:#eba0ac bold)$duration](bg:#2f3447 fg:#BBC3DF)[]($style)";
+                format = "[ ]($style)[[](bg:#2f3447 fg:#eba0ac bold)$duration](bg:#2f3447 fg:#BBC3DF)[]($style)";
                 disabled = false;
                 style = "bg:none fg:#2f3447";
             };
