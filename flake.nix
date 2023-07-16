@@ -37,8 +37,9 @@
                     # my macbook on nixos
                     circe = self.nixos-flake.lib.mkLinuxSystem {
                         imports = [
-                            self.nixosModules.common
-                            self.nixosModules.linux
+                            self.modules.common
+                            self.modules.linux
+                            self.nixosModules.home-manager
                             ./hosts/circe/default.nix
                         ];
                     };
@@ -46,23 +47,19 @@
 
                 # macos
                 darwinConfigurations = {
-                    # my macbook
+                    # my macbook on macos
                     eve = self.nixos-flake.lib.mkIntelMacosSystem {
                         imports = [
-                            self.nixosModules.common
-                            self.nixosModules.darwin
+                            self.modules.common
+                            self.modules.darwin
                             self.darwinModules.home-manager
                             ./hosts/eve/default.nix
                         ];
                     };
                 };
-
-                # enable flakes
-                nix.settings.experimental-features = [ "nix-command" "flakes" ];
             };
 
             perSystem = { self', inputs', system, pkgs, ... }:
                 (import ./dev/rust.nix {inherit inputs system pkgs;});
-
         };
 }

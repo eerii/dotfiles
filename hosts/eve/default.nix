@@ -19,6 +19,10 @@
         enable = true;
         onActivation.autoUpdate = true;
         onActivation.upgrade = true;
+        brews = [
+            "gnupg"
+            "pinentry-mac"
+        ];
         casks = [
             "firefox"
             "git-credential-manager-core"

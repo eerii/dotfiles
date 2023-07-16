@@ -16,6 +16,7 @@
         zoxide # cd
 
         tealdeer # man pages
+        h
     ];
 
     home.shellAliases = { 

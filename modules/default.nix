@@ -1,14 +1,15 @@
 { self, config, ... }:
 {
     flake = {
-        nixosModules = {
+        modules = {
             common = { pkgs, ... }: {
                 # nix
                 services.nix-daemon.enable = true; # make sure it always runs
                 nix = {
                     package = pkgs.nixVersions.unstable;
-                    extraOptions = "experimental-features = nix-command flakes";
+                    settings.experimental-features = [ "nix-command" "flakes" ];
                 };
+                nixpkgs.config.allowUnfree = true;
 
                 # system packages
                 environment.systemPackages = with pkgs; [

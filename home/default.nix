@@ -8,16 +8,17 @@
                     ./shell/zsh.nix
                     ./shell/clitools.nix
                     ./shell/direnv.nix
-                    ./zellij/zellij.nix
+                    ./zellij
+                    ./nvim
                     ./virt/qemu.nix
-                    ./media/ffmpeg.nix
+                    ./misc/ffmpeg.nix
                 ];
 
                 # home manager can manage itself
                 programs.home-manager.enable = true;
 
                 # version control for home manager
-                home.stateVersion = "22.11";
+                home.stateVersion = "23.05";
             };
 
             # linux specific home modules
