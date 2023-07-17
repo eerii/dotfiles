@@ -4,10 +4,8 @@
         enable = true;
     };
 
-    home.file = {
-        ".config/nvim" = {
-            source = config.lib.file.mkOutOfStoreSymlink ../nvim;
-        };
+    xdg.configFile.".config/nvim" = {
+        source = config.lib.file.mkOutOfStoreSymlink ../nvim;
     };
 
     home.packages = with pkgs; [

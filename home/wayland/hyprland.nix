@@ -5,65 +5,88 @@
         extraConfig = ''
 
 # Monitor
-monitor=,preferred,auto,auto
+monitor=DP-1,2880×1800@60,0x0,2
 
 # Launch
-# exec-once = waybar
+exec-once = waybar & hyprpaper
 
 # Environment
-env = XCURSOR_SIZE,24
+# env = XCURSOR_SIZE,24
 
 input {
     kb_layout = es
     kb_variant = mac
     follow_mouse = 1
     touchpad {
-        natural_scroll = false
+        natural_scroll = true
+        clickfinger_behavior = true
     }
-    sensitivity = 0
+    kb_options = ctrl:nocaps
 }
 
 general {
-    gaps_in = 5
-    gaps_out = 20
-    layout = dwindle
+    gaps_in = 7.5
+    gaps_out = 15
+    layout = master
+
+    border_size = 2
+    col.active_border = rgb(191724) # same as bg
+    col.inactive_border = rgb(191724)
+
+    cursor_inactive_timeout = 2
 }
 
 decoration {
-    rounding = 10
-    blur = true
-    blur_size = 3
-    blur_passes = 1
-    blur_new_optimizations = true
-    drop_shadow = true
-    shadow_range = 4
-    shadow_render_power = 3
-    col.shadow = rgba(1a1a1aee)
+    rounding = 6
+
+    # blur = true
+    # blur_size = 3
+    # blur_passes = 1
+    # blur_new_optimizations = true
+
+    # drop_shadow = true
+    # shadow_range = 4
+    # shadow_render_power = 3
+    # col.shadow = rgba(1a1a1aee)
 }
 
 animations {
     enabled = true
-    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+    bezier = myBezier, 0.16, 1, 0.3, 1
+
     animation = windows, 1, 7, myBezier
-    animation = windowsOut, 1, 7, default, popin 80%
-    animation = border, 1, 10, default
-    animation = borderangle, 1, 8, default
-    animation = fade, 1, 7, default
-    animation = workspaces, 1, 6, default
+    animation = windowsOut, 1, 7, myBezier, popin 80%
+    animation = border, 1, 10, myBezier
+    animation = fade, 1, 7, myBezier
+    animation = workspaces, 1, 5, default
 }
 
-dwindle {
-    pseudotile = true
-    preserve_split = true
+master {
+    new_on_top = true
+}
+
+gestures {
+    workspace_swipe = on
 }
 
 # Bindings
 $mainMod = SUPER
 
 bind = $mainMod, T, exec, kitty
-bind = $mainMod, C, killactive,
-bind = $mainMod, Q, exit,
+bind = $mainMod, ENTER, exec, rofi
+bind = $mainMod, C, killactive
+bind = $mainMod, Q, exit
 
+bind = $mainMod, V, togglefloating
+bind = $mainMod, F, fullscreen
+
+# Master
+bind = $mainMod, N, layoutmsg, orientationnext
+bind = $mainMod, comma, layoutmsg, addmaster
+bind = $mainMod, period, layoutmsg, removemaster
+bind = $mainMod, RETURN, layoutmsg, swapwithmaster
+
+# Movement
 bind = $mainMod, l, movefocus, l
 bind = $mainMod, h, movefocus, r
 bind = $mainMod, k, movefocus, u
@@ -90,9 +113,6 @@ bind = $mainMod SHIFT, 7, movetoworkspace, 7
 bind = $mainMod SHIFT, 8, movetoworkspace, 8
 bind = $mainMod SHIFT, 9, movetoworkspace, 9
 bind = $mainMod SHIFT, 0, movetoworkspace, 10
-
-bind = $mainMod, mouse_down, workspace, e+1
-bind = $mainMod, mouse_up, workspace, e-1
 
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow

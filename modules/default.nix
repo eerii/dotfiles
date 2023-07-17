@@ -27,6 +27,8 @@
                     imports = [
                         self.homeModules.common
                         self.homeModules.linux
+                        ./wayland.nix
+                        ./greetd.nix
                     ];
                 };
             };

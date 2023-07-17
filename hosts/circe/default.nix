@@ -45,6 +45,7 @@
         hyprland.enable = true;
         zsh.enable = true;
     };
+
     # version control for nixos
     system.stateVersion = "23.05";
 }

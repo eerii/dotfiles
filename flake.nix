@@ -21,7 +21,15 @@
         nixos-flake.url = "github:srid/nixos-flake";
 
         # other packages
-        hyprland.url = "github:hyprwm/Hyprland";
+        hyprland = {
+            url = "github:hyprwm/Hyprland";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        hyprpaper = {
+            url = "github:hyprwm/hyprpaper";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
 
         # dev toolchain
         rust-overlay = {

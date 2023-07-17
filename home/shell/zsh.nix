@@ -5,7 +5,7 @@
 
         enableAutosuggestions = true;
         enableCompletion = true;
-        enableSyntaxHighlighting = true;
+        syntaxHighlighting.enable = true;
         autocd = true;
 
         history = {
@@ -39,9 +39,9 @@
             add_newline = true;
 
             character = {
-                success_symbol = "[](#a6e3a1 bold)";
-                error_symbol = "[](#f38ba8)";
-                vicmd_symbol = "[](#f9e2af)";
+                success_symbol = "[⏺](#a6e3a1)";
+                error_symbol = "[⏺](#f38ba8)";
+                vicmd_symbol = "[](#f9e2af)";
             };
 
             fill = {
@@ -67,7 +67,7 @@
                 ahead =	"⇡$count";
                 behind = "⇣$count";
                 diverged = "⇡$ahead_count⇣$behind_count";
-                up_to_date = "";
+                up_to_date = "";
                 untracked = "?$count";
                 stashed = "";
                 modified = "!$count";
@@ -78,22 +78,18 @@
 
             cmd_duration = {
                 min_time = 100;
-                format = "[ ]($style)[[](bg:#2f3447 fg:#eba0ac bold)$duration](bg:#2f3447 fg:#BBC3DF)[]($style)";
+                format = "[ ]($style)[[ ](bg:#2f3447 fg:#eba0ac bold)$duration](bg:#2f3447 fg:#BBC3DF)[]($style)";
                 disabled = false;
                 style = "bg:none fg:#2f3447";
             };
         };
     };
 
-    home.file = {
-        ".config/starship-transient.toml" = {
-            text = ''
-format = " $character"
-[character]
-error_symbol = "[](#f38ba8)"
-success_symbol = "[](#a6e3a1 bold)"
-vicmd_symbol = "[](#f9e2af)"
-            '';
-        };
-    };
+    xdg.configFile.".config/starship-transient.toml".text = ''
+        format = " $character"
+        [character]
+        error_symbol = "[⏺](#f38ba8)"
+        success_symbol = "[⏺](#a6e3a1)"
+        vicmd_symbol = "[](#f9e2af)"
+    '';
 }

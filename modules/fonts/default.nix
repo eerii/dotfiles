@@ -1,12 +1,12 @@
 { lib, pkgs, ... }:
-
 let
-    sf-mono-nerd = import ./sf-mono.nix { inherit lib pkgs; };
+    apple-fonts = import ./apple-fonts.nix { inherit lib pkgs; };
 in {
     fonts = {
         fontDir.enable = true;
         fonts = with pkgs; [
-            sf-mono-nerd
+            apple-fonts
+            (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
         ];
     };
 }
