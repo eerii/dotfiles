@@ -29,7 +29,7 @@
                 nix develop ${../..}\#$1 -c zsh
             }
         '';
-        envExtra = "export PATH=/run/current-system/sw/bin:/run/current-system/etc/profiles/per-user/${flake.config.users.me}/bin:$PATH";
+        #envExtra = "export PATH=/run/current-system/sw/bin:/run/current-system/etc/profiles/per-user/${flake.config.users.me}/bin:$PATH";
     };
 
     programs.starship = {
@@ -85,7 +85,7 @@
         };
     };
 
-    xdg.configFile.".config/starship-transient.toml".text = ''
+    home.file.".config/starship-transient.toml".text = ''
         format = " $character"
         [character]
         error_symbol = "[⏺](#f38ba8)"

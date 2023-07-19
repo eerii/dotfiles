@@ -4,7 +4,7 @@
         enable = true;
     };
 
-    xdg.configFile.".config/nvim" = {
+    home.file.".config/nvim" = {
         source = config.lib.file.mkOutOfStoreSymlink ../nvim;
     };
 

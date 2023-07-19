@@ -1,8 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 {
-    xdg.configFile."hypr/hyprpaper.conf".text = ''
-        preload = ~/Pictures/wallpaper.jpg
-        wallpaper = DP-1,~/Pictures/wallpaper.jpg
+    home.file."hypr/hyprpaper.conf".text = ''
+        preload = ~/Pictures/wallpaper.png
+        wallpaper = DP-1,~/Pictures/wallpaper.png
     '';
 
     systemd.user.services.hyprpaper = {

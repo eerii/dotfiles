@@ -13,6 +13,7 @@
                     ./nvim
                     ./virt/qemu.nix
                     ./misc/ffmpeg.nix
+		    ./programs/firefox.nix
                 ];
 
                 # home manager can manage itself
@@ -23,10 +24,10 @@
             };
 
             # linux specific home modules
-            linux = {
+            linux = { pkgs, ... }: {
                 imports = [
                     inputs.hyprland.homeManagerModules.default
-                    ./wayland
+		    (import ./wayland { inherit pkgs inputs; })
                 ];
             };
 

@@ -27,10 +27,13 @@
                     imports = [
                         self.homeModules.common
                         self.homeModules.linux
-                        ./wayland.nix
-                        ./greetd.nix
                     ];
                 };
+
+                imports = [
+                    ./wayland.nix
+                    ./greetd.nix
+                ];
             };
 
             # macos specific modules

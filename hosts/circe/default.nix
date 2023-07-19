@@ -10,6 +10,7 @@
         shell = pkgs.zsh;
 	isNormalUser = true;
     };
+    security.sudo.enable = true;
 
     # custom home manager
     home-manager.users.${flake.config.users.me} = { pkgs, ... }: {
@@ -26,7 +27,7 @@
             efi = {
                 canTouchEfiVariables = true;
                 efiSysMountPoint = "/boot/efi";
-            };
+		    };
         };
     };
 

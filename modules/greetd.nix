@@ -5,12 +5,8 @@
         restart = false;
 
         settings = {
-            default_session = {
-                command = "${pkgs.greetd.regreet}/bin/regreet --cmd Hyprland";
-                user = "greeter";
-            };
-
-            initial_session = {
+	   # TODO: Configure a login manager	    
+           default_session = {
                 command = "${pkgs.hyprland}/bin/Hyprland";
                 user = flake.config.users.me;
             };

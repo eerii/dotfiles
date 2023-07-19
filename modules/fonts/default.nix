@@ -5,7 +5,7 @@ in {
     fonts = {
         fontDir.enable = true;
         fonts = with pkgs; [
-            apple-fonts
+            # apple-fonts
             (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
         ];
     };

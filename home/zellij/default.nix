@@ -4,7 +4,7 @@
         enable = true;
     };
 
-    xdg.configFile.".config/zellij" = {
+    home.file.".config/zellij" = {
         source = config.lib.file.mkOutOfStoreSymlink ../zellij;
     };
 }

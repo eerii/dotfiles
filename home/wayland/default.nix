@@ -1,11 +1,11 @@
-{ ... }:
+{ pkgs, inputs, ... }:
 {
     imports = [
         ./hyprland.nix
         ./hyprpaper.nix
-        ./waybar.nix
         ./dunst.nix
         ./rofi.nix
+        (import ./waybar.nix { inherit pkgs inputs; })
     ];
 
     home.packages = with pkgs; [

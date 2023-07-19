@@ -15,13 +15,13 @@ exec-once = waybar & hyprpaper
 
 input {
     kb_layout = es
-    kb_variant = mac
+    #kb_variant = mac
     follow_mouse = 1
     touchpad {
         natural_scroll = true
-        clickfinger_behavior = true
+        #clickfinger_behavior = true
     }
-    kb_options = ctrl:nocaps
+    #kb_options = ctrl:nocaps
 }
 
 general {
