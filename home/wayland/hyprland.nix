@@ -3,25 +3,24 @@
     wayland.windowManager.hyprland = {
         enable = true;
         extraConfig = ''
-
 # Monitor
-monitor=DP-1,2880×1800@60,0x0,2
+monitor=DP-1,2880×1800@60,0x0,1.5
 
 # Launch
-exec-once = waybar & hyprpaper
+exec-once = zsh ~/.config/hypr/start.sh
 
 # Environment
 # env = XCURSOR_SIZE,24
 
 input {
     kb_layout = es
-    #kb_variant = mac
+    kb_variant = mac
     follow_mouse = 1
     touchpad {
         natural_scroll = true
         #clickfinger_behavior = true
     }
-    #kb_options = ctrl:nocaps
+    kb_options = ctrl:nocaps
 }
 
 general {
@@ -73,10 +72,12 @@ gestures {
 $mainMod = SUPER
 
 bind = $mainMod, T, exec, kitty
-bind = $mainMod, ENTER, exec, rofi
-bind = $mainMod, C, killactive
-bind = $mainMod, Q, exit
+bind = $mainMod, B, exec, firefox
+bind = $mainMod, ENTER, exec, zsh ~/.config/rofi/bin/launcher
+bind = $mainMod, Q, exec, zsh ~/.config/rofi/bin/powermenu
+bind = $mainMod, P, exec, zsh ~/.config/rofi/bin/screenshot
 
+bind = $mainMod, C, killactive
 bind = $mainMod, V, togglefloating
 bind = $mainMod, F, fullscreen
 
@@ -85,6 +86,13 @@ bind = $mainMod, N, layoutmsg, orientationnext
 bind = $mainMod, comma, layoutmsg, addmaster
 bind = $mainMod, period, layoutmsg, removemaster
 bind = $mainMod, RETURN, layoutmsg, swapwithmaster
+
+# System
+bind = , xf86audioraisevolume, exec, amixer sset Master 2%+;
+bind = , xf86audiolowervolume, exec, amixer sset Master 2%-;
+
+bind = , xf86monbrightnessup, exec, brightnessctl set 5%+
+bind = , xf86monbrightnessdown, exec, brightnessctl set 5%-
 
 # Movement
 bind = $mainMod, l, movefocus, l
@@ -117,5 +125,25 @@ bind = $mainMod SHIFT, 0, movetoworkspace, 10
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
         '';
+    };
+
+    home.file.".config/hypr/start.sh" = {
+        text = ''
+#!/usr/bin/env zsh
+
+# Wallpaper
+swww init &
+swww img ~/Pictures/wallpaper.png &
+
+# Network manager
+nm-applet --indicator &
+
+# Status bar
+waybar &
+
+# Notifications
+dunst
+        '';
+        executable = true;
     };
 }

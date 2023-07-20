@@ -43,8 +43,7 @@
             systems = [ "x86_64-linux" "x86_64-darwin" ];
             imports = [
                 inputs.nixos-flake.flakeModule
-                ./users
-                ./modules
+                ./system
                 ./home
             ];
 
@@ -76,7 +75,10 @@
                 };
             };
 
-            perSystem = { self', inputs', system, pkgs, ... }:
-                (import ./dev/rust.nix {inherit inputs system pkgs;});
+            perSystem = { self', inputs', system, pkgs, ... }: {
+                imports = [
+                    (import ./dev/rust.nix { inherit inputs system pkgs; }) 
+                ];
+            };
         };
 }

@@ -1,17 +1,14 @@
 { pkgs, flake, ... }:
 {
     # my user
-    users.users.${flake.config.users.me} = {
-        name = flake.config.users.me;
-        home = "/Users/${flake.config.users.me}";
+    users.users."eko" = {
+        name = "eko";
+        home = "/Users/eko";
     };
 
     # custom home manager
-    home-manager.users.${flake.config.users.me} = { pkgs, ... }: {
-        home.sessionVariables = {
-           EDITOR = "nvim";
-           VISUAL = "nvim";
-        };
+    home-manager.users."eko" = { pkgs, ... }: { 
+	    programs.zsh.envExtra = "export PATH=/run/current-system/sw/bin:/run/current-system/etc/profiles/per-user/eko/bin:$PATH";
     };
 
     # homebrew (used for casks and mas apps)

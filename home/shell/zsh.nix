@@ -17,7 +17,7 @@
         historySubstringSearch.enable = true;
 
         initExtra = ''
-            source ${../../scripts/transient.zsh}
+            source ${./scripts/transient.zsh}
             eval "$(zoxide init zsh)"
             eval "$(direnv hook zsh)"
 
@@ -29,7 +29,6 @@
                 nix develop ${../..}\#$1 -c zsh
             }
         '';
-        #envExtra = "export PATH=/run/current-system/sw/bin:/run/current-system/etc/profiles/per-user/${flake.config.users.me}/bin:$PATH";
     };
 
     programs.starship = {

@@ -4,12 +4,16 @@
         enable = true;
     };
 
-    home.file.".config/nvim" = {
-        source = config.lib.file.mkOutOfStoreSymlink ../nvim;
-    };
+    home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink ../nvim;
 
     home.packages = with pkgs; [
         fzf
         tree-sitter
+        gcc
     ];
+
+    home.sessionVariables = {
+        EDITOR = "nvim";
+        VISUAL = "nvim";
+    };
 }
