@@ -32,6 +32,7 @@
         xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
 
         # dev toolchain
+        devenv.url = "github:cachix/devenv";
         rust-overlay = {
             url = "github:oxalica/rust-overlay";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -43,8 +44,8 @@
             systems = [ "x86_64-linux" "x86_64-darwin" ];
             imports = [
                 inputs.nixos-flake.flakeModule
-                ./users
-                ./modules
+                inputs.devenv.flakeModule
+                ./system
                 ./home
             ];
 
@@ -76,7 +77,13 @@
                 };
             };
 
-            perSystem = { self', inputs', system, pkgs, ... }:
-                (import ./dev/rust.nix {inherit inputs system pkgs;});
+            perSystem = { self', inputs', system, pkgs, ... }: {
+                imports = [
+                    # developer environments
+                    # only general envs are defined here, for more control use a custom devenv flake for the project
+                    (import ./dev/rust.nix { inherit inputs system pkgs; })
+                    ./dev/cpp.nix
+                ];
+            };
         };
 }

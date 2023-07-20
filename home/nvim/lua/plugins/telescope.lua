@@ -46,15 +46,6 @@ return {
         }
     },
 
-    -- fzf (better fuzzy finder)
-    {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        config = function()
-            require("telescope").load_extension("fzf")
-        end,
-    },
-
     -- Zoxide (fuzzy search directories)
     {
         "jvgrootveld/telescope-zoxide",

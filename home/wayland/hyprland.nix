@@ -3,30 +3,25 @@
     wayland.windowManager.hyprland = {
         enable = true;
         extraConfig = ''
-
 # Monitor
-monitor=DP-1,2880×1800@60,0x0,2
+monitor=eDP-1,2880×1800@60,0x0,1.2
 
 # Launch
-exec-once = waybar & hyprpaper
-
-# Environment
-# env = XCURSOR_SIZE,24
+exec-once = dunst & swww init & swww img ~/Pictures/wallpaper.png
 
 input {
     kb_layout = es
-    #kb_variant = mac
     follow_mouse = 1
     touchpad {
         natural_scroll = true
         #clickfinger_behavior = true
     }
-    #kb_options = ctrl:nocaps
+    kb_options = ctrl:nocaps
 }
 
 general {
-    gaps_in = 7.5
-    gaps_out = 15
+    gaps_in = 5
+    gaps_out = 10
     layout = master
 
     border_size = 2
@@ -44,10 +39,10 @@ decoration {
     # blur_passes = 1
     # blur_new_optimizations = true
 
-    # drop_shadow = true
-    # shadow_range = 4
-    # shadow_render_power = 3
-    # col.shadow = rgba(1a1a1aee)
+    drop_shadow = true
+    shadow_range = 4
+    shadow_render_power = 3
+    col.shadow = rgba(1a1a1aee)
 }
 
 animations {
@@ -73,10 +68,11 @@ gestures {
 $mainMod = SUPER
 
 bind = $mainMod, T, exec, kitty
-bind = $mainMod, ENTER, exec, rofi
-bind = $mainMod, C, killactive
-bind = $mainMod, Q, exit
+bind = $mainMod, B, exec, firefox
+bind = $mainMod, SPACE, exec, rofi -show drun
 
+bind = $mainMod, C, killactive
+bind = $mainMod SHIFT, Q, exit
 bind = $mainMod, V, togglefloating
 bind = $mainMod, F, fullscreen
 
@@ -85,6 +81,13 @@ bind = $mainMod, N, layoutmsg, orientationnext
 bind = $mainMod, comma, layoutmsg, addmaster
 bind = $mainMod, period, layoutmsg, removemaster
 bind = $mainMod, RETURN, layoutmsg, swapwithmaster
+
+# System
+bind = , xf86audioraisevolume, exec, amixer sset Master 5%+
+bind = , xf86audiolowervolume, exec, amixer sset Master 5%-
+
+bind = , xf86monbrightnessup, exec, brightnessctl set 5%+
+bind = , xf86monbrightnessdown, exec, brightnessctl set 5%-
 
 # Movement
 bind = $mainMod, l, movefocus, l

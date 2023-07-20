@@ -5,15 +5,11 @@
             common = { pkgs, ... }: {
                 # load modules
                 imports = [
-                    ./shell/zsh.nix
-                    ./shell/clitools.nix
-                    ./shell/direnv.nix
-                    ./terminal/kitty.nix
-                    ./zellij
+                    ./shell
+                    ./terminal
                     ./nvim
-                    ./virt/qemu.nix
-                    ./misc/ffmpeg.nix
-		    ./programs/firefox.nix
+                    ./programs
+                    ./pass
                 ];
 
                 # home manager can manage itself
@@ -27,7 +23,8 @@
             linux = { pkgs, ... }: {
                 imports = [
                     inputs.hyprland.homeManagerModules.default
-		    (import ./wayland { inherit pkgs inputs; })
+		            (import ./wayland { inherit pkgs inputs; })
+		            ./programs/linux.nix
                 ];
             };
 

@@ -8,7 +8,7 @@
 	   # TODO: Configure a login manager	    
            default_session = {
                 command = "${pkgs.hyprland}/bin/Hyprland";
-                user = flake.config.users.me;
+                user = "eko";
             };
         };
     };

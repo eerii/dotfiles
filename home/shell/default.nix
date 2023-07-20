@@ -1,5 +1,10 @@
 { pkgs, ... }:
 {
+    imports = [
+        ./zsh.nix
+        ./zellij
+    ];
+
     home.packages = with pkgs; [
         wget # retrieve files
         aria # improved file downloader
@@ -16,7 +21,9 @@
         zoxide # cd
 
         tealdeer # man pages
-        h
+
+        ffmpeg_6 # multimedia utils
+        imagemagick # image utils
     ];
 
     home.shellAliases = { 
@@ -38,5 +45,12 @@
         lg = "lazygit";
 
         a2 = "aria2c";
+    };
+
+    programs.direnv = {
+        enable = true;
+        nix-direnv = {
+            enable = true;
+        };
     };
 }
