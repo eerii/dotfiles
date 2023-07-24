@@ -49,6 +49,34 @@
                         self.homeModules.darwin
                     ];
                 };
+
+                # homebrew (used for casks and mas apps)
+                homebrew = {
+                    enable = true;
+                    onActivation.autoUpdate = true;
+                    onActivation.upgrade = true;
+                    brews = [
+                        "gnupg"
+                        "pinentry-mac"
+                    ];
+                    casks = [
+                        "beeper"
+                        "firefox"
+                        "git-credential-manager-core"
+                        "iterm2"
+                        "keka"
+                        "maccy"
+                        "macfuse"
+                        "monitorcontrol"
+                        "opencore-patcher"
+                        "quarto"
+                        "raycast"
+                        "spotify"
+                        "stremio"
+                        "telegram"
+                        "visual-studio-code-insiders"
+                    ];
+                };
             };
         }; 
     };

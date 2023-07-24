@@ -4,17 +4,13 @@
         enable = true;
         extraConfig = ''
 # Monitor
-monitor=DP-1,2880×1800@60,0x0,1.5
+monitor=eDP-1,2880×1800@60,0x0,1.5
 
 # Launch
-exec-once = zsh ~/.config/hypr/start.sh
-
-# Environment
-# env = XCURSOR_SIZE,24
+exec-once = dunst & swww init & swww img ~/Pictures/wallpaper.png
 
 input {
     kb_layout = es
-    kb_variant = mac
     follow_mouse = 1
     touchpad {
         natural_scroll = true
@@ -24,8 +20,8 @@ input {
 }
 
 general {
-    gaps_in = 7.5
-    gaps_out = 15
+    gaps_in = 5
+    gaps_out = 10
     layout = master
 
     border_size = 2
@@ -43,10 +39,10 @@ decoration {
     # blur_passes = 1
     # blur_new_optimizations = true
 
-    # drop_shadow = true
-    # shadow_range = 4
-    # shadow_render_power = 3
-    # col.shadow = rgba(1a1a1aee)
+    drop_shadow = true
+    shadow_range = 4
+    shadow_render_power = 3
+    col.shadow = rgba(1a1a1aee)
 }
 
 animations {
@@ -73,11 +69,10 @@ $mainMod = SUPER
 
 bind = $mainMod, T, exec, kitty
 bind = $mainMod, B, exec, firefox
-bind = $mainMod, ENTER, exec, zsh ~/.config/rofi/bin/launcher
-bind = $mainMod, Q, exec, zsh ~/.config/rofi/bin/powermenu
-bind = $mainMod, P, exec, zsh ~/.config/rofi/bin/screenshot
+bind = $mainMod, R, exec, rofi -show drun
 
 bind = $mainMod, C, killactive
+bind = $mainMod SHIFT, Q, exit
 bind = $mainMod, V, togglefloating
 bind = $mainMod, F, fullscreen
 
@@ -88,8 +83,8 @@ bind = $mainMod, period, layoutmsg, removemaster
 bind = $mainMod, RETURN, layoutmsg, swapwithmaster
 
 # System
-bind = , xf86audioraisevolume, exec, amixer sset Master 2%+;
-bind = , xf86audiolowervolume, exec, amixer sset Master 2%-;
+bind = , xf86audioraisevolume, exec, amixer sset Master 5%+
+bind = , xf86audiolowervolume, exec, amixer sset Master 5%-
 
 bind = , xf86monbrightnessup, exec, brightnessctl set 5%+
 bind = , xf86monbrightnessdown, exec, brightnessctl set 5%-
@@ -125,25 +120,5 @@ bind = $mainMod SHIFT, 0, movetoworkspace, 10
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
         '';
-    };
-
-    home.file.".config/hypr/start.sh" = {
-        text = ''
-#!/usr/bin/env zsh
-
-# Wallpaper
-swww init &
-swww img ~/Pictures/wallpaper.png &
-
-# Network manager
-nm-applet --indicator &
-
-# Status bar
-waybar &
-
-# Notifications
-dunst
-        '';
-        executable = true;
     };
 }

@@ -4,7 +4,7 @@
         enable = true;
         extraPortals = with pkgs; [
             xdg-desktop-portal-gtk
-            inputs.xdg-portal-hyprland.packages.${system}.default
+            #inputs.xdg-portal-hyprland.packages.${system}.default
         ];
     };
 

@@ -14,12 +14,21 @@
     # boot
     boot = {
         loader = {
-            systemd-boot.enable = true;
+            systemd-boot = {
+                enable = true;
+                configurationLimit = 4;
+            };
             efi = {
                 canTouchEfiVariables = true;
                 efiSysMountPoint = "/boot/efi";
 		    };
         };
+
+        plymouth = {
+            enable = true;
+            theme = "breeze";
+        };
+        initrd.systemd.enable = true;
     };
 
     # network

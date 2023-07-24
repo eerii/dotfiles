@@ -74,8 +74,4 @@
         }];
         style = builtins.readFile ./style.css;
     };
-
-    home.packages = with pkgs; [
-        networkmanagerapplet    
-    ];
 }

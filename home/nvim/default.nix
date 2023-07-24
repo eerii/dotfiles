@@ -1,12 +1,12 @@
 { config, pkgs, ... }:
 {
-    programs.neovim = {
-        enable = true;
+    home.file.".config/nvim" = {
+        source = ../nvim;
+        recursive = true;
     };
 
-    home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink ../nvim;
-
     home.packages = with pkgs; [
+        neovim
         fzf
         tree-sitter
         gcc
