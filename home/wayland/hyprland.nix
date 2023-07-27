@@ -4,7 +4,7 @@
         enable = true;
         extraConfig = ''
 # Monitor
-monitor=eDP-1,2880×1800@60,0x0,1.5
+monitor=eDP-1,2880×1800@60,0x0,1.2
 
 # Launch
 exec-once = dunst & swww init & swww img ~/Pictures/wallpaper.png
@@ -69,7 +69,7 @@ $mainMod = SUPER
 
 bind = $mainMod, T, exec, kitty
 bind = $mainMod, B, exec, firefox
-bind = $mainMod, R, exec, rofi -show drun
+bind = $mainMod, SPACE, exec, rofi -show drun
 
 bind = $mainMod, C, killactive
 bind = $mainMod SHIFT, Q, exit

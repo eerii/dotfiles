@@ -3,6 +3,7 @@
     imports = [
         ./hyprland.nix
         ./rofi
+        # (import ./waybar { inherit pkgs inputs; })
     ];
 
     home.packages = with pkgs; [

@@ -9,6 +9,7 @@
                     ./terminal
                     ./nvim
                     ./programs
+                    ./pass
                 ];
 
                 # home manager can manage itself

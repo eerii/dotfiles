@@ -9,7 +9,6 @@
         neovim
         fzf
         tree-sitter
-        gcc
     ];
 
     home.sessionVariables = {

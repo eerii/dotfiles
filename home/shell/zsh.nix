@@ -26,7 +26,7 @@
                     echo "Usage: dev <lang>"
                     return 1
                 fi
-                nix develop ${../..}\#$1 -c zsh
+                nix develop --impure ${../..}\#$1 -c zsh
             }
         '';
     };

@@ -5,8 +5,8 @@ let
         inherit system overlays;
     };
 in  {
-    devShells.rust = pkgs.mkShell {
+    devenv.shells.rust = {
         packages = with pkgs; [ rust-bin.stable.latest.default ];
-        shellHook = "";
+        enterShell = "";
     };
 }

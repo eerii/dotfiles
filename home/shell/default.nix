@@ -21,7 +21,7 @@
         zoxide # cd
 
         tealdeer # man pages
-        
+
         ffmpeg_6 # multimedia utils
         imagemagick # image utils
     ];
