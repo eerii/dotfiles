@@ -64,7 +64,7 @@
                     ];
                     casks = [
                         "beeper"
-                        "firefox"
+                        "librewolf"
                         "git-credential-manager-core"
                         "iterm2"
                         "keka"

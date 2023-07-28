@@ -28,7 +28,16 @@
             enable = true;
             theme = "breeze";
         };
-        initrd.systemd.enable = true;
+        initrd = {
+            systemd.enable = true;
+            verbose = false;
+        };
+        consoleLogLevel = 0;
+        kernelParams = [ "quiet" "boot.shell_on_fail" ];
+
+        extraModprobeConfig = ''
+            options snd-hda-intel model=mbp11
+        '';
     };
 
     # network

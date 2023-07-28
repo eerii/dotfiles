@@ -1,7 +1,8 @@
 { pkgs, ... }:
 {
     home.packages = with pkgs; [
-        firefox
+        librewolf
         element
+        easyeffects
     ];
 }
