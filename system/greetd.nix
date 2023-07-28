@@ -1,15 +1,20 @@
-{ pkgs, flake, ... }:
+{ pkgs, ... }:
 {
     services.greetd = {
         enable = true;
-        restart = false;
-
         settings = {
-	   # TODO: Configure a login manager	    
-           default_session = {
-                command = "${pkgs.hyprland}/bin/Hyprland";
-                user = "eko";
+            default_session = {
+                command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd Hyprland";
+                user = "greeter";
             };
         };
+    };
+
+    environment.systemPackages = with pkgs; [
+        greetd.tuigreet
+    ];
+
+    environment.etc = {
+        "greetd/environments".text = "zsh";
     };
 }

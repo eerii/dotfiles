@@ -2,20 +2,19 @@
 {
     imports = [
         ./hyprland.nix
+        ./gnome.nix
+        ./gtk.nix
+        ./dunst.nix
         ./rofi
-        # (import ./waybar { inherit pkgs inputs; })
+        ./waybar
     ];
 
     home.packages = with pkgs; [
-        dunst
-        libnotify
         hyprpicker
         swww
+        wl-clipboard
+        wtype
         colloid-icon-theme
-    ];
-
-    # TODO: Wayland install:
-    #   - eww bar + widgets
-    #   - pipewire (screen sharing)
-    #   - clipboard manager
+        inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
+    ]; 
 }

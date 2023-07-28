@@ -37,11 +37,11 @@
             format="$directory$git_branch$fill$git_status$cmd_duration\n $character";
             add_newline = true;
 
-            character = {
-                success_symbol = "[⏺](#a6e3a1)";
+            /*character = {
+                success_symbol = "[](#a6e3a1)";
                 error_symbol = "[⏺](#f38ba8)";
                 vicmd_symbol = "[](#f9e2af)";
-            };
+            };*/
 
             fill = {
                 symbol = " ";
@@ -86,9 +86,5 @@
 
     home.file.".config/starship-transient.toml".text = ''
         format = " $character"
-        [character]
-        error_symbol = "[⏺](#f38ba8)"
-        success_symbol = "[⏺](#a6e3a1)"
-        vicmd_symbol = "[](#f9e2af)"
     '';
 }

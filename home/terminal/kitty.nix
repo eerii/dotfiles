@@ -6,7 +6,7 @@
             enable = true;
 
             font.name = "SF Mono";
-            font.size = 13;
+            font.size = 12;
 
 	        theme = "Rosé Pine";
 
@@ -18,9 +18,15 @@
 
 	    	    macos_titlebar_color = "background";
 		        macos_quit_when_last_window_closed = "yes";
+
+                hide_window_decorations = "yes";
             };
 
             extraConfig = '' '';
         };
+    };
+
+    home.shellAliases = { 
+        img = "kitty +kitten icat";
     };
 }

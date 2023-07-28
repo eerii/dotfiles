@@ -25,11 +25,15 @@
             url = "github:hyprwm/Hyprland";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        hyprpaper = {
-            url = "github:hyprwm/hyprpaper";
+        hyprland-contrib = {
+            url = "github:hyprwm/contrib";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
+        #xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
+        apple-fonts = {
+            url = "github:Lyndeno/apple-fonts.nix";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
         # dev toolchain
         devenv.url = "github:cachix/devenv";

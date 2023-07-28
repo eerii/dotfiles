@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+rofi \
+    -show drun \
+    -theme ~/.config/rofi/themes/launcher.rasi

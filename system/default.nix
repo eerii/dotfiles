@@ -6,7 +6,10 @@
                 # nix
                 nix = {
                     package = pkgs.nixVersions.unstable;
-                    settings.experimental-features = [ "nix-command" "flakes" ];
+                    settings = {
+                        experimental-features = [ "nix-command" "flakes" ];
+                        warn-dirty = false;
+                    };
                 };
                 nixpkgs.config.allowUnfree = true;
 
@@ -19,7 +22,7 @@
 
                 # other packages
                 imports = [
-                    ./fonts
+                    (import ./fonts.nix { inherit pkgs inputs; })
                 ];
             };
 
@@ -33,9 +36,9 @@
                 };
 
                 imports = [
-                    (import ./wayland.nix { inherit pkgs inputs; })
-                    ./greetd.nix
+                    ./desktop.nix
                     ./sound.nix
+                    #./greetd.nix
                 ];
             };
 
@@ -61,7 +64,7 @@
                     ];
                     casks = [
                         "beeper"
-                        "firefox"
+                        "librewolf"
                         "git-credential-manager-core"
                         "iterm2"
                         "keka"
