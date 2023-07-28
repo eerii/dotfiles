@@ -23,4 +23,8 @@
             extraConfig = '' '';
         };
     };
+
+    home.shellAliases = { 
+        img = "kitty +kitten icat";
+    };
 }

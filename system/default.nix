@@ -6,7 +6,10 @@
                 # nix
                 nix = {
                     package = pkgs.nixVersions.unstable;
-                    settings.experimental-features = [ "nix-command" "flakes" ];
+                    settings = {
+                        experimental-features = [ "nix-command" "flakes" ];
+                        warn-dirty = false;
+                    };
                 };
                 nixpkgs.config.allowUnfree = true;
 

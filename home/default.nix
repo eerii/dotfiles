@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ self, config, inputs, ... }:
 {
     flake = {
         homeModules = {
@@ -20,12 +20,29 @@
             };
 
             # linux specific home modules
-            linux = { pkgs, ... }: {
+            linux = { pkgs, config, ... }: {
                 imports = [
                     inputs.hyprland.homeManagerModules.default
 		            (import ./wayland { inherit pkgs inputs; })
 		            ./programs/linux.nix
                 ];
+
+                xdg.userDirs = {
+                    enable = true;
+                    createDirectories = true;
+
+                    desktop = "Desktop";
+                    documents = "Documents";
+                    download = "Downloads";
+                    music = null;
+                    pictures = "Pictures";
+                    publicShare = null;
+                    templates = null;
+                    videos = null;
+                    extraConfig = {
+                        XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
+                    };
+                };
             };
 
             # macos specific home modules

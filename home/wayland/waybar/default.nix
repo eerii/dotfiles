@@ -13,7 +13,7 @@
             "custom/nix" = {
                 format = "  ";
                 tooltip = false;
-                on-click = "sh $HOME/.config/rofi/bin/powermenu";
+                on-click = "";
             };
             "wlr/workspaces" = {
                 format = "{icon}";

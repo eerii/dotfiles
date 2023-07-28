@@ -4,20 +4,22 @@
         enable = true;
         extraConfig = ''
 # Monitor
-monitor=eDP-1,2880×1800@60,0x0,1.2
+monitor=eDP-1,2880×1800@60,0x0,1.5
 
 # Launch
-exec-once = dunst & swww init & swww img ~/Pictures/wallpaper.png
+exec-once = dunst & waybar & swww init & swww img ~/Pictures/Wallpapers/darkmountains.png
 
 input {
     kb_layout = es
+    kb_options = ctrl:nocaps
     follow_mouse = 1
+    sensitivity = 0.33
     touchpad {
         natural_scroll = true
-        #clickfinger_behavior = true
+        clickfinger_behavior = true
     }
-    kb_options = ctrl:nocaps
 }
+exec-once = hyprctl setcursor "Bibata-Modern-Ice" 24
 
 general {
     gaps_in = 5
@@ -64,16 +66,21 @@ gestures {
     workspace_swipe = on
 }
 
+misc {
+    disable_hyprland_logo = true
+}
+
 # Bindings
 $mainMod = SUPER
 
 bind = $mainMod, T, exec, kitty
 bind = $mainMod, B, exec, firefox
-bind = $mainMod, SPACE, exec, rofi -show drun
+bind = $mainMod, SPACE, exec, rofi -show drun -theme ~/.config/rofi/themes/launcher.rasi
+bind = $mainMod, P, exec, screenshot
 
-bind = $mainMod, C, killactive
+bind = $mainMod, Q, killactive
 bind = $mainMod SHIFT, Q, exit
-bind = $mainMod, V, togglefloating
+bind = $mainMod, D, togglefloating
 bind = $mainMod, F, fullscreen
 
 # Master
@@ -118,7 +125,7 @@ bind = $mainMod SHIFT, 9, movetoworkspace, 9
 bind = $mainMod SHIFT, 0, movetoworkspace, 10
 
 bindm = $mainMod, mouse:272, movewindow
-bindm = $mainMod, mouse:273, resizewindow
+bindm = CTRL, mouse:272, resizewindow
         '';
     };
 }
