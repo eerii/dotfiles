@@ -46,6 +46,9 @@
         lg = "lazygit";
 
         a2 = "aria2c";
+
+        nx = "git add . && nix run .#activate";
+        nu = "nix flake update";
     };
 
     programs.direnv = {

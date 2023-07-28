@@ -22,7 +22,7 @@
 
                 # other packages
                 imports = [
-                    ./fonts
+                    (import ./fonts { inherit pkgs inputs; })
                 ];
             };
 

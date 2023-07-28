@@ -6,7 +6,7 @@
             enable = true;
 
             font.name = "SF Mono";
-            font.size = 13;
+            font.size = 12;
 
 	        theme = "Rosé Pine";
 

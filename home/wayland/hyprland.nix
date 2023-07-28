@@ -4,7 +4,7 @@
         enable = true;
         extraConfig = ''
 # Monitor
-monitor=eDP-1,2880×1800@60,0x0,1.5
+monitor=eDP-1,2880×1800@60,0x0,1.75
 
 # Launch
 exec-once = dunst & waybar & swww init & swww img ~/Pictures/Wallpapers/darkmountains.png
@@ -36,16 +36,19 @@ general {
 decoration {
     rounding = 6
 
-    # blur = true
-    # blur_size = 3
-    # blur_passes = 1
-    # blur_new_optimizations = true
+    blur = true
+    blur_size = 3
+    blur_passes = 1
+    blur_new_optimizations = true
 
     drop_shadow = true
     shadow_range = 4
     shadow_render_power = 3
     col.shadow = rgba(1a1a1aee)
 }
+
+# Blur rofi
+layerrule = blur,rofi
 
 animations {
     enabled = true
@@ -75,13 +78,17 @@ $mainMod = SUPER
 
 bind = $mainMod, T, exec, kitty
 bind = $mainMod, B, exec, firefox
-bind = $mainMod, SPACE, exec, rofi -show drun -theme ~/.config/rofi/themes/launcher.rasi
+bind = $mainMod, SPACE, exec, pkill rofi || sh ~/.config/rofi/bin/launcher
 bind = $mainMod, P, exec, screenshot
 
 bind = $mainMod, Q, killactive
 bind = $mainMod SHIFT, Q, exit
 bind = $mainMod, D, togglefloating
 bind = $mainMod, F, fullscreen
+
+bind = $mainMod, X, exec, wtype -P XF86Cut
+bind = $mainMod, C, exec, wtype -P XF86Copy
+bind = $mainMod, V, exec, wtype -P XF86Paste
 
 # Master
 bind = $mainMod, N, layoutmsg, orientationnext

@@ -43,6 +43,11 @@
                         XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
                     };
                 };
+
+                xdg.desktopEntries.nixos-manual = {
+                    name = "NixOS Manual";
+                    noDisplay = true;
+                };
             };
 
             # macos specific home modules

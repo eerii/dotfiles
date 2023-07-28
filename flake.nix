@@ -30,6 +30,10 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
+        apple-fonts = {
+            url = "github:Lyndeno/apple-fonts.nix";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
         # dev toolchain
         devenv.url = "github:cachix/devenv";

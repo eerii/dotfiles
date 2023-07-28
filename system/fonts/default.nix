@@ -1,12 +1,17 @@
-{ lib, pkgs, ... }:
-let
-    apple-fonts = import ./apple-fonts.nix { inherit lib pkgs; };
-in {
+{ pkgs, inputs, ... }:
+let 
+    apple = inputs.apple-fonts.packages.${pkgs.system};
+in
+{
     fonts = {
         fontDir.enable = true;
         fonts = with pkgs; [
-            # apple-fonts
             (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+            apple.sf-pro
+            apple.sf-compact
+            apple.sf-mono
+            apple.sf-mono-nerd
+            apple.ny
         ];
     };
 }

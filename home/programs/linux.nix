@@ -5,4 +5,6 @@
         element
         easyeffects
     ];
+
+    services.easyeffects.enable = true;
 }
