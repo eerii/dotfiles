@@ -9,9 +9,7 @@
         excludePackages = with pkgs; [ xterm ];
     };
 
-    xdg.portal = {
-        enable = true;
-    };
+    xdg.portal.enable = true;
 
     hardware = {
         opengl.enable = true;

@@ -38,7 +38,6 @@
                 imports = [
                     ./desktop.nix
                     ./sound.nix
-                    #./greetd.nix
                 ];
             };
 
@@ -64,22 +63,33 @@
                     ];
                     casks = [
                         "beeper"
-                        "librewolf"
                         "git-credential-manager-core"
-                        "iterm2"
                         "keka"
+                        "librewolf"
                         "maccy"
                         "macfuse"
                         "monitorcontrol"
                         "opencore-patcher"
                         "quarto"
-                        "raycast"
                         "spotify"
                         "stremio"
                         "telegram"
                         "visual-studio-code-insiders"
                     ];
                 };
+            };
+
+            # gaming specific modules
+            gaming = { pkgs, ... }: {
+                home-manager.users."eko" = {
+                    imports = [
+                        self.homeModules.gaming
+                    ];
+                };
+
+                environment.systemPackages = with pkgs; [
+                    wineWowPackages.waylandFull
+                ];
             };
         }; 
     };

@@ -29,7 +29,6 @@
             url = "github:hyprwm/contrib";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        #xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
         apple-fonts = {
             url = "github:Lyndeno/apple-fonts.nix";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -61,6 +60,7 @@
                         imports = [
                             self.modules.common
                             self.modules.linux
+                            self.modules.gaming
                             self.nixosModules.home-manager
                             ./hosts/circe/default.nix
                         ];
@@ -70,7 +70,8 @@
                 # macos
                 darwinConfigurations = {
                     # my macbook on macos
-                    eve = self.nixos-flake.lib.mkIntelMacosSystem {
+                    eve = self.nixos-flake.lib.mkMacosSystem {
+                        nixpkgs.hostPlatform = "x86_64-darwin";
                         imports = [
                             self.modules.common
                             self.modules.darwin
@@ -87,6 +88,7 @@
                     # only general envs are defined here, for more control use a custom devenv flake for the project
                     (import ./dev/rust.nix { inherit inputs system pkgs; })
                     ./dev/cpp.nix
+                    ./dev/node.nix
                 ];
             };
         };
