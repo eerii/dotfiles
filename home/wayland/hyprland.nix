@@ -66,13 +66,14 @@ gestures {
 
 misc {
     disable_hyprland_logo = true
+    suppress_portal_warnings = 1
 }
 
 # Bindings
 $mainMod = SUPER
 
 bind = $mainMod, T, exec, kitty
-bind = $mainMod, B, exec, firefox
+bind = $mainMod, B, exec, librewolf
 bind = $mainMod, SPACE, exec, pkill rofi || sh ~/.config/rofi/bin/launcher
 bind = $mainMod, P, exec, screenshot
 
