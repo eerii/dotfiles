@@ -29,7 +29,7 @@
             url = "github:hyprwm/contrib";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
+        #xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
         apple-fonts = {
             url = "github:Lyndeno/apple-fonts.nix";
             inputs.nixpkgs.follows = "nixpkgs";

@@ -18,6 +18,8 @@
 
 	    	    macos_titlebar_color = "background";
 		        macos_quit_when_last_window_closed = "yes";
+
+                hide_window_decorations = "yes";
             };
 
             extraConfig = '' '';

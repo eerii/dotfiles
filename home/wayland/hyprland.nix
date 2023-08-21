@@ -36,11 +36,6 @@ general {
 decoration {
     rounding = 6
 
-    blur = true
-    blur_size = 3
-    blur_passes = 1
-    blur_new_optimizations = true
-
     drop_shadow = true
     shadow_range = 4
     shadow_render_power = 3

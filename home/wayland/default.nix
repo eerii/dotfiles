@@ -2,10 +2,11 @@
 {
     imports = [
         ./hyprland.nix
+        ./gnome.nix
         ./gtk.nix
         ./dunst.nix
         ./rofi
-        (import ./waybar { inherit pkgs inputs; })
+        ./waybar
     ];
 
     home.packages = with pkgs; [

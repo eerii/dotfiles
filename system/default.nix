@@ -22,7 +22,7 @@
 
                 # other packages
                 imports = [
-                    (import ./fonts { inherit pkgs inputs; })
+                    (import ./fonts.nix { inherit pkgs inputs; })
                 ];
             };
 
@@ -36,9 +36,9 @@
                 };
 
                 imports = [
-                    (import ./wayland.nix { inherit pkgs inputs; })
-                    ./greetd.nix
+                    ./desktop.nix
                     ./sound.nix
+                    #./greetd.nix
                 ];
             };
 

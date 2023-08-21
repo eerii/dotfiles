@@ -11,10 +11,10 @@ map("n", "<Left>", "<nop>", { desc = "Disable arrow keys" })
 map("n", "<Right>", "<nop>", { desc = "Disable arrow keys" })
 
 -- Move selected lines with J/K
-map("n", "J", ":m +1<CR>", { desc = "Move line down" })
-map("n", "K", ":m -2<CR>", { desc = "Move line up" })
-map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
-map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
+map("n", "J", "<CMD>m +1<CR>", { desc = "Move line down" })
+map("n", "K", "<CMD>m -2<CR>", { desc = "Move line up" })
+map("v", "J", "<CMD>m '>+1<CR>gv=gv", { desc = "Move line down" })
+map("v", "K", "<CMD>m '<-2<CR>gv=gv", { desc = "Move line up" })
 
 -- Half page up/down with <C-d> and <C-u>
 -- Also keeps the cursor centered

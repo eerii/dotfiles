@@ -1,8 +1,7 @@
-{ pkgs, inputs, ... }:
+{ ... }:
 {
     programs.waybar = {
         enable = true;
-        package = inputs.hyprland.packages.${pkgs.system}.waybar-hyprland;
         settings = [{
             layer = "top";
             modules-left = ["custom/nix" "wlr/workspaces"];
