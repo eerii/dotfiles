@@ -2,9 +2,12 @@
 {
     programs.password-store = {
         enable = true;
-        # TODO: wayland package
         settings = {
             PASSWORD_STORE_DIR = "$HOME/.password-store";
         };
     };
+
+    home.packages = with pkgs; [
+        pwgen # quickly generate secrets outside of the store
+    ];
 }

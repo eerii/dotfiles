@@ -69,7 +69,8 @@
                 # macos
                 darwinConfigurations = {
                     # my macbook on macos
-                    eve = self.nixos-flake.lib.mkIntelMacosSystem {
+                    eve = self.nixos-flake.lib.mkMacosSystem {
+                        nixpkgs.hostPlatform = "x86_64-darwin";
                         imports = [
                             self.modules.common
                             self.modules.darwin

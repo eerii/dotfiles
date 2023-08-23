@@ -64,16 +64,14 @@
                     ];
                     casks = [
                         "beeper"
-                        "librewolf"
                         "git-credential-manager-core"
-                        "iterm2"
                         "keka"
+                        "librewolf"
                         "maccy"
                         "macfuse"
                         "monitorcontrol"
                         "opencore-patcher"
                         "quarto"
-                        "raycast"
                         "spotify"
                         "stremio"
                         "telegram"

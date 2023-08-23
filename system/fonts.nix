@@ -5,7 +5,7 @@ in
 {
     fonts = {
         fontDir.enable = true;
-        packages = with pkgs; [
+        fonts = with pkgs; [
             (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
             apple.sf-pro
             apple.sf-compact

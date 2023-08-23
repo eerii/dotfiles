@@ -11,6 +11,8 @@
         aria # improved file downloader
         inetutils # telnet, ping, ifconfig...
 
+        gh # github cli tool
+
         bat # cat
         bottom # top
         du-dust # du
