@@ -13,6 +13,11 @@
         ]);
     };
 
+    programs.browserpass = {
+        enable = true;
+        browsers = [ "librewolf" ];
+    };
+
     home.sessionVariables = {
         PASSWORD_STORE_ENABLE_EXTENSIONS = "true";
     };

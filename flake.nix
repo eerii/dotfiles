@@ -87,6 +87,7 @@
                     # only general envs are defined here, for more control use a custom devenv flake for the project
                     (import ./dev/rust.nix { inherit inputs system pkgs; })
                     ./dev/cpp.nix
+                    ./dev/node.nix
                 ];
             };
         };
