@@ -60,6 +60,7 @@
                         imports = [
                             self.modules.common
                             self.modules.linux
+                            self.modules.gaming
                             self.nixosModules.home-manager
                             ./hosts/circe/default.nix
                         ];

@@ -52,6 +52,9 @@
 
             # macos specific home modules
             darwin = {};
+
+            # gaming specific home modules
+            gaming = { pkgs, config, ... }: (import ./games.nix);
         };
     };
 }

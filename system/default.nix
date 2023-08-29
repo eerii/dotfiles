@@ -38,7 +38,6 @@
                 imports = [
                     ./desktop.nix
                     ./sound.nix
-                    #./greetd.nix
                 ];
             };
 
@@ -78,6 +77,19 @@
                         "visual-studio-code-insiders"
                     ];
                 };
+            };
+
+            # gaming specific modules
+            gaming = { pkgs, ... }: {
+                home-manager.users."eko" = {
+                    imports = [
+                        self.homeModules.gaming
+                    ];
+                };
+
+                environment.systemPackages = with pkgs; [
+                    wine
+                ];
             };
         }; 
     };
