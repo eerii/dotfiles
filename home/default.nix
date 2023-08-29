@@ -54,7 +54,11 @@
             darwin = {};
 
             # gaming specific home modules
-            gaming = { pkgs, config, ... }: (import ./games.nix);
+            gaming = { pkgs, config, ... }: {
+                imports = [
+                    ./games
+                ];
+            };
         };
     };
 }

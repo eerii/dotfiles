@@ -4,11 +4,19 @@
         librewolf
         thunderbirdPackages.thunderbird-115
         easyeffects
-        vlc
+        mpv
         imv
         zathura
+        transmission-gtk
         (callPackage ../../pkgs/beeper.nix {})
     ];
+
+    xdg.desktopEntries = {
+        beeper = {
+            name = "Beeper";
+            exec = "beeper --default-frame --enable-features=UseOzonePlatform --ozone-platform=wayland --no-sandbox %U" ;
+        };
+    };
 
     services.easyeffects.enable = true;
 }

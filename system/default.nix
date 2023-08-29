@@ -88,7 +88,7 @@
                 };
 
                 environment.systemPackages = with pkgs; [
-                    wine
+                    wineWowPackages.waylandFull
                 ];
             };
         }; 

@@ -66,7 +66,7 @@ gestures {
 
 misc {
     disable_hyprland_logo = true
-    suppress_portal_warnings = 1
+    # suppress_portal_warnings = 1
 }
 
 # Bindings
