@@ -1,0 +1,66 @@
+(defwidget bar []
+(centerbox :orientation "h"
+    (workspaces)
+    (center)
+    (sidestuff)))
+
+(defwidget sidestuff []
+(box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
+    (metric :label ""
+            :value volume
+            :onchange "pamixer --set-volume {}")
+        time))
+
+(defwidget workspaces []
+(box :class "workspaces"
+        :orientation "h"
+        :space-evenly true
+        :halign "start"
+        :spacing 10
+    (button :onclick "hyprctl dispatch workspace 1" 1)
+    (button :onclick "hyprctl dispatch workspace 2" 2)
+    (button :onclick "hyprctl dispatch workspace 3" 3)
+    (button :onclick "hyprctl dispatch workspace 4" 4)
+    (button :onclick "hyprctl dispatch workspace 5" 5)))
+
+(defwidget center []
+(box :class "center"
+        :orientation "h"
+        :space-evenly false
+        :halign "center"
+    {music != "" ? "🎵${music}" : ""}))
+
+(defwidget metric [label value onchange]
+(box :orientation "h"
+        :class "metric"
+        :space-evenly false
+    (box :class "label" label)
+    (scale 
+        :min 0
+        :max 101
+        :active {onchange != ""}
+        :value value
+        :onchange onchange)))
+
+
+
+(deflisten music :initial ""
+    "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+
+(defpoll volume :interval "0.2s"
+    "$(pamixer --get-mute) && echo 0 || pamixer --get-volume")
+
+(defpoll time :interval "10s"
+    "date '+%H:%M'")
+
+(defwindow bar
+    :monitor 0
+    :windowtype "dock"
+    :geometry (geometry
+        :x "0%"
+        :y "10px"
+        :width "50%"
+        :height "32px"
+        :anchor "top center")
+    :exclusive true
+(bar))

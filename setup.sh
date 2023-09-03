@@ -2,20 +2,22 @@
 
 # usage
 usage() {
-    echo "usage: $0 [dir] [--hypr] [--help | -h]"
+    echo "usage: $0 [dir] [--hypr] [--no-install | -n] [--help | -h]"
     exit
 }
 
 # process arguments and options
 args=()
 hypr=false
+inst=true
 for arg in "$@"; do
   shift
   case "$arg" in
-    '--hypr')       hypr=true ;;
-    '--help'|'-h')  usage ;;
-    '-'*)           usage ;;
-    *)              args+=($arg) ;;
+    '--hypr')               hypr=true ;;
+    '--no-install'|'-n')    inst=false ;;
+    '--help'|'-h')          usage ;;
+    '-'*)                   usage ;;
+    *)                      args+=($arg) ;;
   esac
 done
 
@@ -34,7 +36,9 @@ echo "dotfiles: $dir"
 
 # install packages
 install() {
-	paru -S --needed $@
+    if $inst; then
+	    paru -S --needed $@
+    fi
 }
 
 # backup dir
@@ -66,6 +70,10 @@ if $hypr; then
     # rofi
     install rofi-lbonn-wayland
     link $dir/rofi ~/.config/rofi
+
+    # eww
+    install eww-tray-wayland-git
+    link $dir/eww ~/.config/eww
 fi
 
 # wezterm

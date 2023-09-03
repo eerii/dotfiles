@@ -6,16 +6,16 @@ killall xdg-desktop-portal-hyprland
 killall xdg-desktop-portal-wlr
 killall xdg-desktop-portal-gnome
 killall xdg-desktop-portal
-killall wireplumber
-killall pipewire
-killall pipewire-pulse
+#killall wireplumber
+#killall pipewire
+#killall pipewire-pulse
 
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
-/usr/bin/pipewire &
-/usr/bin/pipewire-pulse &
-/usr/bin/wireplumber &
+#/usr/bin/pipewire &
+#/usr/bin/pipewire-pulse &
+#/usr/bin/wireplumber &
 
 sleep 1
 
