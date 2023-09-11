@@ -1,0 +1,44 @@
+#!/bin/bash
+
+get_status() {
+    status=$(nmcli | grep wl | awk 'FNR==1' | awk '{print $2}')
+    if [[ $status == d* ]]; then
+        echo false
+    else
+        echo true
+    fi
+}
+
+get_name() {
+    echo $(nmcli | grep wl | awk 'FNR==1' | cut -f 4- -d ' ')
+}
+
+get_strength() {
+    echo $(awk 'NR==3 {printf("%.0f",$3*10/7)}' /proc/net/wireless)
+}
+
+get_icon() {
+    status=$(get_status)
+    strength=$(get_strength)
+    if $status; then
+        if (( $strength > 75 )); then
+            echo 󰤨
+        elif (( $strength > 50 )); then
+            echo 󰤥
+        elif (( $strength > 25 )); then
+            echo 󰤢
+        else
+            echo 󰤟
+        fi
+    else
+        echo 󰤮
+    fi
+}
+
+case $1 in
+    "--status") get_status ;;
+    "--name") get_name ;;
+    "--icon") get_icon ;;
+    "--strength") get_strength ;;
+    *) get_status ;;
+esac

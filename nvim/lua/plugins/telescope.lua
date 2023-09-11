@@ -23,7 +23,7 @@ return {
 				local layout = require("telescope.pickers.layout_strategies").horizontal(picker, max_columns, max_lines, layout_config)
 				layout.results.title = ""
                 if layout.preview then
-                    layout.preview.title = ""
+                    --layout.preview.title = ""
                 end
 				return layout
 			end
@@ -34,15 +34,15 @@ return {
         keys = {
             { "<C-s>", function() require("telescope.builtin").find_files({ follow = true, hidden = false }) end, desc = "Search files" },
             { "<leader>sh", function() require("telescope.builtin").find_files({ follow = true, hidden = true }) end, desc = "Search hidden files" },
-            
+
             { "<C-g>", require("telescope.builtin").live_grep, desc = "Search grep" },
             { "<leader>ss", require("telescope.builtin").grep_string, desc = "Search string under cursor" },
-            
+
             { "<leader>sH", require("telescope.builtin").man_pages, desc = "Search help (man pages)" },
             { "<leader>sm", require("telescope.builtin").keymaps, desc = "Search keymaps" },
-            
+
             { "<leader>sd", require("telescope.builtin").diagnostics, desc = "Search diagnostics" },
-            -- TODO: Add LSP commands
+            { "<leader>sw", require("telescope.builtin").lsp_workspace_symbols, desc = "Search LSP workspace symbols" },
         }
     },
 
@@ -58,7 +58,7 @@ return {
         keys = {
             { "<C-z>", "<CMD>Telescope zoxide list<CR>", desc = "Search directories (zoxide)" }
         }
-    }, 
+    },
 
     -- Neoclip (yank history)
     {

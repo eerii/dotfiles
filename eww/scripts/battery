@@ -1,0 +1,47 @@
+#!/bin/bash
+
+get_battery() {
+    echo $(acpi | awk -F ' ' 'END {print $4}' | tr -d \%,)
+}
+
+get_charging() {
+    text=$(acpi | awk -F ' ' 'END {print $3}' | tr -d \,)
+    if [[ $text == "Charging" ]]; then
+        echo true
+    else
+        echo false
+    fi
+}
+
+get_icon() {
+    bat=$(get_battery)
+    ch=$(get_charging)
+    if (( $bat < 10 )); then
+        $ch && echo 󰢜 || echo 󰁺
+    elif (( $bat < 20 )); then
+        $ch && echo 󰂆 || echo 󰁻
+    elif (( $bat < 30 )); then
+        $ch && echo 󰂇 || echo 󰁼
+    elif (( $bat < 40 )); then
+        $ch && echo 󰂈 || echo 󰁽
+    elif (( $bat < 50 )); then
+        $ch && echo 󰢝 || echo 󰁾
+    elif (( $bat < 60 )); then
+        $ch && echo 󰂉 || echo 󰁿
+    elif (( $bat < 70 )); then
+        $ch && echo 󰢞 || echo 󰂀
+    elif (( $bat < 80 )); then
+        $ch && echo 󰂊 || echo 󰂁
+    elif (( $bat < 90 )); then
+        $ch && echo 󰂋 || echo 󰂂
+    else
+        $ch && echo 󰂅 || echo 󰁹
+    fi
+}
+
+case $1 in
+    "--bat") get_battery ;;
+    "--ch") get_charging ;;
+    "--icon") get_icon ;;
+    *) get_battery ;;
+esac

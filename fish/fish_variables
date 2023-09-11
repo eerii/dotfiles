@@ -46,7 +46,7 @@ SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
 SETUVAR sponge_allow_previously_successful:true
-SETUVAR sponge_delay:2
+SETUVAR sponge_delay:10
 SETUVAR sponge_filters:sponge_filter_failed\x1esponge_filter_matched
 SETUVAR sponge_purge_only_on_exit:false
 SETUVAR sponge_regex_patterns:\x1d

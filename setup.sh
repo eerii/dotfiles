@@ -80,6 +80,10 @@ fi
 install wezterm ttf-nerd-fonts-symbols-mono otf-apple-fonts noto-fonts-emoji
 link $dir/wezterm ~/.config/wezterm
 
+# neofetch
+install neofetch
+link $dir/neofetch ~/.config/neofetch
+
 # fish
 install fish
 link $dir/fish ~/.config/fish

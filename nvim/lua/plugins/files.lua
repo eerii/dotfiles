@@ -1,11 +1,26 @@
 return {
     -- File manager
     {
-        'stevearc/oil.nvim',
-        config = true,
-        cmd = { 'Oil' },
-        keys = { { '<C-f>', '<CMD>Oil --float<CR>', desc = "Open [F]iles directory" } },
+        "echasnovski/mini.files",
+        version = false,
+        opts = {
+            mappings = {
+                go_in_plus = "<CR>"
+            },
+            options = {
+                permanent_delete = false,
+            }
+        },
+        keys = {
+            { "<C-f>", function() require("mini.files").open() end, desc = "Open [F]iles" }
+        }
     },
+    -- {
+    --     'stevearc/oil.nvim',
+    --     config = true,
+    --     cmd = { 'Oil' },
+    --     keys = { { '<C-f>', '<CMD>Oil --float<CR>', desc = "Open [F]iles directory" } },
+    -- },
 
     -- Switch between open files
     {
@@ -21,7 +36,7 @@ return {
         keys = {
             { "<C-m>", function() require("harpoon.mark").add_file() end, desc = "Add harpoon mark" },
             { "<C-n>", function() require("harpoon.ui").toggle_quick_menu() end, desc = "Toggle harpoon navigation menu" },
-            { "<C-e>", function() require("harpoon.cmd-ui").toggle_quick_menu() end, desc = "Toggle harpoon command menu" },
+            { "<C-r>", function() require("harpoon.cmd-ui").toggle_quick_menu() end, desc = "Toggle harpoon command menu" },
             { "<C-,>", function() require("harpoon.ui").nav_next() end, desc = "Navigate to next harpoon mark" },
             { "<C-.>", function() require("harpoon.ui").nav_prev() end, desc = "Navigate to previous harpoon mark" },
             { "<leader>sM", "<CMD>Telescope harpoon marks<CR>", desc = "Get harpoon marks" },

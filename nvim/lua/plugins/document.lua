@@ -49,9 +49,9 @@ return {
         config = function()
             require('mini.comment').setup{
                 mappings = {
-                    comment = '-',
-                    textobject = '-',
-                    comment_line = '--'
+                    comment = 'gc',
+                    textobject = 'gc',
+                    comment_line = 'gcc'
                 }
             }
         end,
@@ -66,4 +66,12 @@ return {
         end,
         keys = { { '<leader>tt', function() require('mini.trailspace').trim() end, desc = 'Trim trailspace' } }
     },
+
+    -- Autopairs
+    -- {
+    --     'altermo/ultimate-autopair.nvim',
+    --     branch = 'v0.6',
+    --     opts = {},
+    --     event = { 'InsertEnter', 'CmdlineEnter' },
+    -- }
 }
