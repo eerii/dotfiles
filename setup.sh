@@ -2,18 +2,16 @@
 
 # usage
 usage() {
-    echo "usage: $0 [dir] [--hypr] [--no-install | -n] [--help | -h]"
+    echo "usage: $0 [dir] [--no-install | -n] [--help | -h]"
     exit
 }
 
 # process arguments and options
 args=()
-hypr=false
 inst=true
 for arg in "$@"; do
   shift
   case "$arg" in
-    '--hypr')               hypr=true ;;
     '--no-install'|'-n')    inst=false ;;
     '--help'|'-h')          usage ;;
     '-'*)                   usage ;;
@@ -42,43 +40,76 @@ install() {
 }
 
 # backup dir
-rm -rf ~/.config/backup > /dev/null 2>&1
-mkdir -p ~/.config/backup
-backup() {
-	if [ -L $1 ] || [ -f $1 ]; then
-		rm -f $1
-	elif [ -d $1 ]; then
-		mv $1 ~/.config/backup
-	fi
-}
+backup_dir=~/.config/backup
+if [ -d $backup_dir ] && [ "$(ls -A $backup_dir)" ]; then
+    echo "cleaning backup dir $backup_dir"
+    echo "files:"
+    ls -1A $backup_dir
+    
+    read -p "are you sure? [y/N]: " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[YySs]$ ]]; then
+        rm -rf $backup_dir
+    fi
+fi
 
 # link
 link() {
-    backup $2
-    ln -sf $1 $2
+    if [ -L $2 ]; then
+        if [ ! $2 -ef $1 ]; then
+            rm $2
+        fi
+    elif [ -f $2 ] || [ -d $2 ]; then
+        mkdir -p $backup_dir
+		mv $2 $backup_dir
+        echo "backup: $2 to ~/.config/backup"
+	fi
+
+    if [ ! -L $2 ]; then
+        ln -sf $1 $2
+        echo "link: $2"
+    fi
 }
 
 # ---
 
-# hyprland
-if $hypr; then
-    install hyprland-git xdg-desktop-portal-hyprland-git \
-        pipewire pipewire-pulse wireplumber \
-        grim slurp dunst udiskie
-    link $dir/hypr ~/.config/hypr
+# sway
+install swayfx-git \
+    pipewire pipewire-pulse wireplumber \
+    grim slurp dunst udiskie \
+    swaybg swayidle swaylock-effects-git swaynagmode \
+    wob sov autotiling-rs libinput-gestures
 
-    # rofi
-    install rofi-lbonn-wayland
-    link $dir/rofi ~/.config/rofi
+link $dir/sway ~/.config/sway
 
-    # eww
-    install eww-tray-wayland-git
-    link $dir/eww ~/.config/eww
+if [ ! -L "/usr/local/bin/run_sway" ]; then
+    if [ "$EUID" -ne 0 ]; then
+        echo "run as root to link run_sway"
+    else
+        link $dir/sway/run /usr/local/bin/run_sway
+    fi
 fi
 
-# wezterm
-install wezterm ttf-nerd-fonts-symbols-mono otf-apple-fonts noto-fonts-emoji
-link $dir/wezterm ~/.config/wezterm
+# sway utils
+link $dir/sway/wob ~/.config/wob
+link $dir/sway/sov ~/.config/sov
+link $dir/sway/libinput-gestures.conf ~/.config/libinput-gestures.conf
+
+# rofi
+install rofi-lbonn-wayland
+link $dir/rofi ~/.config/rofi
+
+# eww
+install eww-tray-wayland-git
+link $dir/eww ~/.config/eww
+
+# dunst
+install dunst
+link $dir/dunst ~/.config/dunst
+
+# foot terminal
+install foot ttf-nerd-fonts-symbols-mono otf-apple-fonts noto-fonts-emoji
+link $dir/foot ~/.config/foot
 
 # neofetch
 install neofetch

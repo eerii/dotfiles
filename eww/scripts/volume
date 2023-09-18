@@ -1,14 +1,19 @@
 #!/bin/bash
 
 get_volume() {
-    $(pamixer --get-mute) && echo 0 || pamixer --get-volume
+    vol=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+    if [[ $vol =~ .*"MUTED".* ]]; then
+        echo 0.00
+    else
+        echo $vol | awk -F ' ' '{print $2}'
+    fi
 }
 
 get_icon() {
     vol=$(get_volume)
-    if [[ $vol == 0 ]]; then
+    if [[ $vol == 0.00 ]]; then
         echo 
-    elif [[ $vol < 50 ]]; then
+    elif [[ $vol < 0.50 ]]; then
         echo 
     else
         echo 

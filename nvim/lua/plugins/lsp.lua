@@ -211,8 +211,8 @@ return {
                     return vim.fn["codeium#Accept"]()
                 end
                 local is_selected = vim.fn.complete_info() ~= -1
-                local cmd = is_selected and "<C-y>" or "<C-e><CR>"
-                if_coq(cmd, "<CR>")
+                local cmd = is_selected and "<C-y>" or "<C-e><Tab>"
+                if_coq(cmd, "<Tab>")
             end
 
             -- TODO: c-w for codeium
@@ -239,7 +239,7 @@ return {
             end
 
             return {
-                { "<Esc>", function() if_coq("<C-e>", "<Esc>") end, mode = "i" },
+                { "<Esc>", function() if_coq("<C-e><Esc>", "<Esc>") end, mode = "i" },
                 { "<C-c>", function() close_coq("<C-c>") end, mode = "i" },
                 { "<C-u>", function() close_coq("<C-u>") end, mode = "i" },
                 { "<BS>", function() close_coq("<BS>") end, mode = "i" },

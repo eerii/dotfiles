@@ -12,9 +12,8 @@ export GPG_TTY=$(tty)
 # ssh
 export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 
-# swww
-export SWWW_TRANSITION_FPS=30
-export SWWW_TRANSITION_STEP=20
+# nvim
+export EDITOR=nvim
 
 # fish
 if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} ]]; then

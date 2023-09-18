@@ -1,12 +1,26 @@
 return {
+    -- Catppuccin theme
+    {
+        "catppuccin/nvim",
+        enabled = false,
+        --lazy = false,
+        --priority = 1000,
+        config = function()
+			require("catppuccin").setup {
+				flavour = "mocha"
+			}
+			vim.cmd("colorscheme catppuccin")
+		end,
+    },
+
     -- Rose pine theme
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-		lazy = false,
+	    lazy = false,
 		priority = 1000,
 		config = function()
-			require("rose-pine").setup{
+			require("rose-pine").setup {
 				disable_background = true
 			}
 			vim.cmd("colorscheme rose-pine")
@@ -15,29 +29,29 @@ return {
 
     -- Kanawaga theme
     {
-        'rebelot/kanagawa.nvim',
+        "rebelot/kanagawa.nvim",
         enabled = false,
-        -- lazy = false,
-        -- priority = 1000,
+        --lazy = false,
+        --priority = 1000,
         config = function()
-            require('kanagawa').setup {
+            require("kanagawa").setup {
                 --transparent = true,
                 colors = {
                     theme = {
                         all = {
-                            ui = { bg_gutter = 'none' }
+                            ui = { bg_gutter = "none" }
                         },
                     },
                     palette = {
-                        sumiInk3 = '#121217',
-                        sumiInk4 = '#1F1F28',
+                        sumiInk3 = "#121217",
+                        sumiInk4 = "#1F1F28",
                     }
                 },
                 overrides = function(colors)
                     local theme = colors.theme
                     return {
                         Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg },
-                        PmenuSel = { fg = 'NONE', bg = theme.ui.bg_p1 },
+                        PmenuSel = { fg = "NONE", bg = theme.ui.bg_p1 },
                         PmenuSbar = { bg = theme.ui.bg_m1 },
                         PmenuThumb = { bg = theme.ui.bg_p1 },
                         CmpDoc = { fg = theme.ui.shade0, bg = theme.ui.bg },
@@ -50,28 +64,16 @@ return {
                     }
                 end,
             }
-            vim.cmd.colorscheme('kanagawa')
+            vim.cmd.colorscheme("kanagawa")
         end,
     },
 
     -- Evangelion theme
     {
-        'nyngwang/nvimgelion',
+        "nyngwang/nvimgelion",
         enabled = false,
         --lazy = false,
         --priority = 1000,
         config = true
     },
-
-    -- Catppuccin theme
-    {
-        'catppuccin/nvim',
-        enabled = false,
-        --lazy = false,
-        --priority = 1000,
-        opts = {
-            flavour = 'mocha'
-        }
-    }
-
 }
