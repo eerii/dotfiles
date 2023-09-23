@@ -2,17 +2,19 @@
 
 # usage
 usage() {
-    echo "usage: $0 [dir] [--no-install | -n] [--help | -h]"
+    echo "usage: $0 [dir] [--no-install | -n] [--extra-deps | -e] [--help | -h]"
     exit
 }
 
 # process arguments and options
 args=()
 inst=true
+extra=false
 for arg in "$@"; do
   shift
   case "$arg" in
     '--no-install'|'-n')    inst=false ;;
+    '--extra-deps'|'-e')    extra=true ;;
     '--help'|'-h')          usage ;;
     '-'*)                   usage ;;
     *)                      args+=($arg) ;;
@@ -35,6 +37,9 @@ echo "dotfiles: $dir"
 # install packages
 install() {
     if $inst; then
+        if [ $1 == "-e" ] && $extra; then
+            shift
+        fi
 	    paru -S --needed $@
     fi
 }
@@ -62,7 +67,7 @@ link() {
     elif [ -f $2 ] || [ -d $2 ]; then
         mkdir -p $backup_dir
 		mv $2 $backup_dir
-        echo "backup: $2 to ~/.config/backup"
+        echo "backup: $2 to $backup_dir"
 	fi
 
     if [ ! -L $2 ]; then
@@ -74,11 +79,7 @@ link() {
 # ---
 
 # sway
-install swayfx-git \
-    pipewire pipewire-pulse wireplumber \
-    grim slurp dunst udiskie \
-    swaybg swayidle swaylock-effects-git swaynagmode \
-    wob sov autotiling-rs libinput-gestures
+install swayfx-git swaybg swayidle swaylock-effects-git swaynagmode
 
 link $dir/sway ~/.config/sway
 
@@ -91,12 +92,17 @@ if [ ! -L "/usr/local/bin/run_sway" ]; then
 fi
 
 # sway utils
+install -e wob sov autotiling-rs libinput-gestures
 link $dir/sway/wob ~/.config/wob
 link $dir/sway/sov ~/.config/sov
 link $dir/sway/libinput-gestures.conf ~/.config/libinput-gestures.conf
 
+# wayland utils
+install -e pipewire pipewire-pulse wireplumber grim slurp dunst udiskie
+
 # rofi
 install rofi-lbonn-wayland
+install -e cliphist
 link $dir/rofi ~/.config/rofi
 
 # eww
@@ -108,18 +114,22 @@ install dunst
 link $dir/dunst ~/.config/dunst
 
 # foot terminal
-install foot ttf-nerd-fonts-symbols-mono otf-apple-fonts noto-fonts-emoji
+install foot
+install -e ttf-nerd-fonts-symbols-mono otf-apple-fonts noto-fonts-emoji
 link $dir/foot ~/.config/foot
 
 # neofetch
-install neofetch
+install -e neofetch
 link $dir/neofetch ~/.config/neofetch
 
 # fish
-install fish
+install fish fisher
 link $dir/fish ~/.config/fish
 link $dir/fish/.bashrc ~/.bashrc
 
 # neovim
 install neovim fzf
 link $dir/nvim ~/.config/nvim
+
+# media
+install -e zathura mpv imv
