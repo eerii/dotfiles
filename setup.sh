@@ -87,7 +87,7 @@ if [ ! -L "/usr/local/bin/run_sway" ]; then
     if [ "$EUID" -ne 0 ]; then
         echo "run as root to link run_sway"
     else
-        link $dir/sway/run /usr/local/bin/run_sway
+        link $dir/sway/bin/run /usr/local/bin/run_sway
     fi
 fi
 
@@ -133,3 +133,6 @@ link $dir/nvim ~/.config/nvim
 
 # media
 install -e zathura mpv imv
+
+# themes
+install colloid-icon-theme-git

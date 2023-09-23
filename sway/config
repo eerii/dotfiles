@@ -49,8 +49,8 @@ input * {
     exec udiskie &
     exec libinput-gestures &
 
-    exec nohup beeper --hidden --no-sandbox --default-frame --enable-features=UseOzonePlatform --ozone-platform=wayland %U
-    exec nohup easyeffects --gapplication-service &
+    exec beeper --hidden --no-sandbox --default-frame --enable-features=UseOzonePlatform --ozone-platform=wayland %U &
+    exec easyeffects --gapplication-service &
 
     set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
     set $SOVSOCK /tmp/sovpipe
@@ -65,6 +65,8 @@ input * {
     exec autotiling-rs
 
     set $nag exec swaynagmode
+
+    exec_always ~/.config/sway/bin/clamshell
 
 # Binds
     bindsym $mod+t exec foot
@@ -124,8 +126,8 @@ input * {
     bindsym $mod+Shift+9 move container to workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10
 
-    bindsym $mod+left exec ~/.config/sway/swaywork prev
-    bindsym $mod+right exec ~/.config/sway/swaywork next
+    bindsym $mod+left exec ~/.config/sway/bin/swaywork prev
+    bindsym $mod+right exec ~/.config/sway/bin/swaywork next
 
     bindsym $mod+m splith
     bindsym $mod+n splitv
@@ -152,6 +154,9 @@ input * {
     bindsym $mod+c exec wtype -P XF86Copy
     bindsym $mod+v exec wtype -P XF86Paste
     bindsym $mod+x exec wtype -P XF86Cut
+
+    bindswitch --reload --locked lid:on output eDP-1 disable
+    bindswitch --reload --locked lid:off output eDP-1 enable
 
 mode "resize" {
     bindsym $right resize shrink width 50px
