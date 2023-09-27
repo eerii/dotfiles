@@ -40,14 +40,13 @@ input * {
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
     exec eww daemon && eww open bar
-    exec_always eww kill && eww open bar
 
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store
 
     exec dunst &
     exec udiskie &
-    exec libinput-gestures &
+    exec_always libinput-gestures &
 
     exec beeper --hidden --no-sandbox --default-frame --enable-features=UseOzonePlatform --ozone-platform=wayland %U &
     exec easyeffects --gapplication-service &
@@ -57,10 +56,10 @@ input * {
     exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
     exec rm -f $SOVSOCK && mkfifo $SOVSOCK && tail -f $SOVSOCK | sov -t 250
 
-    exec swayidle -w \
-        timeout 300 'swaylock --grace 5 --screenshots --effect-blur 10x4' \
-        timeout 600 'swaymsg "output * power off"' \
-        resume 'swaymsg "output * power on"'
+    # exec swayidle -w \
+    #     timeout 300 'swaylock --grace 5 --screenshots --effect-blur 10x4' \
+    #     timeout 600 'swaymsg "output * power off"' \
+    #     resume 'swaymsg "output * power on"'
 
     exec autotiling-rs
 
@@ -156,7 +155,7 @@ input * {
     bindsym $mod+x exec wtype -P XF86Cut
 
     bindswitch --reload --locked lid:on output eDP-1 disable
-    bindswitch --reload --locked lid:off output eDP-1 enable
+    bindswitch --reload --locked lid:off output eDP-1 enable; exec eww open bar
 
 mode "resize" {
     bindsym $right resize shrink width 50px

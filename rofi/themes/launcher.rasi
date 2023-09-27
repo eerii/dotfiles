@@ -12,7 +12,7 @@ configuration {
 @import "colors.rasi"
 
 * {
-    font: "SFMono Nerd Font 12";
+    font: "SF Mono 12";
 }
 
 /* --- */

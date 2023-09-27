@@ -28,5 +28,19 @@ return {
             vim.o.timeoutlen = 500
         end,
         opts = {}
+    },
+
+    {
+        "https://gitlab.com/itaranto/plantuml.nvim",
+        version = "*",
+        opts = {
+            renderer = {
+                type = "imv",
+                options = {
+                    dark_mode = true,
+                }
+            }
+        },
+        ft = "plantuml"
     }
 }

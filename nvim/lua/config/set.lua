@@ -50,3 +50,12 @@ vim.diagnostic.config({
 	update_in_insert = true,
 	float = { focusable = true },
 })
+
+-- Plantuml filetype
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+	desc = "plantuml filetype",
+	pattern = {"*.puml", "*.uml"},
+	callback = function (opts)
+		vim.bo[opts.buf].filetype = "plantuml"
+    end,
+})
