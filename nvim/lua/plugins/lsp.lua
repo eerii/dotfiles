@@ -161,6 +161,7 @@ return {
                 },
                 auto_start = "shut-up",
             }
+
             vim.cmd [[COQnow --shut-up]]
 
             vim.api.nvim_exec([[

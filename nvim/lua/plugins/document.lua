@@ -45,13 +45,13 @@ return {
 
     -- Toggle comments
     {
-        'echasnovski/mini.comment',
+        "echasnovski/mini.comment",
         config = function()
-            require('mini.comment').setup{
+            require("mini.comment").setup{
                 mappings = {
-                    comment = 'gc',
-                    textobject = 'gc',
-                    comment_line = 'gcc'
+                    comment = "gc",
+                    textobject = "gc",
+                    comment_line = "gcc"
                 }
             }
         end,
@@ -60,18 +60,41 @@ return {
 
     -- Trim trailspace
     {
-        'echasnovski/mini.trailspace',
+        "echasnovski/mini.trailspace",
         config = function()
-            require('mini.trailspace').setup()
+            require("mini.trailspace").setup()
         end,
-        keys = { { '<leader>tt', function() require('mini.trailspace').trim() end, desc = 'Trim trailspace' } }
+        keys = { { "<leader>tt", function() require("mini.trailspace").trim() end, desc = "Trim trailspace" } }
     },
 
     -- Autopairs
     -- {
-    --     'altermo/ultimate-autopair.nvim',
-    --     branch = 'v0.6',
+    --     "altermo/ultimate-autopair.nvim",
+    --     branch = "v0.6",
     --     opts = {},
-    --     event = { 'InsertEnter', 'CmdlineEnter' },
-    -- }
+    --     event = { "InsertEnter", "CmdlineEnter" },
+    -- },
+    
+    -- Zen mode
+    {
+        "folke/zen-mode.nvim",
+        opts = {
+            window = {
+                backdrop = 1, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
+                width = 80,
+                options = {
+                    signcolumn = "no", -- disable signcolumn
+                    number = false, -- disable number column
+                    relativenumber = false, -- disable relative numbers
+                    cursorline = false, -- disable cursorline
+                    cursorcolumn = false, -- disable cursor column
+                    foldcolumn = "0", -- disable fold column
+                    list = false, -- disable whitespace characters
+                    wrap = true, -- set text wrap
+                    linebreak = true, -- break whole words
+                },
+            },
+        },
+        keys = { { "<leader>z", "<CMD>ZenMode<CR>", desc = "Zen mode" } }
+    }
 }

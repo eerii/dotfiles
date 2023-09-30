@@ -14,7 +14,10 @@ return {
             require("nvim-treesitter.configs").setup {
                 ensure_installed = { "c", "cpp", "rust", "python", "lua", "vim", "vimdoc", "query" },
                 auto_install = true,
-                highlight = { enable = true },
+                highlight = {
+                    enable = true,
+                    disable = { "markdown" }
+                },
                 indent = { enable = true },
                 incremental_selection = { enable = true },
                 refactor = {
@@ -25,5 +28,23 @@ return {
             }
         end,
         event = "BufReadPre",
-    }
+    },
+
+    -- Markdown improved syntax
+    {
+        "plasticboy/vim-markdown",
+        branch = "master",
+        require = {"godlygeek/tabular"},
+        config = function()
+            vim.g.vim_markdown_folding_style_pythonic = 1
+            
+            vim.api.nvim_create_autocmd("Filetype", {
+                pattern = "markdown",
+                callback = function()
+                    vim.o.foldlevel = 99
+                end,
+            })
+        end,
+        ft = "markdown"
+    },
 }
