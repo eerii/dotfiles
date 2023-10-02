@@ -100,12 +100,13 @@ link $dir/sway/sov ~/.config/sov
 install -e pipewire pipewire-pulse wireplumber grim slurp dunst udiskie
 
 # general utils
-install -e glow zoxide ripgrep rm-improved eza
+install -e glow zoxide ripgrep rm-improved eza bat
 
 # rofi
 install rofi-lbonn-wayland
 install -e cliphist
 link $dir/rofi ~/.config/rofi
+link ~/.cache/wal/config.rasi ~/.config/rofi/config.rasi
 
 # eww
 install eww-tray-wayland-git
@@ -121,7 +122,7 @@ install -e ttf-nerd-fonts-symbols-mono otf-apple-fonts noto-fonts-emoji
 link $dir/foot ~/.config/foot
 
 # lf
-install lf archivefs
+install lf archivefs chafa perl-file-mimetype
 link $dir/lf ~/.config/lf
 
 # neofetch

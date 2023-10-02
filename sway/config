@@ -4,6 +4,9 @@ set $left h
 set $down j
 set $up k
 set $right l
+set $opacity 0.95
+
+include /etc/sway/config.d/*
 
 # Colors
 include "$HOME/.cache/wal/colors-sway"
@@ -35,7 +38,9 @@ input * {
     default_border none
     default_floating_border none
 
-    # blur enable
+    blur enable
+    blur_passes 5
+    blur_radius 3
 
     shadows enable
     shadows_on_csd enable
@@ -45,8 +50,6 @@ input * {
     scratchpad_minimize enable
 
 # Exec
-    exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-
     exec wal -R
     exec_always eww daemon && eww close-all && eww open bar
 
@@ -76,7 +79,11 @@ input * {
 
 # Window rules
     for_window [app_id=".*"] inhibit_idle fullscreen
+    for_window [app_id=".*"] opacity $opacity
+
     for_window [app_id="Beeper"] move scratchpad
+
+    layer_effects "rofi" blur enable; shadows enable; corner_radius 10
 
 # Binds
     bindsym $mod+t exec foot
@@ -201,5 +208,3 @@ mode "nag" {
     }
 }
 swaynag_command $nag -R
-
-include @sysconfdir@/sway/config.d/*

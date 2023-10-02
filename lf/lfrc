@@ -4,11 +4,16 @@ set shell bash
 # set '-eu' options for shell commands
 set shellopts '-eu'
 
+# set previewer
+set previewer ~/.config/lf/preview
+
 # set internal field separator (IFS) to "\n" for shell commands
 set ifs "\n"
 
-# leave some space at the top and the bottom of the screen
+# settings
 set scrolloff 10
+set icons
+set sixel
 
 # Use the `dim` attribute instead of underline for the cursor in the preview pane
 set cursorpreviewfmt "\033[7;2m"
@@ -121,9 +126,9 @@ map gg :fzf_search
 
 # custom open
 cmd open ${{
-    case "$f" in
+    case "$(mimetype -b $f)" in
         # access compressed files
-        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.zip|*.rar|*.iso)
+        *tar*|*zip*|*rar*|*cd-image*)
             mntdir="$f.mount"
             if [ ! -d "$mntdir" ]; then
                 mkdir "$mntdir"
@@ -132,11 +137,12 @@ cmd open ${{
             fi
             mntdir="$(printf '%s' "$mntdir" | sed 's/\\/\\\\/g;s/"/\\"/g')"
             lf -remote "send $id cd \"$mntdir\""
-            lf -remote "send $id reload"
-            ;;
+            lf -remote "send $id reload" ;;
+        application/pdf)
+            zathura $f ;;
+        image/*)
+            imv $f ;;
         *)
-            for f in $fx; do
-                $OPENER $f > /dev/null 2> /dev/null &
-            done;;
+            lf -remote "send $id \$$EDITOR \$fx" ;;
     esac
 }}
