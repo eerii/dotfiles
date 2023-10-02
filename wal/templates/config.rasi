@@ -2,7 +2,7 @@
 
 window {{
     transparency: "real";
-    width: 610px;
+    width: 600px;
     height: 470px;
 }}
 
@@ -13,8 +13,21 @@ window {{
     font: "Atkinson Hyperlegible 14";
 }}
 
+entry {{
+    placeholder: "";
+    font: "Atkinson Hyperlegible 18";
+}}
+
 inputbar {{
     children: [ entry, case-indicator ];
+}}
+
+listview {{
+    scrollbar: false;
+}}
+
+element {{
+    border-radius: 10px;
 }}
 
 element normal.normal {{
@@ -26,7 +39,7 @@ element alternate.normal {{
 }}
 
 element-icon {{
-    size: 42px;
+    size: 42;
 }}
 
 element-text {{

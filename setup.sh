@@ -103,7 +103,7 @@ install -e pipewire pipewire-pulse wireplumber grim slurp dunst udiskie
 install -e glow zoxide ripgrep rm-improved eza bat
 
 # rofi
-install rofi-lbonn-wayland
+install rofi-lbonn-wayland rofimoji
 install -e cliphist
 link $dir/rofi ~/.config/rofi
 link ~/.cache/wal/config.rasi ~/.config/rofi/config.rasi

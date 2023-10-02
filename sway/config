@@ -4,7 +4,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $opacity 0.95
+set $opacity 0.93
 
 include /etc/sway/config.d/*
 
@@ -82,6 +82,7 @@ input * {
     for_window [app_id=".*"] opacity $opacity
 
     for_window [app_id="Beeper"] move scratchpad
+    for_window [app_id="Beeper"] opacity 0.88
 
     layer_effects "rofi" blur enable; shadows enable; corner_radius 10
 
@@ -89,10 +90,14 @@ input * {
     bindsym $mod+t exec foot
     bindsym $mod+b exec librewolf
     bindsym $mod+a exec nautilus -w
-    bindsym $mod+space exec pkill rofi || sh ~/.config/rofi/bin/launcher | xargs swaymsg exec --
-    bindsym $mod+Shift+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy
-    bindsym $mod+Shift+e exec pkill rofi || rofimoji
+
     bindsym $mod+Shift+s exec grim -g "$(slurp)" ~/Media/Pictures/Screenshots/$(date +'%Y.%m.%d-%H:%M:%S.png')
+
+    bindsym $mod+space exec pkill rofi || rofi -show drun -show-icons | xargs swaymsg exec --
+    bindsym $mod+Shift+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy
+    bindsym $mod+Shift+e exec ~/.config/rofi/bin/emoji
+    bindsym $mod+Shift+m exec ~/.config/rofi/bin/emoji math
+    bindsym $mod+Shift+n exec ~/.config/rofi/bin/emoji nerd_font
 
     bindsym $mod+q kill
     bindsym $mod+Shift+c reload
