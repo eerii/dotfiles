@@ -13,6 +13,10 @@ client.focused $color0 $background $foreground $color7 $background
 output eDP-1 resolution 2880x1800 position 0,0 scale 1.75
 output * bg $wallpaper fill
 
+# Seats
+seat * hide_cursor 3000
+seat * hide_cursor when-typing enable
+
 # Idle
 # TODO: 
 
@@ -61,7 +65,7 @@ input * {
     exec rm -f $SOVSOCK && mkfifo $SOVSOCK && tail -f $SOVSOCK | sov -t 250
 
     exec swayidle -w \
-        timeout 300 'swaylock -f --grace 5 -i ~/Media/Pictures/Wallpapers/cliff.jpg -s fill --font-size 1 --indicator-radius 24 --indicator-thickness 4 --indicator-x 48 --indicator-y 48' \
+        timeout 300 'sh ~/.config/sway/bin/swaylock' \
         timeout 330 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"'
 
@@ -86,6 +90,7 @@ input * {
     bindsym $mod+q kill
     bindsym $mod+Shift+c reload
     bindsym $mod+Shift+q $nag -t "warning" -m "Exit Sway?" -b "Exit" "swaymsg exit" -b "Reload" "swaymsg reload"
+    bindsym $mod+Shift+w exec sh ~/.config/sway/bin/swaylock
 
     floating_modifier $mod normal
 

@@ -99,6 +99,9 @@ link $dir/sway/sov ~/.config/sov
 # wayland utils
 install -e pipewire pipewire-pulse wireplumber grim slurp dunst udiskie
 
+# general utils
+install -e glow zoxide ripgrep rm-improved eza
+
 # rofi
 install rofi-lbonn-wayland
 install -e cliphist
@@ -116,6 +119,10 @@ link $dir/dunst ~/.config/dunst
 install foot
 install -e ttf-nerd-fonts-symbols-mono otf-apple-fonts noto-fonts-emoji
 link $dir/foot ~/.config/foot
+
+# lf
+install lf archivefs
+link $dir/lf ~/.config/lf
 
 # neofetch
 install -e neofetch

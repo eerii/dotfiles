@@ -5,20 +5,20 @@
     - [ ] emojis
     - [ ] calculator
 
+- [ ] zellij
+
 - [ ] color picker
 
 - [ ] create a custom colorscheme
     - [ ] mix rose pine, catppuccin, kanawaga, ...
-    - [ ] match colorscheme to backgrounds?
+    - [x] match colorscheme to backgrounds?
+    - [ ] add to dunst, gtk, qt, java, sov, wob
     - [ ] multiple options?
 
-- [ ] gtk theme
-    - [ ] apply also to qt and java
+- [x] change cursor again
+- [x] revisit icon theme
 
-- [ ] change cursor again
-- [ ] revisit icon theme
-
-- [ ] propperly rice dunst
+- [x] propperly rice dunst
 - [ ] notification center
 
 - [ ] power off menu
@@ -43,10 +43,11 @@
 - [ ] maybe add a login screen
     - [ ] gtkgreet / regreet
     - [ ] plymouth
+    - [ ] fix unlock passwords
 - [ ] improve lock screen
 
 - [ ] email client
-- [ ] work on messages client
+- [x] work on messages client
 
 - [ ] replace wob with something using eww
-    - [ ] sov can stay as it is pretty nice
+    - [x] sov can stay as it is pretty nice
