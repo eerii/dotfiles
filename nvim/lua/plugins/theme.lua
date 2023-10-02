@@ -1,4 +1,15 @@
 return {
+    -- Pywal automatic theme
+    {
+        "sprockmonty/wal.vim",
+        dir = "~/Code/wal.vim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+			vim.cmd("colorscheme wal")
+		end,
+    },
+
     -- Catppuccin theme
     {
         "catppuccin/nvim",
@@ -17,8 +28,9 @@ return {
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-	    lazy = false,
-		priority = 1000,
+        enabled = false,
+	    --lazy = false,
+		--priority = 1000,
 		config = function()
 			require("rose-pine").setup {
 				disable_background = true

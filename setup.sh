@@ -92,10 +92,9 @@ if [ ! -L "/usr/local/bin/run_sway" ]; then
 fi
 
 # sway utils
-install -e wob sov autotiling-rs libinput-gestures
+install -e wob sov autotiling-rs
 link $dir/sway/wob ~/.config/wob
 link $dir/sway/sov ~/.config/sov
-link $dir/sway/libinput-gestures.conf ~/.config/libinput-gestures.conf
 
 # wayland utils
 install -e pipewire pipewire-pulse wireplumber grim slurp dunst udiskie
@@ -136,3 +135,10 @@ install -e zathura mpv imv
 
 # themes
 install colloid-icon-theme-git
+install python-pywal python-pywalfox
+if $inst; then
+    echo "If you are using librewolf, please install python-pywalfox 2.8.0 from text.pypi.org"
+fi
+link $dir/wal ~/.config/wal
+link ~/.config/gtk-4.0 ~/.config/gtk-3.0
+link ~/.cache/wal/gtk.css ~/.config/gtk-4.0/gtk.css

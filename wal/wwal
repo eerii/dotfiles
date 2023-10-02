@@ -1,0 +1,4 @@
+#!/bin/bash
+wal "$@"
+pywalfox update
+nautilus -q

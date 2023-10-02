@@ -5,9 +5,13 @@ set $down j
 set $up k
 set $right l
 
+# Colors
+include "$HOME/.cache/wal/colors-sway"
+client.focused $color0 $background $foreground $color7 $background
+
 # Displays
 output eDP-1 resolution 2880x1800 position 0,0 scale 1.75
-output * bg ~/Media/Pictures/Wallpapers/forest.png fill
+output * bg $wallpaper fill
 
 # Idle
 # TODO: 
@@ -39,16 +43,16 @@ input * {
 # Exec
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
-    exec eww daemon && eww open bar
+    exec wal -R
+    exec_always eww daemon && eww close-all && eww open bar
 
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store
 
-    exec dunst &
+    exec dunst &swaymsg -t get_tree | jq -r '<jq prog here>'
     exec udiskie &
-    exec_always libinput-gestures &
 
-    exec beeper --hidden --no-sandbox --default-frame --enable-features=UseOzonePlatform --ozone-platform=wayland %U &
+    exec beeper --no-sandbox --default-frame --enable-features=UseOzonePlatform --ozone-platform=wayland %U &
     exec easyeffects --gapplication-service &
 
     set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
@@ -56,16 +60,19 @@ input * {
     exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
     exec rm -f $SOVSOCK && mkfifo $SOVSOCK && tail -f $SOVSOCK | sov -t 250
 
-    # exec swayidle -w \
-    #     timeout 300 'swaylock --grace 5 --screenshots --effect-blur 10x4' \
-    #     timeout 600 'swaymsg "output * power off"' \
-    #     resume 'swaymsg "output * power on"'
+    exec swayidle -w \
+        timeout 300 'swaylock -f --grace 5 -i ~/Media/Pictures/Wallpapers/cliff.jpg -s fill --font-size 1 --indicator-radius 24 --indicator-thickness 4 --indicator-x 48 --indicator-y 48' \
+        timeout 330 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"'
 
+    exec_always ~/.config/sway/bin/clamshell
     exec autotiling-rs
 
     set $nag exec swaynagmode
 
-    exec_always ~/.config/sway/bin/clamshell
+# Window rules
+    for_window [app_id=".*"] inhibit_idle fullscreen
+    for_window [app_id="Beeper"] move scratchpad
 
 # Binds
     bindsym $mod+t exec foot
@@ -125,11 +132,11 @@ input * {
     bindsym $mod+Shift+9 move container to workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10
 
-    bindsym $mod+left exec ~/.config/sway/bin/swaywork prev
-    bindsym $mod+right exec ~/.config/sway/bin/swaywork next
+    bindsym $mod+left exec ~/.config/sway/bin/swaywork next
+    bindsym $mod+right exec ~/.config/sway/bin/swaywork prev
 
-    bindsym $mod+m splith
-    bindsym $mod+n splitv
+    bindsym $mod+comma splith
+    bindsym $mod+period splitv
 
     bindsym $mod+f fullscreen
     bindsym $mod+d floating toggle
@@ -138,6 +145,7 @@ input * {
 
     bindsym $mod+Shift+minus move scratchpad
     bindsym $mod+minus scratchpad show
+    bindsym $mod+m [app_id="Beeper"] scratchpad show
 
     bindsym --locked XF86AudioRaiseVolume exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/[^0-9]//g' > $WOBSOCK
     bindsym --locked XF86AudioLowerVolume exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/[^0-9]//g' > $WOBSOCK
@@ -156,6 +164,9 @@ input * {
 
     bindswitch --reload --locked lid:on output eDP-1 disable
     bindswitch --reload --locked lid:off output eDP-1 enable; exec eww open bar
+
+    bindgesture swipe:left exec ~/.config/sway/bin/swaywork next
+    bindgesture swipe:right exec ~/.config/sway/bin/swaywork prev
 
 mode "resize" {
     bindsym $right resize shrink width 50px
