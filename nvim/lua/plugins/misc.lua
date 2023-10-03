@@ -30,6 +30,7 @@ return {
         opts = {}
     },
 
+    -- Plantuml renderer
     {
         "https://gitlab.com/itaranto/plantuml.nvim",
         version = "*",
@@ -42,5 +43,26 @@ return {
             }
         },
         ft = "plantuml"
+    },
+
+    -- Pandoc renderer
+    {
+        "garciabarreiro/nvim-pandoc",
+        dir = "~/Code/nvim-pandoc",
+        ft = { "markdown", "latex" },
+        keys = {
+            { "<leader>p", function()
+                vim.api.nvim_create_augroup("Pandoc", { clear = false })
+                vim.api.nvim_clear_autocmds({ buffer = 0, group = "Pandoc" })
+                vim.api.nvim_create_autocmd("BufWritePost", {
+                    group = "Pandoc",
+                    buffer = 0,
+                    callback = function()
+                        vim.cmd("PandocWrite")
+                    end
+                })
+                vim.cmd("PandocRead")
+            end, desc = "Pandoc enable" },
+        }
     }
 }

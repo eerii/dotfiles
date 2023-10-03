@@ -150,3 +150,7 @@ fi
 link $dir/wal ~/.config/wal
 link ~/.config/gtk-4.0 ~/.config/gtk-3.0
 link ~/.cache/wal/gtk.css ~/.config/gtk-4.0/gtk.css
+
+# pandoc
+install tectonic pandoc-bin
+link $dir/pandoc ~/.config/pandoc
