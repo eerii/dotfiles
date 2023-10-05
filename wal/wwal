@@ -1,4 +1,4 @@
 #!/bin/bash
-wal "$@"
+wal "$@" --cols16 --saturate 0.4 --backend colorz -b 0c0d0f
 pywalfox update
 nautilus -q

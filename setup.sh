@@ -80,21 +80,21 @@ link() {
 
 # sway
 install swayfx-git swaybg swayidle swaylock-effects-git swaynagmode
-
 link $dir/sway ~/.config/sway
 
-if [ ! -L "/usr/local/bin/run_sway" ]; then
-    if [ "$EUID" -ne 0 ]; then
-        echo "run as root to link run_sway"
-    else
-        link $dir/sway/bin/run /usr/local/bin/run_sway
-    fi
+if [ "$EUID" -ne 0 ]; then
+    echo "run as root to link environment"
+else
+    link $dir/sway/environment /etc/environment
 fi
 
 # sway utils
 install -e wob sov autotiling-rs
 link $dir/sway/wob ~/.config/wob
 link $dir/sway/sov ~/.config/sov
+
+# login
+install -e gdm plymouth plymouth-theme-angular-git
 
 # wayland utils
 install -e pipewire pipewire-pulse wireplumber grim slurp dunst udiskie
@@ -143,7 +143,8 @@ install -e zathura mpv imv
 
 # themes
 install colloid-icon-theme-git
-install python-pywal python-pywalfox
+install swww sunwait wallutils
+install pywal-16-colors python-pywalfox colorz
 if $inst; then
     echo "If you are using librewolf, please install python-pywalfox 2.8.0 from text.pypi.org"
 fi

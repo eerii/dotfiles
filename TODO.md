@@ -1,8 +1,8 @@
 # todo
 
-- [ ] global rofi rice
-    - [ ] clipboard
-    - [ ] emojis
+- [x] global rofi rice
+    - [x] clipboard
+    - [x] emojis
     - [ ] calculator
 
 - [ ] zellij
@@ -12,6 +12,8 @@
 - [ ] create a custom colorscheme
     - [ ] mix rose pine, catppuccin, kanawaga, ...
     - [x] match colorscheme to backgrounds?
+    - [x] dynamic backgrounds
+    - [ ] improve neovim theme, propper fork
     - [ ] add to dunst, gtk, qt, java, sov, wob
     - [ ] multiple options?
 
@@ -20,6 +22,10 @@
 
 - [x] propperly rice dunst
 - [ ] notification center
+
+- [ ] neovim
+    - [ ] mini mode (no lsp, cmp, plugins...)
+    - [ ] change from coq to cmp again
 
 - [ ] power off menu
 - [ ] fan control menu

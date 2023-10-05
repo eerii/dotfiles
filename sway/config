@@ -50,7 +50,8 @@ input * {
     scratchpad_minimize enable
 
 # Exec
-    exec wal -R
+    exec swww init
+    exec ~/.config/sway/bin/sunpaper -d
     exec_always eww daemon && eww close-all && eww open bar
 
     exec wl-paste --type text --watch cliphist store
@@ -186,7 +187,7 @@ input * {
     bindsym $mod+x exec wtype -P XF86Cut
 
     bindswitch --reload --locked lid:on output eDP-1 disable
-    bindswitch --reload --locked lid:off output eDP-1 enable
+    bindswitch --reload --locked lid:off output eDP-1 enable; exec sleep 1 && [[ $(eww windows | grep bar) != \** ]] && swaymsg reload
 
     bindgesture swipe:left exec ~/.config/sway/bin/swaywork next
     bindgesture swipe:right exec ~/.config/sway/bin/swaywork prev

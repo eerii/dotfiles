@@ -7,7 +7,7 @@
 }
 
 .logo, .clock>*, .system {
-    background-color: #191724;
+    background-color: #0c0d0f;
     color: #b0b4bc;
     border-radius: 6px;
     padding: 0px 10px;
@@ -19,8 +19,4 @@
 
 .clock:hover>* {
     padding: 0px 64px;
-}
-
-button:hover {
-    color: #D35D6E;
 }

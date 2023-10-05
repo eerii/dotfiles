@@ -47,7 +47,7 @@ map("i", "jj", "<Esc>", { desc = "Map jj to <Esc>" })
 map("n", "U", "<C-r>", { desc = "Redo" })
 
 -- Go to previous buffer fast
-map("n", "<C-x>", "<C-^>", { desc = "Go to previous buffer" })
+map("n", "<C-<>", "<C-^>", { desc = "Go to previous buffer" })
 
 -- Open lazy plugin window
 map("n", "<leader>L", ":Lazy<CR>", { desc = "Lazy plugin manager" })

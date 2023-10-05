@@ -4,7 +4,6 @@ return {
         dependencies = {
             "williamboman/mason.nvim",
             "folke/neodev.nvim", -- Neovim development
-            "ms-jpq/coq_nvim", -- Completion
         },
         config = function()
             vim.api.nvim_create_autocmd("LspAttach", {
@@ -39,9 +38,6 @@ return {
                     "jdtls"
                 },
                 handlers = {
-                    function(server_name)
-                        lsp[server_name].setup(require("coq").lsp_ensure_capabilities{})
-                    end,
                     ["jdtls"] = function() end
                 }
             }
@@ -114,6 +110,7 @@ return {
     },
     {
         "ms-jpq/coq_nvim",
+        enabled = false,
         branch = "coq",
         dependencies = {
             {
@@ -215,10 +212,6 @@ return {
                 local cmd = is_selected and "<C-y>" or "<C-e><Tab>"
                 if_coq(cmd, "<Tab>")
             end
-
-            -- TODO: c-w for codeium
-            -- TODO: Move textbefore to lua
-            -- TODO: Hide lua_ls messages
 
             local codeium_next = function(arg, fallback)
                 if vim.g.codeium_is_active then
