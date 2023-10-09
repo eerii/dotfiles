@@ -51,7 +51,7 @@ input * {
 
 # Exec
     exec swww init
-    exec ~/.config/sway/bin/sunpaper -d
+    exec ~/.config/sway/bin/sunpaper -d &
     exec_always eww daemon && eww close-all && eww open bar
 
     exec wl-paste --type text --watch cliphist store
@@ -88,6 +88,8 @@ input * {
     for_window [app_id="foot-ps"] move scratchpad; scratchpad show
     for_window [app_id="foot-btm"] move scratchpad; scratchpad show; resize set 1500 900
 
+    for_window [app_id="mpv"] fullscreen
+
     layer_effects "rofi" blur enable; shadows enable; corner_radius 10
 
 # Binds
@@ -95,13 +97,12 @@ input * {
     bindsym $mod+b exec librewolf
     bindsym $mod+a exec nautilus -w
 
-    bindsym $mod+Shift+s exec grim -g "$(slurp)" ~/Media/Pictures/Screenshots/$(date +'%Y.%m.%d-%H:%M:%S.png')
-
-    bindsym $mod+Shift+p exec foot --app-id="foot-ps" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm -e --default_widget_type process"
-    bindsym $mod+Shift+d exec foot --app-id="foot-btm" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm"
+    bindsym $mod+Shift+s exec grim -g "$(slurp)" ~/Media/Pictures/Screenshots/$(date +'%Y.%m.%d-%H:%M:%S.png') 
 
     bindsym $mod+space exec pkill rofi || rofi -show drun -show-icons | xargs swaymsg exec --
     bindsym $mod+Shift+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy
+    bindsym $mod+Shift+f exec pkill rofi || locate /home/eri | rofi -dmenu
+    bindsym Ctrl+space exec pkill rofi || foot -D "$(zoxide query --list | rofi -dmenu)"
     bindsym $mod+Shift+e exec ~/.config/rofi/bin/emoji
     bindsym $mod+Shift+m exec ~/.config/rofi/bin/emoji math
     bindsym $mod+Shift+n exec ~/.config/rofi/bin/emoji nerd_font
@@ -170,6 +171,9 @@ input * {
     bindsym $mod+Shift+minus move scratchpad
     bindsym $mod+minus scratchpad show
     bindsym $mod+m [app_id="Beeper"] scratchpad show
+
+    bindsym $mod+Shift+p exec foot --app-id="foot-ps" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm -e --default_widget_type process"
+    bindsym $mod+Shift+o exec foot --app-id="foot-btm" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm"
 
     bindsym --locked XF86AudioRaiseVolume exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/[^0-9]//g' > $WOBSOCK
     bindsym --locked XF86AudioLowerVolume exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/[^0-9]//g' > $WOBSOCK

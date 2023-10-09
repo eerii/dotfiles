@@ -37,7 +37,13 @@ return {
                     "lua_ls",
                     "jdtls"
                 },
+                automatic_installation = {
+                    exclude = { "rust_analyzer" }
+                },
                 handlers = {
+                    function (server_name)
+                        lsp[server_name].setup {}
+                    end,
                     ["jdtls"] = function() end
                 }
             }
@@ -82,7 +88,7 @@ return {
 
                 return {
                     cmd = { path },
-                    root_dir = vim.fs.dirname(vim.fs.find({"gradlew", ".git", "mvnw"}, { upward = true })[1]),
+                    root_dir = vim.fs.dirname(vim.fs.find({"gradlew", ".git", "mvnw", "settings.gradle.kts"}, { upward = true })[1]),
                     handlers = {
                         ["$/progress"] = function() end,
                         --["language/status"] = function() end,
@@ -107,6 +113,22 @@ return {
             })
         end,
         ft = "java",
+    },
+    {
+        "simrat39/rust-tools.nvim",
+        config = function()
+            require("rust-tools").setup {
+                settings = {
+                    ["rust-analyzer"] = {
+                        checkOnSave = { command = "clippy" }
+                    }
+                },
+                server = {
+                    on_attach = function(_, _) end,
+                },
+            }
+        end,
+        ft = "rust",
     },
     {
         "ms-jpq/coq_nvim",

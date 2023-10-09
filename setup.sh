@@ -100,7 +100,7 @@ install -e gdm plymouth plymouth-theme-angular-git
 install -e pipewire pipewire-pulse wireplumber grim slurp dunst udiskie
 
 # general utils
-install -e glow zoxide ripgrep rm-improved eza bat
+install -e glow zoxide ripgrep rm-improved eza bat plocate
 
 # rofi
 install rofi-lbonn-wayland rofimoji
@@ -143,7 +143,7 @@ install -e zathura mpv imv
 
 # themes
 install colloid-icon-theme-git
-install swww sunwait wallutils
+install swww sunwait
 install pywal-16-colors python-pywalfox colorz
 if $inst; then
     echo "If you are using librewolf, please install python-pywalfox 2.8.0 from text.pypi.org"

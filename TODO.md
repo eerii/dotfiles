@@ -46,6 +46,8 @@
     - [ ] fade in/out animations
     - [ ] window move animations
 
+- [ ] calendar notifications window rule
+
 - [ ] maybe add a login screen
     - [ ] gtkgreet / regreet
     - [ ] plymouth

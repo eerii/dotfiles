@@ -126,7 +126,7 @@ map gg :fzf_search
 
 # custom open
 cmd open ${{
-    case "$(mimetype -b $f)" in
+    case "$(/usr/bin/vendor_perl/mimetype -b $f)" in
         # access compressed files
         *tar*|*zip*|*rar*|*cd-image*)
             mntdir="$f.mount"
@@ -142,6 +142,8 @@ cmd open ${{
             zathura $f ;;
         image/*)
             imv $f ;;
+        video/*)
+            mpv $f ;;
         *)
             lf -remote "send $id \$$EDITOR \$fx" ;;
     esac

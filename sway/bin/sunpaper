@@ -108,7 +108,7 @@ swww_enable="true"
 #
 # swww_fps <1 to 255>
 # swww_step <1 to 255>
-swww_fps="10"
+swww_fps="1"
 swww_step="10"
 
 
@@ -507,19 +507,18 @@ pywal_construct(){
 
     get_sunpoll
 
-    if [ "$sun_poll" == "DAY" ];then 
+    # if [ "$sun_poll" == "DAY" ];then 
+    #
+    #     [ "$pywal_image_day" == "true" ] && pywal_options_image="-i $wallpaperPath/$image.jpg"
+    #     pywal_options_combined="-q -n $pywal_options_image $pywal_options $pywal_options_day"
+    #
+    # elif [ "$sun_poll" == "NIGHT" ];then
+    #
+    #     [ "$pywal_image_night" == "true" ] && pywal_options_image="-i $wallpaperPath/$image.jpg"
+    #     pywal_options_combined="-q -n $pywal_options_image $pywal_options $pywal_options_night"
+    # fi
 
-        [ "$pywal_image_day" == "true" ] && pywal_options_image="-i $wallpaperPath/$image.jpg"
-        pywal_options_combined="-q -n $pywal_options_image $pywal_options $pywal_options_day"
-
-    elif [ "$sun_poll" == "NIGHT" ];then
-
-        [ "$pywal_image_night" == "true" ] && pywal_options_image="-i $wallpaperPath/$image.jpg"
-        pywal_options_combined="-q -n $pywal_options_image $pywal_options $pywal_options_night"
-    fi
-    #TODO: why does this fail?
-    #wal "$pywal_options_combined"
-    wwal $pywal_options_combined
+    wwal -q -n -i "$wallpaperPath/$image.jpg"
 }
 
 local_darkmode(){
@@ -682,7 +681,7 @@ exec_swww(){
 pkill_daemon(){
     #TODO: does this need to be smarter?
     echo "The Sunpaper daemon has stopped."
-    pkill sunpaper.sh > /dev/null 2>&1 &
+    pkill -f "sunpaper -d" > /dev/null 2>&1 &
 
 }
 
@@ -705,6 +704,8 @@ Sunpaper Option Flags (cannot be combined)
                 time so you can see what your wallpaper will 
                 look like then. Must be in HH:MM format. 
                 (-t 06:12)
+
+-u, --unset-time Clears the time set
 
 -s, --sky,      Sky! A weather testing flag. Set conditions
                 here to see what your wallpaper will look
@@ -762,6 +763,14 @@ while :; do
             exit
         fi         
         ;;
+        -u|--unset-time)
+            unset time
+            get_currenttime
+            echo $(echo $currenttime | date +%c)
+            get_suntimes
+            set_cache
+            set_paper
+        ;;
         -w|--waybar) 
             waybarmode_enable="true"
             shift
@@ -796,6 +805,7 @@ main(){
     if [ "$waybarmode_enable" == "true" ]; then
         show_suntimes_waybar
     fi
+    unset time
 }
 
 if [ "$daemon_enable" == "true" ]; then
@@ -811,7 +821,7 @@ if [ "$daemon_enable" == "true" ]; then
     echo "The Sunpaper daemon has started -- use sunpaper.sh -k to stop it."
 
     #Try to prevent generating duplicate daemons.
-    if [[ $(pgrep -c "sunpaper.sh") -gt 1 ]] ;then
+    if [[ $(pgrep -c "sunpaper -d") -gt 1 ]] ;then
         #do nothing
         true
     else

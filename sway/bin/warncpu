@@ -1,0 +1,10 @@
+#!/bin/bash
+THRESHOLD=60
+
+top -b -n 1 | sed -e "1,7d" | while read line; do
+    cpu=$(echo $line | cut -d" " -f9 | cut -d "," -f1)
+    ps=$(echo $line | cut -d" " -f12)
+    if [ $cpu -gt $THRESHOLD ]; then
+        dunstify "El proceso $ps está consumiendo mucho CPU ($cpu)"
+    fi
+done
