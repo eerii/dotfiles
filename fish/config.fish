@@ -11,6 +11,8 @@ abbr -a -- p 'paru'
 abbr -a -- pc 'paru -Qtdq | ifne paru -Rns - && paru -Qqd | ifne paru -Rsu -'
 abbr -a -- rm 'rip'
 abbr -a -- ls 'eza'
+abbr -a -- grep 'rg'
+abbr -a -- cat 'bat -p'
 abbr -a -- l 'lfcd'
 abbr -a -- ga 'git add'
 abbr -a --set-cursor -- gc 'git commit -m "%"'
@@ -24,9 +26,22 @@ abbr -a -- sys 'systemctl --user'
 abbr -a -- v 'virsh'
 abbr -a -- nc 'ncat'
 abbr -a -- grdl 'gradle -q --console plain run'
+abbr -a -- n 'neovim'
 
 function gr!
     git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE="%cD" git commit --amend --no-edit' rebase -i
+end
+
+# Keybinds
+function launch_zellij
+    if not set -q ZELLIJ
+        command zellij
+        commandline -f repaint
+    end
+end
+
+function fish_user_key_bindings
+    bind \ca launch_zellij
 end
 
 # lf

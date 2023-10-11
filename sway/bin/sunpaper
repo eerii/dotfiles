@@ -817,15 +817,12 @@ if [ "$daemon_enable" == "true" ]; then
     #to make sure paper is still set for WM logout/login if daemon already exists, etc)
     main
 
-    #TODO: maybe this should be quiet?
-    echo "The Sunpaper daemon has started -- use sunpaper.sh -k to stop it."
-
     #Try to prevent generating duplicate daemons.
-    if [[ $(pgrep -c "sunpaper -d") -gt 1 ]] ;then
-        #do nothing
-        true
+    if [[ $(pgrep -c "sunpaper") -gt 1 ]] ;then
+        echo "The Sunpaper daemon already existed"
     else
         #Then loop forever
+        echo "The Sunpaper daemon has started -- use sunpaper.sh -k to stop it."
         while :; do
             main &
             sleep 60

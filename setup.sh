@@ -134,6 +134,10 @@ install fish fisher
 link $dir/fish ~/.config/fish
 link $dir/fish/.bashrc ~/.bashrc
 
+# zellij
+install zellij
+link $dir/zellij ~/.config/zellij
+
 # neovim
 install neovim fzf
 link $dir/nvim ~/.config/nvim

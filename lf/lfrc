@@ -128,7 +128,7 @@ map gg :fzf_search
 cmd open ${{
     case "$(/usr/bin/vendor_perl/mimetype -b $f)" in
         # access compressed files
-        *tar*|*zip*|*rar*|*cd-image*)
+        *tar*|*zip*|*rar*|*cd-image*|*iso*)
             mntdir="$f.mount"
             if [ ! -d "$mntdir" ]; then
                 mkdir "$mntdir"

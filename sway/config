@@ -97,7 +97,7 @@ input * {
     bindsym $mod+b exec librewolf
     bindsym $mod+a exec nautilus -w
 
-    bindsym $mod+Shift+s exec grim -g "$(slurp)" ~/Media/Pictures/Screenshots/$(date +'%Y.%m.%d-%H:%M:%S.png') 
+    bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f -
 
     bindsym $mod+space exec pkill rofi || rofi -show drun -show-icons | xargs swaymsg exec --
     bindsym $mod+Shift+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy

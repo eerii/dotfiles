@@ -64,5 +64,16 @@ return {
                 vim.cmd("PandocRead")
             end, desc = "Pandoc enable" },
         }
+    },
+
+    -- Markdown paste image
+    {
+        "dfendr/clipboard-image.nvim",
+        branch = "patch-1",
+        ft = "markdown",
+        keys = {
+            { "<leader>mi", "<CMD>PasteImg<CR>", desc = "Markdown paste image" },
+        }
+
     }
 }

@@ -16,6 +16,7 @@
     - [ ] improve neovim theme, propper fork
     - [ ] add to dunst, gtk, qt, java, sov, wob
     - [ ] multiple options?
+    - [ ] sunpaper in python
 
 - [x] change cursor again
 - [x] revisit icon theme

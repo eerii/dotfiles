@@ -32,8 +32,9 @@ vim.o.signcolumn = "yes"
 -- Line padding
 vim.o.linespace = 4
 
--- Hide cmd line
+-- Hide cmd line and statusline
 vim.o.cmdheight = 0
+vim.o.laststatus = 0
 
 -- Set termgui colors
 vim.o.termguicolors = true
