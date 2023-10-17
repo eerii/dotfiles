@@ -3,6 +3,7 @@ return {
     {
         "sprockmonty/wal.vim",
         dir = "~/Code/wal.vim",
+        enabled = false,
         lazy = false,
         priority = 1000,
         config = function()
@@ -28,9 +29,8 @@ return {
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-        enabled = false,
-	    --lazy = false,
-		--priority = 1000,
+	    lazy = false,
+		priority = 1000,
 		config = function()
 			require("rose-pine").setup {
 				disable_background = true
