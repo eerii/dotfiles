@@ -48,7 +48,7 @@ return {
     -- Pandoc renderer
     {
         "garciabarreiro/nvim-pandoc",
-        dir = "~/Code/nvim-pandoc",
+        dir = "~/Code/pkgs/nvim-plugins/nvim-pandoc",
         ft = { "markdown", "latex" },
         keys = {
             { "<leader>p", function()

@@ -2,7 +2,7 @@ return {
     -- Pywal automatic theme
     {
         "sprockmonty/wal.vim",
-        dir = "~/Code/wal.vim",
+        dir = "~/Code/pkgs/nvim-plugin/wal.vim",
         enabled = false,
         lazy = false,
         priority = 1000,

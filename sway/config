@@ -14,7 +14,6 @@ client.focused $color0 $background $foreground $color7 $background
 
 # Displays
 output eDP-1 resolution 2880x1800 position 0,0 scale 1.75
-# output * bg $wallpaper fill
 
 # Seats
 seat * hide_cursor 3000
@@ -50,6 +49,8 @@ input * {
     scratchpad_minimize enable
 
 # Exec
+    exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
     exec python ~/.config/wal/paperd.py -s
     exec_always eww daemon && eww close-all && eww open bar
 
