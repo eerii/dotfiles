@@ -1,0 +1,12 @@
+[package]
+name = "meh"
+version = "0.1.0"
+edition = "2021"
+authors = ["eri <eri@inventati.org>"]
+description = "mini eww helper: a tiny utility to get system data to use in eww"
+
+[dependencies]
+battery = "0.7.8"
+clap = { version = "4.4.7", features = ["derive"] }
+dbus = "0.9.7"
+networkmanager = "0.4.0"

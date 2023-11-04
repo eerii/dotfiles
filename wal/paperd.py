@@ -26,7 +26,7 @@ country = "Spain"
 timezone = "Europe/Madrid"
 
 # Naming: n-from-to.ext
-dir = "~/Media/Pictures/Wallpapers/Desert"
+dir = "/home/eri/Media/Pictures/Wallpapers/Desert"
 
 adjust = {
     "dawn": -30,
@@ -99,8 +99,7 @@ def current(sun):
 # Wallpaper
 
 def get_wal(curr, silent = True):
-    path = os.path.expanduser(dir)
-    files = os.listdir(path)
+    files = os.listdir(dir)
 
     wallpaper = ""
     for f in files:
@@ -133,8 +132,8 @@ def set_wal(wall, silent = True):
         while (not check_running("swww-daemon")):
             time.sleep(0.5); 
 
-    path = f"{os.path.expanduser(dir)}/{wall}"
-    with open(os.path.expanduser("~/.cache/swww/eDP-1")) as cache:
+    path = f"{dir}/{wall}"
+    with open("/home/eri/.cache/swww/eDP-1") as cache:
         if (cache.readline() == path):
             return False
 
@@ -163,7 +162,7 @@ def rgb_hex(r, g, b):
     return f"#{r:02x}{g:02x}{b:02x}"
 
 def get_colors_wallpaper(wall):
-    path = f"{os.path.expanduser(dir)}/{wall}"
+    path = f"{dir}/{wall}"
 
     img = Image.open(path).reduce(12)
     contrast = ImageEnhance.Contrast(img)

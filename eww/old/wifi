@@ -1,12 +1,7 @@
 #!/bin/bash
 
 get_status() {
-    status=$(nmcli | grep wl | awk 'FNR==1' | awk '{print $2}')
-    if [[ $status == d* ]]; then
-        echo false
-    else
-        echo true
-    fi
+    echo $(nmcli | grep wl | awk 'FNR==1' | awk '{print $2}')
 }
 
 get_name() {
@@ -20,7 +15,7 @@ get_strength() {
 get_icon() {
     status=$(get_status)
     strength=$(get_strength)
-    if $status; then
+    if [[ $status == conectado ]]; then
         if (( $strength > 75 )); then
             echo 󰤨
         elif (( $strength > 50 )); then
@@ -30,6 +25,8 @@ get_icon() {
         else
             echo 󰤟
         fi
+    elif [[ $status == conectando ]]; then
+        echo 󱛇
     else
         echo 󰤮
     fi
