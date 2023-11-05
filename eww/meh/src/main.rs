@@ -1,27 +1,68 @@
+use meh::{Args, battery::BatteryCmd, daemon::{self, Daemon, DATA_FILE}, Info};
+
+use std::fs;
 use clap::Parser;
-use meh::{Args, battery::{self, BatteryCmd}, wifi::{self, WifiCmd}};
 
 pub fn main() {
     let args = Args::parse();
 
-    if let Some(b) = args.battery {
-        let res = match b {
-            BatteryCmd::Percent => battery::percent().unwrap_or(-1.0).to_string(),
-            BatteryCmd::State => battery::state().unwrap_or(::battery::State::Unknown).to_string(),
-            BatteryCmd::Icon => battery::icon().unwrap_or("").to_string(),
-            BatteryCmd::All => battery::all().unwrap_or("error".to_string()),
-        };
-        println!("{}", res);
+    // ······
+    // daemon
+    // ······
+
+    if args.daemon {
+        Daemon::default().start();
+        return;
     }
 
-    if let Some(w) = args.wifi {
-        let res = match w {
-            WifiCmd::Coverage => todo!(),
-            WifiCmd::State => todo!(),
-            WifiCmd::Icon => todo!(),
-            WifiCmd::Name => todo!(),
-            WifiCmd::Ip => todo!(),
-            WifiCmd::All => { wifi::all(); todo!() },
+    if args.kill_daemon {
+        if let Err(e) = daemon::kill() {
+            eprintln!("error: {}", e);
+        }
+        return;
+    }
+
+    // ········
+    // commands
+    // ········
+    
+    let info = match fs::read_to_string(DATA_FILE) {
+        Ok(data) => toml::from_str(&data).unwrap(),
+        Err(_) => {
+            eprintln!("unable to retrieve the daemon data. is it running?");
+            Info::default()
+        }
+    };
+
+    // battery
+    if let Some(cmd) = args.battery {
+        let bat = info.battery.unwrap_or_default();
+        match cmd {
+            BatteryCmd::Percent => println!("{}", bat.percent),
+            BatteryCmd::State => println!("{}", bat.state),
+            BatteryCmd::Icon => println!("{}", bat.icon),
+        };
+        return;
+    }
+
+    // network
+    if let Some(cmd) = args.network {
+        let net = info.network.unwrap_or_default();
+        match cmd {
+            meh::net::NetCmd::Coverage => todo!(),
+            meh::net::NetCmd::State => todo!(),
+            meh::net::NetCmd::Icon => println!("{}", net.icon),
+            meh::net::NetCmd::Name => todo!(),
+            meh::net::NetCmd::Ip => todo!(),
+        };
+    }
+
+    // volume
+    if let Some(cmd) = args.volume {
+        let vol = info.volume.unwrap_or_default();
+        match cmd {
+            meh::volume::VolumeCmd::Loudness => println!("{}", vol.loudness),
+            meh::volume::VolumeCmd::Icon => println!("{}", vol.icon),
         };
     }
 }

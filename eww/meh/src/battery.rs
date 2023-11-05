@@ -1,4 +1,5 @@
 use std::io;
+use serde::{Deserialize, Serialize};
 use battery::{Manager, Battery, State, units::ratio};
 
 static ICONS: [&str; 11] = ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"];
@@ -9,34 +10,67 @@ pub enum BatteryCmd {
     Percent,
     State,
     Icon,
-    All
 }
 
-fn get_battery() -> Result<Battery, battery::Error> {
-    let manager = Manager::new()?;
+#[derive(Serialize, Deserialize)]
+#[serde(remote = "State")]
+pub enum StateDef {
+    Unknown,
+    Charging,
+    Discharging,
+    Empty,
+    Full,
+    __Nonexhaustive,
+}
 
-    match manager.batteries()?.next() {
-        Some(Ok(battery)) => Ok(battery),
-        Some(Err(e)) => {
-            eprintln!("unable to access battery information");
-            return Err(e);
-        }
-        None => {
-            eprintln!("unable to find any batteries");
-            return Err(io::Error::from(io::ErrorKind::NotFound).into());
+#[derive(Serialize, Deserialize, Debug)]
+pub struct BatteryInfo {
+    pub percent: i32,
+    pub icon: String,
+    #[serde(with = "StateDef")]
+    pub state: State,
+}
+
+impl Default for BatteryInfo {
+    fn default() -> Self {
+        Self {
+            percent: 0,
+            icon: "󱉞".to_string(),
+            state: State::Unknown,
         }
     }
 }
 
-fn _percent(bat: &Battery) -> f32 {
+pub fn get_battery() -> Result<BatteryInfo, battery::Error> {
+    let manager = Manager::new()?;
+
+    let bat = match manager.batteries()?.next() {
+        Some(Ok(bat)) => bat,
+        Some(Err(e)) => {
+            eprintln!("unable to access battery information");
+            return Err(e);
+        },
+        None => {
+            eprintln!("unable to find any batteries");
+            return Err(io::Error::from(io::ErrorKind::NotFound).into());
+        },
+    };
+
+    Ok(BatteryInfo {
+        percent: percent(&bat) as i32,
+        icon: icon(&bat).to_string(),
+        state: bat.state()
+    })
+}
+
+fn percent(bat: &Battery) -> f32 {
     (bat.energy() / bat.energy_full())
         .get::<ratio::percent>()
-        .round()
         .clamp(0.0, 100.0)
 }
 
-fn _icon(bat: &Battery) -> &'static str {
-    let p : usize = _percent(bat) as usize / 10;
+fn icon(bat: &Battery) -> &'static str {
+    let p : usize = percent(bat) as usize / 10;
 
     match bat.state() {
         State::Full => "󱈑",
@@ -46,24 +80,4 @@ fn _icon(bat: &Battery) -> &'static str {
         State::Unknown => "󱟩",
         _ => unreachable!(),
     }
-}
-
-pub fn percent() -> Result<f32, battery::Error> {
-    let bat = get_battery()?;
-    Ok(_percent(&bat))
-}
-
-pub fn state() -> Result<State, battery::Error> {
-    Ok(get_battery()?.state())
-}
-
-pub fn icon() -> Result<&'static str, battery::Error> {
-    let bat = get_battery()?;
-    Ok(_icon(&bat))
-}
-
-pub fn all() -> Result<String, battery::Error> {
-    let bat = get_battery()?;
-    Ok(format!("icon: {} - percent: {} - state: {}",
-        _icon(&bat), _percent(&bat), bat.state()))
 }

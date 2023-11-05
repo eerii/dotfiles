@@ -2,14 +2,14 @@
 ;; variables
 ;; ·········
 
-(defpoll VOLUME :interval "1s" "echo a")
-(defpoll VOLUME_ICON :interval "1s" "echo a")
+(defpoll VOLUME :interval "1s" "meh/target/release/meh --volume loudness")
+(defpoll VOLUME_ICON :interval "1s" "meh/target/release/meh --volume icon")
 
 (defpoll BATTERY :interval "1s" "meh/target/release/meh --battery percent")
 (defpoll BATTERY_ICON :interval "1s" "meh/target/release/meh --battery icon")
 
-(defpoll WIFI :interval "5s" "echo b")
-(defpoll WIFI_ICON :interval "5s" "echo b")
+(defpoll WIFI :interval "1s" "echo b")
+(defpoll WIFI_ICON :interval "1s" "meh/target/release/meh --network icon")
 
 ;; ·······
 ;; widgets
