@@ -67,14 +67,6 @@ return {
         keys = { { "<leader>tt", function() require("mini.trailspace").trim() end, desc = "Trim trailspace" } }
     },
 
-    -- Autopairs
-    -- {
-    --     "altermo/ultimate-autopair.nvim",
-    --     branch = "v0.6",
-    --     opts = {},
-    --     event = { "InsertEnter", "CmdlineEnter" },
-    -- },
-    
     -- Zen mode
     {
         "folke/zen-mode.nvim",

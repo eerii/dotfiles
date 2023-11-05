@@ -18,7 +18,7 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 export EDITOR=nvim
 
 # path
-export PATH="/home/eri/.local/bin:$PATH"
+export PATH="/home/eri/.local/bin:/home/eri/.cargo/bin:$PATH"
 
 # themes
 export QT_QPA_PLATFORMTHEME=qt6ct

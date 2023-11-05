@@ -5,7 +5,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         dependencies = {
-           "nvim-treesitter/nvim-treesitter-refactor" 
+           "nvim-treesitter/nvim-treesitter-refactor"
         },
         build = function()
             require("nvim-treesitter.install").update({ with_sync = true })
@@ -34,10 +34,10 @@ return {
     {
         "plasticboy/vim-markdown",
         branch = "master",
-        require = {"godlygeek/tabular"},
+        require = { "godlygeek/tabular" },
         config = function()
             vim.g.vim_markdown_folding_style_pythonic = 1
-            
+
             vim.api.nvim_create_autocmd("Filetype", {
                 pattern = "markdown",
                 callback = function()

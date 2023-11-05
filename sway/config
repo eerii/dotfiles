@@ -53,7 +53,8 @@ input * {
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
     exec python ~/.config/wal/paperd.py -s
-    exec_always eww daemon && eww close-all && eww open bar
+    exec ~/.cargo/bin/meh -d
+    exec eww daemon && eww open bar
 
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store
@@ -196,7 +197,7 @@ input * {
     bindsym $mod+x exec wtype -P XF86Cut
 
     bindswitch --reload --locked lid:on output eDP-1 disable
-    bindswitch --reload --locked lid:off output eDP-1 enable; exec python ~/.config/wal/paperd.py -s; exec sleep 1 && [[ $(eww windows | grep bar) != \** ]] && swaymsg reload
+    bindswitch --reload --locked lid:off output eDP-1 enable; exec python ~/.config/wal/paperd.py -s; exec sleep 1 && [[ $(eww windows | grep bar) != \** ]] && eww close-all && eww open bar
 
     bindgesture swipe:left exec ~/.config/sway/bin/swaywork next
     bindgesture swipe:right exec ~/.config/sway/bin/swaywork prev

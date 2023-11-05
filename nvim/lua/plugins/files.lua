@@ -15,12 +15,6 @@ return {
             { "<C-f>", function() require("mini.files").open() end, desc = "Open [F]iles" }
         }
     },
-    -- {
-    --     'stevearc/oil.nvim',
-    --     config = true,
-    --     cmd = { 'Oil' },
-    --     keys = { { '<C-f>', '<CMD>Oil --float<CR>', desc = "Open [F]iles directory" } },
-    -- },
 
     -- Switch between open files
     {
