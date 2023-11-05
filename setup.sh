@@ -94,10 +94,11 @@ link $dir/sway/wob ~/.config/wob
 link $dir/sway/sov ~/.config/sov
 
 # login
-install -e gdm plymouth plymouth-theme-angular-git
+install -e ly
+# TODO: ly config
 
 # wayland utils
-install -e pipewire pipewire-pulse wireplumber grim slurp dunst udiskie
+install -e pipewire pipewire-pulse wireplumber grim slurp udiskie
 
 # general utils
 install -e glow zoxide ripgrep rm-improved eza bat plocate
@@ -111,10 +112,7 @@ link ~/.cache/wal/config.rasi ~/.config/rofi/config.rasi
 # eww
 install eww-tray-wayland-git
 link $dir/eww ~/.config/eww
-
-# dunst
-install dunst
-link $dir/dunst ~/.config/dunst
+# TODO: cargo install
 
 # foot terminal
 install foot
@@ -122,7 +120,7 @@ install -e ttf-nerd-fonts-symbols-mono otf-apple-fonts noto-fonts-emoji
 link $dir/foot ~/.config/foot
 
 # lf
-install lf archivefs chafa perl-file-mimetype
+install lf archivefs perl-file-mimetype
 link $dir/lf ~/.config/lf
 
 # neofetch

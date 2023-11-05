@@ -2,6 +2,7 @@ pub mod daemon;
 pub mod battery;
 pub mod net;
 pub mod volume;
+pub mod notify;
 
 use battery::{BatteryCmd, BatteryInfo};
 use net::{NetCmd, NetInfo};

@@ -59,7 +59,6 @@ input * {
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store
 
-    exec dunst &swaymsg -t get_tree | jq -r '<jq prog here>'
     exec udiskie &
 
     exec beeper --default-frame --enable-features=UseOzonePlatform --ozone-platform=wayland &

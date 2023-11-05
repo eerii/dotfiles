@@ -4,11 +4,17 @@ version = "0.1.0"
 edition = "2021"
 authors = ["eri <eri@inventati.org>"]
 description = "mini eww helper: a tiny utility to get system data to use in eww"
+build = "build.rs"
 
 [dependencies]
 battery = "0.7.8"
 clap = { version = "4.4.7", features = ["derive"] }
 daemonize = "0.5.0"
+dbus = "0.9.7"
+dbus-crossroads = "0.5.2"
 serde = { version = "1.0.190", features = ["derive"] }
+serde_bare = "0.5.0"
 sysinfo = "0.29.10"
-toml = "0.8.6"
+
+[build-dependencies]
+dbus-codegen = { version = "0.10.0", features = ["dbus-crossroads"] }

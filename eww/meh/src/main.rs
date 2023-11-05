@@ -11,7 +11,7 @@ pub fn main() {
     // ······
 
     if args.daemon {
-        Daemon::default().start();
+        Daemon::new().start();
         return;
     }
 
@@ -26,8 +26,8 @@ pub fn main() {
     // commands
     // ········
     
-    let info = match fs::read_to_string(DATA_FILE) {
-        Ok(data) => toml::from_str(&data).unwrap(),
+    let info = match fs::read(DATA_FILE) {
+        Ok(data) => serde_bare::from_slice(&data).unwrap(),
         Err(_) => {
             eprintln!("unable to retrieve the daemon data. is it running?");
             Info::default()

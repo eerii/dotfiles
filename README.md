@@ -18,7 +18,6 @@
 - **bar and widgets:** [eww](https://github.com/elkowar/eww)
 - **terminal:** [foot](https://codeberg.org/dnkl/foot)
 - **shell:** [fish](https://github.com/fish-shell/fish-shell) + [bash](https://www.gnu.org/software/bash/)
-- **notifications:** [dunst](https://github.com/dunst-project/dunst)
 - **editor:** [neovim](https://github.com/neovim/neovim)
 
 ## install 🌳
