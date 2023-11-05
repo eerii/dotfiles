@@ -1,0 +1,3 @@
+[submodule "eww/meh"]
+	path = eww/meh
+	url = https://github.com/eerii/meh.git
