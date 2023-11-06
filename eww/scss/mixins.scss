@@ -139,3 +139,18 @@
         }
     }
 }
+
+@mixin animate(
+    $name,
+    $duration: 200ms,
+    $method: linear,
+    $times: 1
+    ) {
+        animation: $name $duration $method $times;
+    }
+
+@mixin keyframes($name){
+    @keyframes #{$name}{
+        @content;
+    }
+}

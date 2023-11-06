@@ -35,18 +35,20 @@
                         min-height: 0.8rem;
                         min-width: 0.8rem;
                         margin: 0.5rem 0;
-                        &.occupied {
+                        background: $accent;
+
+                        &.empty {
                             background: lighten($color: $bg, $amount: 15%);
                         }
                         &.active {
-                            background: #b39ef0;
                             min-width: 1.5rem;
                         }
+
                         &:hover {
-                            &.occupied {
+                            &.empty {
                                 background: lighten($color: $bg, $amount: 25%);
                             }
-                            &.active {
+                            &.active, &.inactive {
                                 background: lighten($color: $accent, $amount: 10%);
                             }
                         }

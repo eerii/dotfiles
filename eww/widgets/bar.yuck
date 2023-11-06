@@ -35,7 +35,7 @@
                             :cursor "pointer"
                             :halign "center"
                             (button
-                                :class "workspace ${workspace.focused ? 'active' : 'occupied'}"))))))))
+                                :class "workspace ${workspace.focused ? 'active' : workspace.empty ? 'empty' : 'inactive'}"))))))))
         ;; change this to something like the dynamic island
         ;; for example, grow with music, grow notifications from there, live activities...
 
