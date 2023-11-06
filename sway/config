@@ -32,9 +32,9 @@ input * {
 }
 
 # Graphical
-    gaps inner 10
+    gaps inner 8
 
-    corner_radius 10
+    corner_radius 14
     default_border none
     default_floating_border none
 
@@ -52,8 +52,8 @@ input * {
 # Exec
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
+    exec meh -kd
     exec python ~/.config/wal/paperd.py -s
-    exec ~/.cargo/bin/meh -d
     exec eww daemon && eww open bar
 
     exec wl-paste --type text --watch cliphist store
@@ -64,9 +64,7 @@ input * {
     exec beeper --default-frame --enable-features=UseOzonePlatform --ozone-platform=wayland &
     exec easyeffects --gapplication-service &
 
-    set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
     set $SOVSOCK /tmp/sovpipe
-    exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
     exec rm -f $SOVSOCK && mkfifo $SOVSOCK && tail -f $SOVSOCK | sov -t 250
 
     exec swayidle -w \
@@ -161,8 +159,8 @@ input * {
     bindsym $mod+Shift+9 move container to workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10
 
-    bindsym $mod+left exec ~/.config/sway/bin/swaywork next
-    bindsym $mod+right exec ~/.config/sway/bin/swaywork prev
+    bindsym $mod+left exec ~/.config/sway/bin/swaywork prev
+    bindsym $mod+right exec ~/.config/sway/bin/swaywork next
 
     bindsym $mod+comma splith
     bindsym $mod+period splitv
@@ -180,9 +178,9 @@ input * {
     bindsym $mod+Shift+p exec foot --app-id="foot-ps" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm -e --default_widget_type process"
     bindsym $mod+Shift+o exec foot --app-id="foot-btm" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm"
 
-    bindsym --locked XF86AudioRaiseVolume exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/[^0-9]//g' > $WOBSOCK
-    bindsym --locked XF86AudioLowerVolume exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.0 && wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/[^0-9]//g' > $WOBSOCK
-    bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && (wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED && echo 0 > $WOBSOCK) || wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/[^0-9]//g' > $WOBSOCK
+    bindsym --locked XF86AudioRaiseVolume exec meh volume --add 5
+    bindsym --locked XF86AudioLowerVolume exec meh volume --sub 5
+    bindsym --locked XF86AudioMute exec meh volume --toggle-mute
 
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+ | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK

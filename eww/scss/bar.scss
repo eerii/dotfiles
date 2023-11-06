@@ -1,0 +1,58 @@
+.bar {
+    margin: 0 8px;
+    .widget {
+        @include widget($shadow: false);
+        padding: 0.2rem 1rem;
+
+        .date {
+            @include button($flat: true);
+            color: $fg;
+
+            .clock {
+                &.hour,
+                &.minute {
+                    font-weight: 500;
+                }
+
+                &.ellipsis {
+                    margin-top: -0.3rem;
+                }
+            }
+        }
+
+        .island { 
+            .island_center {
+                &:hover {
+                    .workspaces {
+                        min-width: 15rem;
+                    }
+                }
+                .workspaces {
+                    min-width: 10rem;
+
+                    .workspace {
+                        border-radius: 1rem;
+                        min-height: 0.8rem;
+                        min-width: 0.8rem;
+                        margin: 0.5rem 0;
+                        &.occupied {
+                            background: lighten($color: $bg, $amount: 15%);
+                        }
+                        &.active {
+                            background: #b39ef0;
+                            min-width: 1.5rem;
+                        }
+                        &:hover {
+                            &.occupied {
+                                background: lighten($color: $bg, $amount: 25%);
+                            }
+                            &.active {
+                                background: lighten($color: $accent, $amount: 10%);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

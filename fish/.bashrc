@@ -17,13 +17,6 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 # nvim
 export EDITOR=nvim
 
-# path
-export PATH="/home/eri/.local/bin:/home/eri/.cargo/bin:$PATH"
-
-# themes
-export QT_QPA_PLATFORMTHEME=qt6ct
-unset QT_STYLE_OVERRIDE
-
 # fish
 if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} ]]; then 
     shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=''

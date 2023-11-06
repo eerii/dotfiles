@@ -9,3 +9,5 @@ _JAVA_AWT_WM_NONREPARENTING=1
 
 QT_QPA_PLATFORMTHEME=gnome
 QT_STYLE_OVERRIDE=adawaita
+
+PATH="/home/eri/.local/bin:/home/eri/.cargo/bin:$PATH"

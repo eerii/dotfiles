@@ -1,23 +1,15 @@
 * {
     all: unset;
+    transition: 200ms;
+    font-family: "SF Pro Rounded", "Atkinson Hyperlegible";
 }
 
-.bar>* {
-    margin: 0px 10px;
-}
+@import "scss/colors.scss";
+@import "scss/mixins.scss";
+@import "scss/variables.scss";
 
-.logo, .clock>*, .system {
-    background-color: #0c0d0f;
-    color: #b0b4bc;
-    opacity: 0.85;
-    border-radius: 6px;
-    padding: 0px 10px;
-}
+@import "scss/bar.scss";
 
-.clock>* {
-    transition: padding 200ms;
-}
-
-.clock:hover>* {
-    padding: 0px 64px;
+tooltip {
+  @include tooltip;
 }

@@ -242,7 +242,7 @@ def get_theme(curr, wall):
         col_alt[k+"_alt"] = c * Luma(0.8)
 
     col = col | col_alt
-    col["background"] = Color.from_hsv(hue, 0.2, 0.1)
+    col["background"] = Color.from_hsv(hue, 0.2, 0.05)
 
     return col
 

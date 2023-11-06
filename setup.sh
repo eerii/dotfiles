@@ -89,8 +89,7 @@ else
 fi
 
 # sway utils
-install -e wob sov autotiling-rs
-link $dir/sway/wob ~/.config/wob
+install -e sov autotiling-rs
 link $dir/sway/sov ~/.config/sov
 
 # login

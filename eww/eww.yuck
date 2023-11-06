@@ -1,2 +1,15 @@
-(include "./bar.yuck")
-(include "./notifications.yuck")
+;; ·········
+;; variables
+;; ·········
+
+(deflisten volume :initial "{}" "meh get --volume -m")
+(deflisten battery :initial "{}" "meh get --battery -m")
+(deflisten network :initial "{}" "meh get --network -m")
+(defpoll workspaces :initial "[]" :interval "1s" "swaymsg -t get_workspaces | jq 'map({num, focused})'")
+
+;; ·······
+;; modules
+;; ·······
+
+(include "./windows/bar.yuck")
+(include "./windows/notifications.yuck")

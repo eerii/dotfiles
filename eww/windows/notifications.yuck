@@ -1,10 +1,8 @@
-;; ·······
-;; widgets
-;; ·······
+(include "./widgets/notifications.yuck")
 
-;; ·······
-;; windows
-;; ·······
+(defwidget notifications[]
+    (box :class "notifications"
+        (label :text "TEST")))
 
 (defwindow notifications 
     :monitor 0
@@ -12,4 +10,4 @@
     :geometry (geometry :x "20px"
                         :y "20px"
                         :anchor "top right")
-    (label :text "TEST"))
+    (notifications)) 
