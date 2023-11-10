@@ -7,6 +7,8 @@
 (deflisten network :initial "{}" "meh get --network -m")
 (deflisten workspaces :initial "[]" "~/.config/sway/bin/getwork.py")
 
+(defvar topleft_vol_rev false)
+
 ;; ·······
 ;; modules
 ;; ·······

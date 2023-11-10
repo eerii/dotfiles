@@ -108,10 +108,9 @@ install -e cliphist
 link $dir/rofi ~/.config/rofi
 link ~/.cache/wal/config.rasi ~/.config/rofi/config.rasi
 
-# eww
-install eww-tray-wayland-git
-link $dir/eww ~/.config/eww
-# TODO: cargo install
+# ags
+install aylurs-gtk-shell inotify-tools sassc
+link $dir/ags ~/.config/ags
 
 # foot terminal
 install foot

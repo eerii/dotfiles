@@ -24,11 +24,11 @@
             .island_center {
                 &:hover {
                     .workspaces {
-                        min-width: 15rem;
+                        padding: 0 4rem;
                     }
                 }
                 .workspaces {
-                    min-width: 10rem;
+                    padding: 0 1rem;
 
                     .workspace {
                         border-radius: 1rem;

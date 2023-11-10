@@ -48,7 +48,7 @@
 (defwidget network []
     (box
         :class "network"
-        :tooltip {network.name}
+        :tooltip "${network.name} (${network.strength})"
         {network.icon}))
 
 (defwidget battery []

@@ -84,6 +84,7 @@ input * {
     for_window [app_id="Beeper"] move scratchpad
     for_window [app_id="Beeper"] opacity 0.88
     for_window [app_id="localsend_app"] move scratchpad; scratchpad show
+    for_window [app_id="com.github.Aylur.ags"] move scratchpad
 
     for_window [app_id="foot-ps"] move scratchpad; scratchpad show
     for_window [app_id="foot-btm"] move scratchpad; scratchpad show; resize set 1500 900
