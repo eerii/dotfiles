@@ -34,29 +34,38 @@ vim.o.linespace = 4
 
 -- Hide cmd line and statusline
 vim.o.cmdheight = 0
---vim.o.laststatus = 0
 
 -- Set termgui colors
 vim.o.termguicolors = true
 
--- Terminal zsh
-vim.g.shell = "/bin/zsh"
+-- Terminal shell
+vim.g.shell = "/bin/fish"
 
 -- Disable netrw banner
 vim.g.netrw_banner = 0
 
+-- Persistent undo
+vim.opt.undodir = vim.fn.expand("~/.local/share/nvim/undofiles")
+vim.opt.undofile = true
+
 -- Diagnostics
 vim.diagnostic.config({
 	virtual_text = true,
-	update_in_insert = true,
-	float = { focusable = true },
+	update_in_insert = false,
+	severity_sort = true,
 })
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 -- Plantuml filetype
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	desc = "plantuml filetype",
-	pattern = {"*.puml", "*.uml"},
-	callback = function (opts)
+	pattern = { "*.puml", "*.uml" },
+	callback = function(opts)
+		---@diagnostic disable-next-line: inject-field
 		vim.bo[opts.buf].filetype = "plantuml"
-    end,
+	end,
 })

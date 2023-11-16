@@ -1,9 +1,13 @@
-use crate::{HasPrev, write_data};
+use crate::{write_data, HasPrev};
 
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use networkmanager::{NetworkManager, devices::{Any, Device, Wireless}, types::ActiveConnectionState};
+use networkmanager::{
+    devices::{Any, Device, Wireless},
+    types::ActiveConnectionState,
+    NetworkManager,
+};
 
 const ICONS: [&str; 5] = ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"];
 const ICON_UNKNOWN: &str = "󰤭";
@@ -47,14 +51,14 @@ impl NetInfo {
             uuid: "".to_string(),
             strength: 0,
             state: ActiveConnectionState::Unknown,
-            prev: None, 
+            prev: None,
         }
     }
 
     pub fn update(&mut self) {
         let dbus = dbus::blocking::Connection::new_system().expect("failed to connect to dbus");
         let nm = NetworkManager::new(&dbus);
-        
+
         self.state = ActiveConnectionState::Unknown;
 
         if let Ok(dev) = nm.get_device_by_ip_iface("wlp3s0") {
@@ -66,10 +70,10 @@ impl NetInfo {
                     if let Ok(conn) = dev.active_connection() {
                         self.state = conn.state().unwrap_or(ActiveConnectionState::Unknown);
                         self.name = conn.id().unwrap_or("".to_string());
-                        self.uuid = conn.uuid().unwrap_or("".to_string()); 
-                    } 
-                },
-                _ => ()
+                        self.uuid = conn.uuid().unwrap_or("".to_string());
+                    }
+                }
+                _ => (),
             }
         }
 
@@ -79,11 +83,12 @@ impl NetInfo {
                 let next = ICONS.iter().position(|&x| x == self.icon).unwrap_or(0) + 1;
                 ICONS[next % ICONS.len()]
             }
-            ActiveConnectionState::Activated => {
-                ICONS[self.strength as usize / 20]
-            },
-            ActiveConnectionState::Deactivating | ActiveConnectionState::Deactivated => ICON_DEACTIVATED,
-        }.to_string();
+            ActiveConnectionState::Activated => ICONS[self.strength as usize / 20],
+            ActiveConnectionState::Deactivating | ActiveConnectionState::Deactivated => {
+                ICON_DEACTIVATED
+            }
+        }
+        .to_string();
 
         write_data(self, "network");
     }

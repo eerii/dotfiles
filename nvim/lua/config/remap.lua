@@ -4,12 +4,6 @@ local map = vim.keymap.set
 -- Commands with ;
 map("n", ";", ":", { desc = "Commands with ;" })
 
--- Disable arrow keys on normal mode
-map("n", "<Up>", "<nop>", { desc = "Disable arrow keys" })
-map("n", "<Down>", "<nop>", { desc = "Disable arrow keys" })
-map("n", "<Left>", "<nop>", { desc = "Disable arrow keys" })
-map("n", "<Right>", "<nop>", { desc = "Disable arrow keys" })
-
 -- Move selected lines with J/K
 map("n", "J", "<CMD>m +1<CR>", { desc = "Move line down" })
 map("n", "K", "<CMD>m -2<CR>", { desc = "Move line up" })
@@ -25,21 +19,13 @@ map("n", "<C-u>", "<C-u>zz", { desc = "Half page up" })
 map("n", "n", "nzzzv", { desc = "Search next" })
 map("n", "N", "Nzzzv", { desc = "Search previous" })
 
--- Paste without losing the buffer
+-- Paste
 map("x", "<leader>p", '"_dP', { desc = "Paste without losing buffer" })
+map({ "n", "v", "i" }, "<C-v>", '"+p', { desc = "Paste from system clipboard" })
 
 -- Copy into the system clipboard
-map("n", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
-map("v", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
-map("n", "<leader>Y", '"+Y', { desc = "Copy to system clipboard" })
-
--- Copy / paste with ctrl-c / ctrl-v
-map("n", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
-map("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
-map("i", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
-map("n", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
-map("v", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
-map("i", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
+map({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
+map({ "n", "v", "i" }, "<C-c>", '"+y', { desc = "Copy to system clipboard" })
 
 -- Delete to the void register
 map("n", "<leader>x", '"_d', { desc = "Delete to void register" })
@@ -55,15 +41,15 @@ map("i", "jj", "<Esc>", { desc = "Map jj to <Esc>" })
 map("n", "U", "<C-r>", { desc = "Redo" })
 
 -- Go to previous buffer fast
-map("n", "<C-<>", "<C-^>", { desc = "Go to previous buffer" })
+map("n", "<C-x>", "<C-^>", { desc = "Go to previous buffer" })
 
 -- Open lazy plugin window
-map("n", "<leader>L", ":Lazy<CR>", { desc = "Lazy plugin manager" })
+map("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Lazy plugin manager" })
 
 -- New file with nf
-map("n", "<leader>n", ":enew<CR>", { desc = "New file" })
+map("n", "<leader>n", "<CMD>enew<CR>", { desc = "New file" })
 
 -- Terminal
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal" })
-map("t", "<C-v><Esc>", "<Esc>", { desc = "Send escape to terminal" })
-map("t", "<D-v>", '<C-\\><C-n>"+pi', { desc = "Paste in terminal mode" })
+map("t", "<M-c>", "<Esc>", { desc = "Send escape to terminal" })
+map("t", "<C-v>", '<C-\\><C-n>"+pi', { desc = "Paste in terminal mode" })

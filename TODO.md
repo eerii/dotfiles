@@ -21,7 +21,7 @@
 
 - [ ] neovim
     - [ ] mini mode (no lsp, cmp, plugins...)
-    - [ ] change from coq to cmp again
+    - [ ] redo cmp
 
 - [ ] move to ags
 - [ ] power off menu

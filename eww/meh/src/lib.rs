@@ -1,8 +1,8 @@
-pub mod daemon;
 pub mod battery;
+pub mod daemon;
 pub mod net;
-pub mod volume;
 pub mod notify;
+pub mod volume;
 
 use std::{fs, path::Path};
 
@@ -12,10 +12,13 @@ use net::NetInfo;
 use serde_json::Value;
 use volume::VolumeInfo;
 
-use ::notify::{Config, Event, RecommendedWatcher, RecursiveMode, Watcher, event::EventKind};
-use futures::{channel::mpsc::{channel, Receiver}, SinkExt, StreamExt};
-use serde::{Deserialize, Serialize};
+use ::notify::{event::EventKind, Config, Event, RecommendedWatcher, RecursiveMode, Watcher};
 use clap::{Parser, Subcommand};
+use futures::{
+    channel::mpsc::{channel, Receiver},
+    SinkExt, StreamExt,
+};
+use serde::{Deserialize, Serialize};
 
 pub const DIR_FILE: &str = "/tmp/meh";
 pub const OUT_FILE: &str = concatcp!(DIR_FILE, "/out");
@@ -36,7 +39,7 @@ pub struct Cli {
 
     #[arg(short, long, action)]
     #[serde(skip_serializing)]
-    pub kill_daemon: bool, 
+    pub kill_daemon: bool,
 }
 
 #[derive(Subcommand, Debug, Serialize)]
@@ -56,7 +59,7 @@ pub enum Commands {
 
         #[arg(short, long, action)]
         #[serde(skip_serializing)]
-        monitor: bool, 
+        monitor: bool,
     },
 
     Volume {
@@ -79,7 +82,7 @@ pub enum Commands {
         #[arg(long, action)]
         #[clap(group = "volume")]
         toggle_mute: bool,
-    }
+    },
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -88,7 +91,6 @@ pub struct Info {
     pub network: NetInfo,
     pub volume: VolumeInfo,
 }
-
 
 pub trait HasPrev {
     fn prev(&mut self, next: Value) -> Value;
@@ -126,11 +128,9 @@ pub async fn async_watch<P: AsRef<Path>>(path: P, f: &dyn Fn(&str)) -> ::notify:
 
     while let Some(res) = rx.next().await {
         match res {
-            Ok(event) => {
-                match event.kind {
-                    EventKind::Modify(_) => f(event.paths[0].to_str().unwrap()),
-                    _ => ()
-                }
+            Ok(event) => match event.kind {
+                EventKind::Modify(_) => f(event.paths[0].to_str().unwrap()),
+                _ => (),
             },
             Err(e) => println!("watch error: {:?}", e),
         }

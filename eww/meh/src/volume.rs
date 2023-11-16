@@ -75,7 +75,7 @@ impl VolumeInfo {
     }
 
     pub fn mute(&mut self, m: bool) {
-        self.run_wpctl(if m {Wpctl::Mute} else {Wpctl::Unmute});
+        self.run_wpctl(if m { Wpctl::Mute } else { Wpctl::Unmute });
         self.update();
     }
 
@@ -94,7 +94,9 @@ impl VolumeInfo {
             .arg(WPCTL_SINK)
             .arg(match action {
                 Wpctl::SetVolume(vol) => format!("{}%", vol),
-                Wpctl::AddVolume(vol) => format!("{}%{}", vol.abs(), if vol > 0 {"+"} else {"-"}),
+                Wpctl::AddVolume(vol) => {
+                    format!("{}%{}", vol.abs(), if vol > 0 { "+" } else { "-" })
+                }
                 Wpctl::Mute => "1".to_string(),
                 Wpctl::Unmute => "0".to_string(),
                 Wpctl::ToggleMute => "toggle".to_string(),
@@ -114,10 +116,14 @@ impl VolumeInfo {
         match action {
             Wpctl::GetVolume => {
                 let res = from_utf8(&out.stdout[..]).unwrap().split(" ");
-                
-                let vol = res.clone().nth(1)
-                    .unwrap_or("0.0").trim()
-                    .parse::<f32>().unwrap();
+
+                let vol = res
+                    .clone()
+                    .nth(1)
+                    .unwrap_or("0.0")
+                    .trim()
+                    .parse::<f32>()
+                    .unwrap();
                 self.volume = (vol * 100.0).round() as u32;
 
                 self.state = if self.volume == 0 || res.count() > 2 {
@@ -125,20 +131,29 @@ impl VolumeInfo {
                 } else {
                     State::Regular
                 };
-            },
+            }
             Wpctl::Mute => self.state = State::Mute,
             Wpctl::Unmute => self.state = State::Regular,
-            Wpctl::ToggleMute => self.state = match self.state {
-                State::Mute | State::Unknown => State::Regular,
-                State::Regular => State::Mute,
-            },
-            _ => ()
+            Wpctl::ToggleMute => {
+                self.state = match self.state {
+                    State::Mute | State::Unknown => State::Regular,
+                    State::Regular => State::Mute,
+                }
+            }
+            _ => (),
         }
 
-        self.icon = match self.state { 
+        self.icon = match self.state {
             State::Unknown => ICON_UNKNOWN,
             State::Mute => ICON_MUTE,
-            State::Regular => if self.volume > 50 { ICON_MAX } else { ICON_MIN },
-        }.to_string();
+            State::Regular => {
+                if self.volume > 50 {
+                    ICON_MAX
+                } else {
+                    ICON_MIN
+                }
+            }
+        }
+        .to_string();
     }
 }

@@ -1,9 +1,22 @@
 // notification daemon
 // heavily based on https://github.com/orhun/runst
 
-use std::{error::Error, sync::{atomic::{AtomicU32, Ordering}, mpsc::Sender}, time::{Duration, SystemTime, UNIX_EPOCH}, fmt};
-use dbus::{MethodErr, blocking::{Connection, stdintf::org_freedesktop_dbus::RequestNameReply}, message::MatchRule, channel::MatchingReceiver};
+use dbus::{
+    blocking::{stdintf::org_freedesktop_dbus::RequestNameReply, Connection},
+    channel::MatchingReceiver,
+    message::MatchRule,
+    MethodErr,
+};
 use dbus_crossroads::Crossroads;
+use std::{
+    error::Error,
+    fmt,
+    sync::{
+        atomic::{AtomicU32, Ordering},
+        mpsc::Sender,
+    },
+    time::{Duration, SystemTime, UNIX_EPOCH},
+};
 
 const SERVER_INFO: [&str; 4] = [
     env!("CARGO_PKG_NAME"),
@@ -49,7 +62,7 @@ pub struct Notification {
     pub app_name: String,
     pub summary: String,
     pub body: String,
-    pub expire_timeout: Option<Duration>, 
+    pub expire_timeout: Option<Duration>,
     pub timestamp: u64,
 }
 
@@ -70,7 +83,9 @@ pub struct Manager {
 
 impl Manager {
     pub fn new() -> Self {
-        Self { notifications: Vec::new() }
+        Self {
+            notifications: Vec::new(),
+        }
     }
 
     pub fn count(&self) -> usize {
@@ -168,14 +183,17 @@ struct DbusServer {
 
 #[derive(Debug, Clone)]
 enum DbusError {
-    NotPrimary
+    NotPrimary,
 }
 
 impl fmt::Display for DbusError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            DbusError::NotPrimary => write!(f, "not primary dbus notification server, is another running?"),
-        } 
+            DbusError::NotPrimary => write!(
+                f,
+                "not primary dbus notification server, is another running?"
+            ),
+        }
     }
 }
 
@@ -228,11 +246,8 @@ impl DbusServer {
             });
         });
 
-        self.crossroads.insert(
-            format!("{NOTIFICATION_PATH}/ctl"),
-            &[token],
-            ()
-        );
+        self.crossroads
+            .insert(format!("{NOTIFICATION_PATH}/ctl"), &[token], ());
 
         self.connection.start_receive(
             MatchRule::new_method_call(),
@@ -249,5 +264,3 @@ impl DbusServer {
         }
     }
 }
-
-

@@ -1,8 +1,8 @@
+use battery::{units::ratio, Battery, Manager, State};
 use serde::{Deserialize, Serialize};
-use battery::{Manager, Battery, State, units::ratio};
 use serde_json::Value;
 
-use crate::{HasPrev, write_data};
+use crate::{write_data, HasPrev};
 
 const ICONS: [&str; 11] = ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"];
 const ICONS_CHARGING: [&str; 11] = ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"];
@@ -50,27 +50,33 @@ impl BatteryInfo {
             icon: ICON_UNKNOWN.to_string(),
             state: State::Unknown,
             manager: Some(manager),
-            prev: None
+            prev: None,
         }
     }
 
     pub fn update(&mut self) {
         write_data(self, "battery");
 
-        match self.manager.as_ref().expect("battery info was not initialized")
-                .batteries().expect("there are no batteries").next() {
+        match self
+            .manager
+            .as_ref()
+            .expect("battery info was not initialized")
+            .batteries()
+            .expect("there are no batteries")
+            .next()
+        {
             Some(Ok(bat)) => {
                 self.percent = percent(&bat) as i32;
                 self.icon = icon(&bat).to_string();
                 self.state = bat.state();
                 write_data(self, "battery");
-            },
+            }
             Some(Err(e)) => {
                 eprintln!("unable to access battery information: {}", e);
-            },
+            }
             None => {
                 eprintln!("unable to find any batteries");
-            },
+            }
         }
     }
 }
@@ -82,7 +88,7 @@ fn percent(bat: &Battery) -> f32 {
 }
 
 fn icon(bat: &Battery) -> &'static str {
-    let p : usize = percent(bat) as usize / 10;
+    let p: usize = percent(bat) as usize / 10;
 
     match bat.state() {
         State::Full => ICON_FULL,

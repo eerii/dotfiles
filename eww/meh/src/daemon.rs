@@ -1,10 +1,21 @@
-use crate::{Info, battery::BatteryInfo, notify::{self, register_dbus_handler, Action}, volume::VolumeInfo, net::NetInfo, DIR_FILE, OUT_FILE, ERR_FILE, PID_FILE, DATA_FILE};
+use crate::{
+    battery::BatteryInfo,
+    net::NetInfo,
+    notify::{self, register_dbus_handler, Action},
+    volume::VolumeInfo,
+    Info, DATA_FILE, DIR_FILE, ERR_FILE, OUT_FILE, PID_FILE,
+};
 
-use std::{fs::{File, read_to_string, remove_file, self}, thread, time, error::Error, sync::{mpsc, Arc, RwLock}};
-use networkmanager::types::ActiveConnectionState;
-use sysinfo::{Pid, ProcessExt, Signal, System, SystemExt};
 use daemonize::Daemonize;
 use glob::glob;
+use networkmanager::types::ActiveConnectionState;
+use std::{
+    error::Error,
+    fs::{self, read_to_string, remove_file, File},
+    sync::{mpsc, Arc, RwLock},
+    thread, time,
+};
+use sysinfo::{Pid, ProcessExt, Signal, System, SystemExt};
 
 pub struct Daemon {
     info: Info,
@@ -39,35 +50,36 @@ impl Daemon {
             Ok(_) => {
                 println!("the meh daemon has started");
                 self.run();
-            },
+            }
             Err(e) => eprintln!("{}", e),
-        } 
-    } 
+        }
+    }
 
     fn run(&mut self) {
         let (sender, receiver) = mpsc::channel();
         thread::spawn(move || register_dbus_handler(sender));
-  
+
         // notification loop
         let dbus = self.dbus_manager.clone();
-        thread::spawn(move || {
-            loop {
-                if let Ok(recv) = receiver.recv() {
-                    match recv {
-                        Action::Show(n) => {
-                            println!("received notification: {}\napp: {}\n{}\n{}",
-                                n.id, n.app_name, n.summary, n.body);
-                            dbus.write().expect("failed to write into the dbus manager").add(n);
-                        },
-                        Action::Close(_) => {},
+        thread::spawn(move || loop {
+            if let Ok(recv) = receiver.recv() {
+                match recv {
+                    Action::Show(n) => {
+                        println!(
+                            "received notification: {}\napp: {}\n{}\n{}",
+                            n.id, n.app_name, n.summary, n.body
+                        );
+                        dbus.write()
+                            .expect("failed to write into the dbus manager")
+                            .add(n);
                     }
+                    Action::Close(_) => {}
                 }
             }
         });
-       
+
         // daemon loop
         loop {
-
             if self.it % 5 == 0 {
                 self.info.battery.update();
             }
@@ -83,7 +95,7 @@ impl Daemon {
             if self.it % net_delay == 0 {
                 self.info.network.update();
             }
-            
+
             self.it += 1;
             thread::sleep(time::Duration::from_millis(100));
         }
@@ -93,7 +105,8 @@ impl Daemon {
 pub fn kill() -> Result<(), Box<dyn Error>> {
     let pid = read_to_string(PID_FILE)
         .or_else(|_| Err("the daemon doesn't seem to be running"))?
-        .trim().parse::<usize>()?;
+        .trim()
+        .parse::<usize>()?;
     let s = System::new_all();
 
     if let Some(process) = s.process(Pid::from(pid)) {
@@ -106,7 +119,7 @@ pub fn kill() -> Result<(), Box<dyn Error>> {
     for path in glob(&format!("{}.*", DATA_FILE)).unwrap() {
         match path {
             Ok(path) => fs::remove_file(path)?,
-            Err(e) => eprintln!("{}", e)
+            Err(e) => eprintln!("{}", e),
         }
     }
 

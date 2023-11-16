@@ -1,4 +1,4 @@
-use std::{fs, env, error::Error, path::Path};
+use std::{env, error::Error, fs, path::Path};
 
 use dbus_codegen::{ConnectionType, GenOpts, ServerAccess};
 
