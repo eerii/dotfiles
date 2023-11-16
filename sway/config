@@ -60,9 +60,10 @@ input * {
     exec wl-paste --type image --watch cliphist store
 
     exec udiskie &
-
-    exec beeper --default-frame --enable-features=UseOzonePlatform --ozone-platform=wayland &
     exec easyeffects --gapplication-service &
+
+    exec env --chdir=/home/eri/.local/share/applications -S gtk-launch beeper.desktop
+    exec env --chdir=/usr/share/applications -S gtk-launch thunderbird.desktop
 
     set $SOVSOCK /tmp/sovpipe
     exec rm -f $SOVSOCK && mkfifo $SOVSOCK && tail -f $SOVSOCK | sov -t 250
@@ -81,8 +82,7 @@ input * {
     for_window [app_id=".*"] inhibit_idle fullscreen
     for_window [app_id=".*"] opacity $opacity
 
-    for_window [app_id="Beeper"] move scratchpad
-    for_window [app_id="Beeper"] opacity 0.88
+    for_window [app_id="kebihpkoclefnhgdieipmimdjhpdkbjc"] move scratchpad
     for_window [app_id="localsend_app"] move scratchpad; scratchpad show
     for_window [app_id="com.github.Aylur.ags"] move scratchpad
 
@@ -92,6 +92,7 @@ input * {
     for_window [app_id="mpv"] fullscreen
     
     for_window [app_id="thunderbird" title="^((?!Mozilla Thunderbird).)*$"] floating enable
+    for_window [app_id="thunderbird" title="Mozilla Thunderbird"] move workspace 4
     for_window [title="Open *"] floating enable
 
     layer_effects "rofi" blur enable; shadows enable; corner_radius 10
@@ -104,7 +105,7 @@ input * {
     bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f -
 
     bindsym $mod+space exec pkill rofi || rofi -show drun -show-icons | xargs swaymsg exec --
-    bindsym $mod+Shift+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy
+    bindsym $mod+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy
     bindsym $mod+Shift+f exec pkill rofi || locate /home/eri | rofi -dmenu
     bindsym Ctrl+space exec pkill rofi || foot -D "$(zoxide query --list | rofi -dmenu)"
     bindsym $mod+Shift+e exec ~/.config/rofi/bin/emoji
@@ -173,7 +174,7 @@ input * {
 
     bindsym $mod+Shift+minus move scratchpad
     bindsym $mod+minus scratchpad show
-    bindsym $mod+m [app_id="Beeper"] scratchpad show
+    bindsym $mod+m [app_id="kebihpkoclefnhgdieipmimdjhpdkbjc"] scratchpad show
     bindsym $mod+Shift+m [app_id="localsend_app"] scratchpad show
 
     bindsym $mod+Shift+p exec foot --app-id="foot-ps" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm -e --default_widget_type process"
@@ -189,10 +190,6 @@ input * {
     bindsym --locked XF86AudioPlay exec playerctl play-pause
     bindsym --locked XF86AudioNext exec playerctl next
     bindsym --locked XF86AudioPrev exec playerctl previous
-
-    bindsym $mod+c exec wtype -P XF86Copy
-    bindsym $mod+v exec wtype -P XF86Paste
-    bindsym $mod+x exec wtype -P XF86Cut
 
     bindswitch --reload --locked lid:on output eDP-1 disable
     bindswitch --reload --locked lid:off output eDP-1 enable; exec python ~/.config/wal/paperd.py -s; exec sleep 1 && [[ $(eww windows | grep bar) != \** ]] && eww close-all && eww open bar

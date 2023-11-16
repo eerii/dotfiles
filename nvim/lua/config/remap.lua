@@ -33,6 +33,14 @@ map("n", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
 map("v", "<leader>y", '"+y', { desc = "Copy to system clipboard" })
 map("n", "<leader>Y", '"+Y', { desc = "Copy to system clipboard" })
 
+-- Copy / paste with ctrl-c / ctrl-v
+map("n", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
+map("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
+map("i", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
+map("n", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
+map("v", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
+map("i", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
+
 -- Delete to the void register
 map("n", "<leader>x", '"_d', { desc = "Delete to void register" })
 map("v", "<leader>x", '"_d', { desc = "Delete to void register" })

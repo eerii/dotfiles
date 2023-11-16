@@ -35,7 +35,8 @@ inotifywait --quiet --monitor --event create,modify,delete --recursive $WORKDIR 
         scss)
             echo "reloading SCSS..."
             _sass
-            ags --run-js "ags.App.resetCss(); ags.App.applyCss('style.css');" #&>/dev/null  
+            _debounce
+            #ags --run-js "ags.App.resetCss(); ags.App.applyCss('style.css');" #&>/dev/null  
             ;;
     esac
 done
