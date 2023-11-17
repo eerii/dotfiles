@@ -16,8 +16,13 @@ return {
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lsp-document-symbol",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
+			"hrsh7th/cmp-nvim-lua",
 			"l3mon4d3/luasnip",
 			"saadparwaiz1/cmp_luasnip",
+			"onsails/lspkind.nvim",
+			"jmarkin/cmp-diag-codes",
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -26,8 +31,12 @@ return {
 
 			cmp.setup({
 				sources = {
-					{ name = "nvim_lsp", max_item_count = 5 },
+					{ name = "nvim_lsp" },
+					{ name = "nvim_lsp_document_symbol" },
+					{ name = "nvim_lsp_signature_help" },
 					{ name = "luasnip", max_item_count = 5 },
+					{ name = "nvim_lua" },
+					{ name = "diag-codes", option = { in_comment = true } },
 				},
 				preselect = cmp.PreselectMode.Item,
 				mapping = cmp.mapping.preset.insert({
@@ -82,15 +91,58 @@ return {
 							copilot.next()
 						end
 					end, { "i", "s" }),
+
+					["<C-d>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.mapping.scroll_docs(-1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+
+					["<C-f>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.mapping.scroll_docs(1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
 				}),
 				snippet = {
 					expand = function(args)
 						require("luasnip").lsp_expand(args.body)
 					end,
 				},
+				formatting = {
+					fields = { "kind", "abbr", "menu" },
+					format = function(entry, vim_item)
+						local kind = require("lspkind").cmp_format({
+							symbol_map = vim.g.symbol_map,
+							maxwidth = 40,
+						})(entry, vim_item)
+						local strings = vim.split(vim_item.kind, "%s+", { trimempty = true })
+						kind.kind = string.format(" %s │", strings[1], strings[2])
+						return kind
+					end,
+				},
+				window = {
+					documentation = {
+						border = "rounded",
+						winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+						scrollbar = false,
+						col_offset = 0,
+					},
+					completion = {
+						border = "rounded",
+						winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
+						scrollbar = false,
+						col_offset = 0,
+						side_padding = 0,
+					},
+				},
 				performance = {
 					debounce = 150,
-					max_view_entries = 5,
+					max_view_entries = 8,
 				},
 				experimental = {
 					ghost_text = true,

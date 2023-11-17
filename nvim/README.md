@@ -33,13 +33,14 @@
 
 - `gh`: hover
 - `ga`: code actions
-- `gs`: declaration
-- `gf`: definition
+- `gD`: declaration
+- `gd`: definition
 - `gt`: type definition
 - `gj`: implementation
 - `gr`: references
 - `gi`: incoming calls
 - `go`: outgoing calls
+- `gs`: document symbols
 - `<leader>r`: rename
 - `<leader>f`: format
 - `<Tab>`: accept completion
@@ -64,7 +65,7 @@
 
 ### diagnostics
 
-- `gd`: show diagnostic
+- `ge`: show diagnostic
 - `<leader>sd`: document diagnostics
 - `<leader>sD`: workspace diagnostics
 - `<leader>st`: todo list

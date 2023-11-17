@@ -11,6 +11,50 @@ end, {
 	bang = true,
 })
 
+-- LSP symbols
+vim.g.symbol_map = {
+	Text = "󰉿",
+	Method = "󰆧",
+	StaticMethod = "󰆧",
+	Function = "󰊕",
+	Constructor = "",
+	Field = "󰜢",
+	Variable = "󰯫",
+	Class = "",
+	Interface = "",
+	Module = "",
+	Namespace = "󰅪",
+	Package = "󰏗",
+	Property = "󰜢",
+	Unit = "",
+	Value = "󰎠",
+	Enum = "",
+	Key = "󰌆",
+	Keyword = "󰌆",
+	Snippet = "",
+	Color = "󰏘",
+	File = "󰈙",
+	Reference = "󱞡",
+	Folder = "󰉋",
+	EnumMember = "",
+	Constant = "",
+	String = "",
+	Number = "󰎠",
+	Boolean = "󰱒",
+	Array = "󱃶",
+	Object = "󱗝",
+	Null = "",
+	Component = "",
+	Fragment = "",
+	Struct = "󰙅",
+	Event = "󱐋",
+	Operator = "󱨃",
+	TypeParameter = "",
+	Parameter = "",
+	TypeAlias = "󰑕",
+	Macro = "󰻃",
+}
+
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -26,7 +70,7 @@ return {
 					local map = vim.keymap.set
 					map("n", "gh", vim.lsp.buf.hover, { buffer = e.buf, desc = "[L]SP [H]over info" })
 					map("n", "ga", vim.lsp.buf.code_action, { buffer = e.buf, desc = "[L]SP [C]ode [A]ctions" })
-					map("n", "gs", vim.lsp.buf.declaration, { buffer = e.buf, desc = "[L]SP [D]eclaration" })
+					map("n", "gD", vim.lsp.buf.declaration, { buffer = e.buf, desc = "[L]SP [D]eclaration" })
 					map("n", "gd", function()
 						require("trouble").toggle("lsp_definitions")
 					end, { buffer = e.buf, desc = "[L]SP [D]efinition" })
@@ -58,6 +102,7 @@ return {
 
 			-- General LSP
 			local lsp = require("lspconfig")
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			-- Mason config
 			require("mason").setup()
@@ -71,7 +116,9 @@ return {
 				},
 				handlers = {
 					function(server_name)
-						lsp[server_name].setup({})
+						lsp[server_name].setup({
+							capabilities = capabilities,
+						})
 					end,
 					["jdtls"] = function() end,
 				},
@@ -92,7 +139,7 @@ return {
 		keys = {
 			{ "[d", vim.diagnostic.goto_next, desc = "LSP next [D]iagnostic" },
 			{ "]d", vim.diagnostic.goto_prev, desc = "LSP previous [D]iagnostic" },
-			{ "gd", vim.diagnostic.open_float, desc = "LSP show line [D]iagnostics" },
+			{ "ge", vim.diagnostic.open_float, desc = "LSP show line [D]iagnostics" },
 			{ "<leader>lsp", ":LspInfo<CR>", desc = "[LSP] Info" },
 		},
 	},
@@ -210,4 +257,20 @@ return {
 	},
 
 	-- TODO: Lint
+
+	-- Symbols
+	{
+		"hedyhli/outline.nvim",
+		opts = {
+			symbols = {
+				icon_fetcher = function(name)
+					return vim.g.symbol_map[name]
+				end,
+				icon_source = "lspkind",
+			},
+		},
+		keys = {
+			{ "gs", "<CMD>Outline<CR>", desc = "LSP Symbol outline" },
+		},
+	},
 }
