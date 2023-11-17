@@ -6,6 +6,7 @@
 
 - `<leader>n`: new file
 - `<leader>z`: zen mode
+- `<leader>w`: toggle wrap
 - `<leader>l`: lazy plugins
 - `<leader>m`: mason
 - `<leader>lsp`: lsp info
@@ -41,6 +42,12 @@
 - `go`: outgoing calls
 - `<leader>r`: rename
 - `<leader>f`: format
+- `<Tab>`: accept completion
+- `<C-e>`: get completion
+- `<C-j>`: next completion
+- `<C-k>`: previous completion
+- `<C-w>`: suggestion
+- `<leader>tc`: toggle autocomplete
 
 ### search
 

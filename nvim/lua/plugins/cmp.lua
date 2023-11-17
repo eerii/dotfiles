@@ -1,3 +1,16 @@
+vim.g.enable_autocomplete = true
+vim.api.nvim_create_user_command("ToggleCmp", function(_)
+	vim.g.enable_autocomplete = not vim.g.enable_autocomplete
+
+	local cmp = require("cmp")
+	local autocomplete = vim.g.enable_autocomplete and { cmp.TriggerEvent.TextChanged } or false
+
+	cmp.setup.buffer({ completion = { autocomplete = autocomplete } })
+	vim.notify("Auto completions " .. (vim.g.enable_autocomplete and "enabled" or "disabled"))
+end, {
+	desc = "Toggle auto completions",
+})
+
 return {
 	{
 		"hrsh7th/nvim-cmp",
@@ -9,19 +22,20 @@ return {
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
+			local copilot = require("copilot.suggestion")
 
 			cmp.setup({
 				sources = {
 					{ name = "nvim_lsp", max_item_count = 5 },
 					{ name = "luasnip", max_item_count = 5 },
 				},
-				completion = {
-					-- autocomplete = false
-				},
+				preselect = cmp.PreselectMode.Item,
 				mapping = cmp.mapping.preset.insert({
 					["<Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_next_item()
+						if copilot.is_visible() then
+							copilot.accept()
+						elseif cmp.visible() then
+							cmp.confirm({ select = true })
 						elseif luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
 						else
@@ -29,8 +43,20 @@ return {
 						end
 					end, { "i", "s" }),
 
-					["<S-Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
+					["<C-j>"] = cmp.mapping(function(fallback)
+						if copilot.is_visible() then
+							copilot.next()
+						elseif cmp.visible() then
+							cmp.select_next_item()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+
+					["<C-k>"] = cmp.mapping(function(fallback)
+						if copilot.is_visible() then
+							copilot.prev()
+						elseif cmp.visible() then
 							cmp.select_prev_item()
 						elseif luasnip.jumpable(-1) then
 							luasnip.jump(-1)
@@ -39,25 +65,23 @@ return {
 						end
 					end, { "i", "s" }),
 
-					["<CR>"] = cmp.mapping({
-						i = function(fallback)
-							if cmp.visible() and cmp.get_active_entry() then
-								cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-							else
-								fallback()
-							end
-						end,
-						s = cmp.mapping.confirm({ select = true }),
-						c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-					}),
-
-					["<C-W>"] = cmp.mapping(function(_)
+					["<C-e>"] = cmp.mapping(function(_)
 						if cmp.visible() then
 							cmp.abort()
 						else
+							copilot.dismiss()
 							cmp.complete()
 						end
-					end),
+					end, { "i", "s" }),
+
+					["<C-w>"] = cmp.mapping(function(_)
+						if copilot.is_visible() then
+							copilot.dismiss()
+						else
+							cmp.abort()
+							copilot.next()
+						end
+					end, { "i", "s" }),
 				}),
 				snippet = {
 					expand = function(args)
@@ -66,11 +90,37 @@ return {
 				},
 				performance = {
 					debounce = 150,
+					max_view_entries = 5,
 				},
 				experimental = {
 					ghost_text = true,
 				},
 			})
 		end,
+		keys = {
+			{ "<leader>tc", "<CMD>ToggleCmp<CR>", desc = "Toggle auto compeltions" },
+		},
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		opts = {
+			panel = {
+				enabled = false,
+			},
+
+			suggestion = {
+				enabled = true,
+				auto_trigger = false,
+				debounce = 75,
+				keymap = {
+					["*"] = false,
+				},
+			},
+
+			filetypes = {
+				["*"] = true,
+			},
+		},
+		event = "InsertEnter",
 	},
 }

@@ -12,7 +12,18 @@ return {
 		end,
 		config = function()
 			require("nvim-treesitter.configs").setup({
-				ensure_installed = { "c", "cpp", "rust", "python", "lua", "vim", "vimdoc", "query" },
+				ensure_installed = {
+					"c",
+					"cpp",
+					"regex",
+					"rust",
+					"python",
+					"lua",
+					"markdown_inline",
+					"vim",
+					"vimdoc",
+					"query",
+				},
 				auto_install = true,
 				highlight = {
 					enable = true,
@@ -34,7 +45,7 @@ return {
 	{
 		"plasticboy/vim-markdown",
 		branch = "master",
-		require = { "godlygeek/tabular" },
+		dependencies = { "godlygeek/tabular" },
 		config = function()
 			vim.g.vim_markdown_folding_style_pythonic = 1
 

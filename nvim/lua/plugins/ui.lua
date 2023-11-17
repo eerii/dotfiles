@@ -4,6 +4,7 @@ return {
 		"folke/noice.nvim",
 		dependencies = {
 			"muniftanjim/nui.nvim",
+			{ "rcarriga/nvim-notify", opts = { background_colour = "#000000" } },
 		},
 		opts = {},
 		event = "VeryLazy",

@@ -10,7 +10,6 @@ return {
 			{ "<leader>sd", "<CMD>TroubleToggle document_diagnostics<CR>", desc = "Trouble document diagnostics" },
 			{ "<leader>sD", "<CMD>TroubleToggle workspace_diagnostics<CR>", desc = "Trouble workspace diagnostics" },
 			{ "<leader>sq", "<CMD>TroubleToggle quickfix<CR>", desc = "Trouble quickfix" },
-			-- TODO: Add LSP lists
 		},
 		event = "BufRead",
 	},

@@ -192,9 +192,6 @@ return {
 				java = { "clang-format" },
 				python = { "isort", "black" },
 				rust = { "rustfmt" },
-				sh = { "beautish" },
-				bash = { "beautish" },
-				zsh = { "beautish" },
 			},
 			format_after_save = function(buf)
 				if vim.g.disable_autoformat or vim.b[buf].disable_autoformat then

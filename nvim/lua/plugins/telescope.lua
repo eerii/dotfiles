@@ -90,13 +90,15 @@ return {
 		},
 		config = function()
 			require("neoclip").setup({
-				history = 256,
+				history = 1000,
 				enable_persistent_history = true,
+				continuous_sync = true,
 			})
 			require("telescope").load_extension("neoclip")
 		end,
 		keys = {
 			{ "<leader>sp", "<CMD>Telescope neoclip<CR>", desc = "Search yank clipboard" },
 		},
+		event = "BufReadPost",
 	},
 }
