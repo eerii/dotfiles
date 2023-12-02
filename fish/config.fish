@@ -26,7 +26,8 @@ abbr -a -- sys 'systemctl --user'
 abbr -a -- v 'virsh'
 abbr -a -- nc 'ncat'
 abbr -a -- grdl 'gradle -q --console plain run'
-abbr -a -- n 'neovim'
+abbr -a -- n 'neovide'
+abbr -a -- nv 'nvim'
 
 function gr!
     git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE="%cD" git commit --amend --no-edit' rebase -i

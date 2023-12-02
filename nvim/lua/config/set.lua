@@ -44,13 +44,22 @@ vim.g.shell = "/bin/fish"
 -- Disable netrw banner
 vim.g.netrw_banner = 0
 
+-- Indent lines
+-- vim.opt.list = true
+-- vim.opt.listchars = { leadmultispace = "│ ", multispace = "│ ", tab = "│ " }
+
 -- Persistent undo
 vim.opt.undodir = vim.fn.expand("~/.local/share/nvim/undofiles")
 vim.opt.undofile = true
 
 -- Diagnostics
 vim.diagnostic.config({
-	virtual_text = true,
+	underline = {
+		severity = { max = vim.diagnostic.severity.INFO },
+	},
+	virtual_text = {
+		severity = { min = vim.diagnostic.severity.WARN },
+	},
 	update_in_insert = false,
 	severity_sort = true,
 })

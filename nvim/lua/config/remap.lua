@@ -21,11 +21,12 @@ map("n", "N", "Nzzzv", { desc = "Search previous" })
 
 -- Paste
 map("x", "<leader>p", '"_dP', { desc = "Paste without losing buffer" })
-map({ "n", "v", "i" }, "<C-v>", '"+p', { desc = "Paste from system clipboard" })
+map({ "n", "v" }, "<C-v>", '"+p', { desc = "Paste from system clipboard" })
+map("i", "<C-v>", '<C-r>"', { desc = "Paste from system clipboard" })
 
 -- Copy into the system clipboard
 map({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
-map({ "n", "v", "i" }, "<C-c>", '"+y', { desc = "Copy to system clipboard" })
+map({ "n", "v" }, "<C-c>", '"+y', { desc = "Copy to system clipboard" })
 
 -- Delete to the void register
 map("n", "<leader>x", '"_d', { desc = "Delete to void register" })

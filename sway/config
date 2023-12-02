@@ -68,10 +68,10 @@ input * {
     set $SOVSOCK /tmp/sovpipe
     exec rm -f $SOVSOCK && mkfifo $SOVSOCK && tail -f $SOVSOCK | sov -t 250
 
-    exec swayidle -w \
-        timeout 300 'sh ~/.config/sway/bin/swaylock' \
-        timeout 330 'swaymsg "output * dpms off"' \
-        resume 'swaymsg "output * dpms on"'
+    # exec swayidle -w \
+    #     timeout 300 'sh ~/.config/sway/bin/swaylock' \
+    #     timeout 330 'swaymsg "output * dpms off"' \
+    #     resume 'swaymsg "output * dpms on"'
 
     exec_always ~/.config/sway/bin/clamshell
     exec autotiling-rs
@@ -100,9 +100,11 @@ input * {
 # Binds
     bindsym $mod+t exec foot
     bindsym $mod+b exec firefox
+    bindsym $mod+n exec neovide
     bindsym $mod+a exec nautilus -w
 
     bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f -
+    bindsym $mod+Shift+r exec obs-cli recording toggle
 
     bindsym $mod+space exec pkill rofi || rofi -show drun -show-icons | xargs swaymsg exec --
     bindsym $mod+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy
@@ -191,8 +193,8 @@ input * {
     bindsym --locked XF86AudioNext exec playerctl next
     bindsym --locked XF86AudioPrev exec playerctl previous
 
-    bindswitch --reload --locked lid:on output eDP-1 disable
-    bindswitch --reload --locked lid:off output eDP-1 enable; exec python ~/.config/wal/paperd.py -s; exec sleep 1 && [[ $(eww windows | grep bar) != \** ]] && eww close-all && eww open bar
+    # bindswitch --reload --locked lid:on output eDP-1 disable
+    # bindswitch --reload --locked lid:off output eDP-1 enable; exec python ~/.config/wal/paperd.py -s; exec sleep 1 && [[ $(eww windows | grep bar) != \** ]] && eww close-all && eww open bar
 
     bindgesture swipe:left exec ~/.config/sway/bin/swaywork next
     bindgesture swipe:right exec ~/.config/sway/bin/swaywork prev

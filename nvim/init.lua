@@ -12,3 +12,6 @@ require("config.lazy")
 
 -- Set mappings
 require("config.remap")
+
+-- Neovide
+require("config.neovide")
