@@ -53,6 +53,7 @@ vim.g.symbol_map = {
 	Parameter = "",
 	TypeAlias = "󰑕",
 	Macro = "󰻃",
+	Codeium = "󱝁",
 }
 
 return {

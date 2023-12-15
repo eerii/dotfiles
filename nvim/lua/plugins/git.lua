@@ -2,7 +2,16 @@ return {
 	-- Git sign column
 	{
 		"lewis6991/gitsigns.nvim",
-		opts = {},
+		opts = {
+			signs = {
+				add = { text = "│" },
+				change = { text = "│" },
+				delete = { text = "_" },
+				topdelete = { text = "‾" },
+				changedelete = { text = "│" },
+				untracked = { text = "│" },
+			},
+		},
 		event = "BufRead",
 		keys = {
 			{ "<leader>gs", "<CMD>Gitsigns stage_hunk<CR>", mode = { "n", "v" }, desc = "[G]it stage hunk" },

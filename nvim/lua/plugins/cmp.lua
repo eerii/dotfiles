@@ -27,23 +27,31 @@ return {
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
-			local copilot = require("copilot.suggestion")
+
+			local cmp_mapping = function(fn)
+				return cmp.mapping(function(fallback)
+					if cmp.visible() then
+						fn()
+					else
+						fallback()
+					end
+				end, { "i", "s" })
+			end
 
 			cmp.setup({
 				sources = {
 					{ name = "nvim_lsp" },
+					{ name = "codeium" },
 					{ name = "nvim_lsp_document_symbol" },
 					{ name = "nvim_lsp_signature_help" },
-					{ name = "luasnip", max_item_count = 5 },
+					{ name = "luasnip", max_item_count = 3 },
 					{ name = "nvim_lua" },
 					{ name = "diag-codes", option = { in_comment = true } },
 				},
 				preselect = cmp.PreselectMode.Item,
 				mapping = cmp.mapping.preset.insert({
 					["<Tab>"] = cmp.mapping(function(fallback)
-						if copilot.is_visible() then
-							copilot.accept()
-						elseif cmp.visible() then
+						if cmp.visible() then
 							cmp.confirm({ select = true })
 						elseif luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
@@ -51,62 +59,13 @@ return {
 							fallback()
 						end
 					end, { "i", "s" }),
-
-					["<C-j>"] = cmp.mapping(function(fallback)
-						if copilot.is_visible() then
-							copilot.next()
-						elseif cmp.visible() then
-							cmp.select_next_item()
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-
-					["<C-k>"] = cmp.mapping(function(fallback)
-						if copilot.is_visible() then
-							copilot.prev()
-						elseif cmp.visible() then
-							cmp.select_prev_item()
-						elseif luasnip.jumpable(-1) then
-							luasnip.jump(-1)
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-
-					["<C-e>"] = cmp.mapping(function(_)
-						if cmp.visible() then
-							cmp.abort()
-						else
-							copilot.dismiss()
-							cmp.complete()
-						end
-					end, { "i", "s" }),
-
-					["<C-w>"] = cmp.mapping(function(_)
-						if copilot.is_visible() then
-							copilot.dismiss()
-						else
-							cmp.abort()
-							copilot.next()
-						end
-					end, { "i", "s" }),
-
-					["<C-d>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.mapping.scroll_docs(-1)
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-
-					["<C-f>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.mapping.scroll_docs(1)
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
+					["<C-e>"] = cmp_mapping(cmp.abort),
+					["<C-d>"] = cmp_mapping(function()
+						cmp.mapping.scroll_docs(-4)
+					end),
+					["<C-u>"] = cmp.mapping(function()
+						cmp.mapping.scroll_docs(4)
+					end),
 				}),
 				snippet = {
 					expand = function(args)
@@ -153,26 +112,25 @@ return {
 			{ "<leader>tc", "<CMD>ToggleCmp<CR>", desc = "Toggle auto compeltions" },
 		},
 	},
+
 	{
-		"zbirenbaum/copilot.lua",
-		opts = {
-			panel = {
-				enabled = false,
-			},
-
-			suggestion = {
-				enabled = true,
-				auto_trigger = false,
-				debounce = 75,
-				keymap = {
-					["*"] = false,
-				},
-			},
-
-			filetypes = {
-				["*"] = true,
-			},
+		"l3mon4d3/luasnip",
+		dependencies = {
+			"rafamadriz/friendly-snippets",
 		},
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./snippets" } })
+		end,
+	},
+
+	{
+		"exafunction/codeium.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"hrsh7th/nvim-cmp",
+		},
+		opts = {},
 		event = "InsertEnter",
+		cmd = "Codeium",
 	},
 }

@@ -4,8 +4,8 @@ return {
 		"sprockmonty/wal.vim",
 		dir = "~/Code/pkgs/nvim-plugin/wal.vim",
 		enabled = false,
-		lazy = false,
-		priority = 1000,
+		--lazy = false,
+		--priority = 1000,
 		config = function()
 			vim.cmd("colorscheme wal")
 		end,
@@ -29,8 +29,9 @@ return {
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-		lazy = false,
-		priority = 1000,
+		enabled = false,
+		--lazy = false,
+		--priority = 1000,
 		config = function()
 			require("rose-pine").setup({
 				disable_background = true,
@@ -42,12 +43,11 @@ return {
 	-- Kanawaga theme
 	{
 		"rebelot/kanagawa.nvim",
-		enabled = false,
-		--lazy = false,
-		--priority = 1000,
+		lazy = false,
+		priority = 1000,
 		config = function()
 			require("kanagawa").setup({
-				--transparent = true,
+				transparent = true,
 				colors = {
 					theme = {
 						all = {

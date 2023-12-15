@@ -27,12 +27,13 @@ vim.o.scrolloff = 8
 vim.o.sidescrolloff = 4
 
 -- Always show the sign column
-vim.o.signcolumn = "yes"
+vim.o.numberwidth = 3
+vim.o.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%=%s"
 
 -- Line padding
 vim.o.linespace = 4
 
--- Hide cmd line and statusline
+-- Hide cmd line
 vim.o.cmdheight = 0
 
 -- Set termgui colors

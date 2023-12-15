@@ -1,3 +1,38 @@
+local colors = {
+	red = "#E46876",
+	yellow = "#DCA561",
+	green = "#76946A",
+	blue = "#7E9CD8",
+	magenta = "#957FB8",
+}
+
+local lualine_mode = {
+	-- mode component
+	function()
+		return "██"
+	end,
+	color = function()
+		-- auto change color according to neovims mode
+		local mode_color = {
+			n = colors.blue,
+			i = colors.green,
+			v = colors.magenta,
+			[""] = colors.magenta,
+			V = colors.magenta,
+			c = colors.yellow,
+			t = colors.blue,
+		}
+		-- If color in table, color, else, red
+		local color = mode_color[vim.fn.mode()]
+		if color == nil then
+			color = colors.red
+		end
+		return { fg = color }
+	end,
+	padding = 0,
+	separator = "",
+}
+
 return {
 	-- Notifications
 	{
@@ -21,6 +56,39 @@ return {
 		keys = {
 			{ "<leader>sn", "<CMD>Noice telescope<CR>", desc = "Search notifications" },
 		},
+	},
+
+	-- Status line
+	{
+		"nvim-lualine/lualine.nvim",
+		opts = {
+			options = {
+				component_separators = "|",
+				section_separators = { left = "", right = "" },
+			},
+			sections = {
+				lualine_a = {},
+				lualine_b = { lualine_mode, "filename", "diagnostics" },
+				lualine_c = {},
+				lualine_x = {},
+				lualine_y = { "diff", "progress" },
+				lualine_z = {},
+			},
+			extensions = {
+				"trouble",
+			},
+		},
+		event = "VeryLazy",
+	},
+
+	-- TODO: Breadcrumbs (needs 0.10)
+	{
+		"Bekaboo/dropbar.nvim",
+		enabled = false,
+		dependencies = {
+			"nvim-telescope/telescope-fzf-native.nvim",
+		},
+		event = "BufRead",
 	},
 
 	-- Colorizer

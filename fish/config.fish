@@ -70,3 +70,6 @@ function lfcd
         end
     end
 end
+
+# Direnv
+direnv hook fish | source

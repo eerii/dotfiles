@@ -22,7 +22,7 @@ map("n", "N", "Nzzzv", { desc = "Search previous" })
 -- Paste
 map("x", "<leader>p", '"_dP', { desc = "Paste without losing buffer" })
 map({ "n", "v" }, "<C-v>", '"+p', { desc = "Paste from system clipboard" })
-map("i", "<C-v>", '<C-r>"', { desc = "Paste from system clipboard" })
+map("i", "<C-v>", "<C-r>+", { desc = "Paste in insert" })
 
 -- Copy into the system clipboard
 map({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system clipboard" })

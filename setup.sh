@@ -121,12 +121,8 @@ link $dir/foot ~/.config/foot
 install lf archivefs perl-file-mimetype
 link $dir/lf ~/.config/lf
 
-# neofetch
-install -e neofetch
-link $dir/neofetch ~/.config/neofetch
-
 # fish
-install fish fisher
+install fish fisher direnv
 link $dir/fish ~/.config/fish
 link $dir/fish/.bashrc ~/.bashrc
 
@@ -144,9 +140,6 @@ install -e zathura mpv imv
 # themes
 install colloid-icon-theme-git
 install swww pywal-16-colors python-pywalfox python-astral colorz
-if $inst; then
-    echo "If you are using librewolf, please install python-pywalfox 2.8.0 from text.pypi.org"
-fi
 link $dir/wal ~/.config/wal
 link ~/.config/gtk-4.0 ~/.config/gtk-3.0
 link ~/.cache/wal/gtk.css ~/.config/gtk-4.0/gtk.css

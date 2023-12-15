@@ -23,5 +23,6 @@ return {
 			{ "<leader>st", "<CMD>TodoTrouble<CR>", desc = "Todo list on Trouble" },
 		},
 		event = "BufRead",
+		cmd = "TodoTrouble",
 	},
 }

@@ -44,10 +44,9 @@
 - `<leader>r`: rename
 - `<leader>f`: format
 - `<Tab>`: accept completion
-- `<C-e>`: get completion
-- `<C-j>`: next completion
-- `<C-k>`: previous completion
-- `<C-w>`: suggestion
+- `<C-e>`: hide completion
+- `<C-n>`: next completion
+- `<C-p>`: previous completion
 - `<leader>tc`: toggle autocomplete
 
 ### search
