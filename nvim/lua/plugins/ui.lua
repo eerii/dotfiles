@@ -71,7 +71,16 @@ return {
 				lualine_b = { lualine_mode, "filename", "diagnostics" },
 				lualine_c = {},
 				lualine_x = {},
-				lualine_y = { "diff", "progress" },
+				lualine_y = {
+					{
+						"%3{codeium#GetStatusString()}",
+						cond = function()
+							return vim.fn.exists("*codeium#Accept") ~= 0
+						end,
+					},
+					"diff",
+					"progress",
+				},
 				lualine_z = {},
 			},
 			extensions = {

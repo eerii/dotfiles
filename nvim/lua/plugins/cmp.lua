@@ -23,15 +23,21 @@ return {
 			"saadparwaiz1/cmp_luasnip",
 			"onsails/lspkind.nvim",
 			"jmarkin/cmp-diag-codes",
+			"exafunction/codeium.vim",
 		},
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 
-			local cmp_mapping = function(fn)
+			local cmp_mapping = function(fn_cmp, fn_codeium, fn_luasnip)
 				return cmp.mapping(function(fallback)
-					if cmp.visible() then
-						fn()
+					---@diagnostic disable-next-line: undefined-field
+					if vim.b._codeium_completions ~= nil and fn_codeium then
+						fn_codeium()
+					elseif cmp.visible() then
+						fn_cmp()
+					elseif luasnip.expand_or_jumpable() and fn_luasnip then
+						fn_luasnip()
 					else
 						fallback()
 					end
@@ -50,22 +56,40 @@ return {
 				},
 				preselect = cmp.PreselectMode.Item,
 				mapping = cmp.mapping.preset.insert({
-					["<Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.confirm({ select = true })
-						elseif luasnip.expand_or_jumpable() then
-							luasnip.expand_or_jump()
+					["<Tab>"] = cmp_mapping(function()
+						cmp.confirm({ select = true })
+					end, function()
+						vim.fn.feedkeys(
+							vim.api.nvim_replace_termcodes(vim.fn["codeium#Accept"](), true, true, true),
+							""
+						)
+					end, luasnip.expand_or_jump),
+					["<C-n>"] = cmp_mapping(function()
+						cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+					end, function()
+						vim.fn["codeium#CycleCompletions"](1)
+					end, nil),
+					["<C-p>"] = cmp_mapping(function()
+						cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+					end, function()
+						vim.fn["codeium#CycleCompletions"](-1)
+					end, nil),
+					["<C-w>"] = cmp.mapping(function(_)
+						cmp.abort()
+						---@diagnostic disable-next-line: undefined-field
+						if vim.b._codeium_completions then
+							vim.fn["codeium#Clear"]()
 						else
-							fallback()
+							vim.fn["codeium#Complete"]()
 						end
-					end, { "i", "s" }),
-					["<C-e>"] = cmp_mapping(cmp.abort),
+					end),
+					["<C-e>"] = cmp_mapping(cmp.abort, nil, nil),
 					["<C-d>"] = cmp_mapping(function()
 						cmp.mapping.scroll_docs(-4)
-					end),
+					end, nil, nil),
 					["<C-u>"] = cmp.mapping(function()
 						cmp.mapping.scroll_docs(4)
-					end),
+					end, nil, nil),
 				}),
 				snippet = {
 					expand = function(args)
@@ -124,12 +148,11 @@ return {
 	},
 
 	{
-		"exafunction/codeium.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"hrsh7th/nvim-cmp",
-		},
-		opts = {},
+		"exafunction/codeium.vim",
+		config = function()
+			vim.g.codeium_disable_bindings = true
+			vim.g.codeium_manual = true
+		end,
 		event = "InsertEnter",
 		cmd = "Codeium",
 	},
