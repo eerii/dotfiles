@@ -89,8 +89,7 @@ else
 fi
 
 # sway utils
-install -e sov autotiling-rs
-link $dir/sway/sov ~/.config/sov
+install -e autotiling-rs
 
 # login
 install -e ly
@@ -100,7 +99,7 @@ install -e ly
 install -e pipewire pipewire-pulse wireplumber grim slurp udiskie
 
 # general utils
-install -e glow zoxide ripgrep rm-improved eza bat plocate
+install -e glow zoxide ripgrep rm-improved eza bat
 
 # rofi
 install rofi-lbonn-wayland rofimoji
@@ -114,7 +113,7 @@ link $dir/ags ~/.config/ags
 
 # foot terminal
 install foot
-install -e ttf-nerd-fonts-symbols-mono otf-apple-fonts noto-fonts-emoji
+install -e ttf-nerd-fonts-symbols-mono apple-fonts noto-fonts-emoji
 link $dir/foot ~/.config/foot
 
 # lf
@@ -127,7 +126,7 @@ link $dir/fish ~/.config/fish
 link $dir/fish/.bashrc ~/.bashrc
 
 # zellij
-install zellij
+install -e zellij
 link $dir/zellij ~/.config/zellij
 
 # neovim
@@ -135,15 +134,11 @@ install neovim fzf
 link $dir/nvim ~/.config/nvim
 
 # media
-install -e zathura mpv imv
+install -e zathura zathura-pdf-poppler mpv imv
 
 # themes
 install colloid-icon-theme-git
-install swww pywal-16-colors python-pywalfox python-astral colorz
-link $dir/wal ~/.config/wal
-link ~/.config/gtk-4.0 ~/.config/gtk-3.0
-link ~/.cache/wal/gtk.css ~/.config/gtk-4.0/gtk.css
+install swww
 
 # pandoc
-install tectonic pandoc-bin
-link $dir/pandoc ~/.config/pandoc
+install -e tectonic pandoc-bin

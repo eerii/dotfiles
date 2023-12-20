@@ -28,13 +28,16 @@ return {
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
+			local copilot = require("copilot.suggestion")
 
-			local cmp_mapping = function(fn_cmp, fn_codeium, fn_luasnip)
+			local cmp_mapping = function(fn_cmp, fn_codeium, fn_copilot, fn_luasnip)
 				return cmp.mapping(function(fallback)
 					---@diagnostic disable-next-line: undefined-field
 					if vim.b._codeium_completions ~= nil and fn_codeium then
 						fn_codeium()
-					elseif cmp.visible() then
+					elseif copilot.is_visible() and fn_copilot then
+						fn_copilot()
+					elseif cmp.visible() and fn_cmp then
 						fn_cmp()
 					elseif luasnip.expand_or_jumpable() and fn_luasnip then
 						fn_luasnip()
@@ -45,6 +48,11 @@ return {
 			end
 
 			cmp.setup({
+				enabled = function()
+					---@diagnostic disable-next-line: undefined-field
+					return not copilot.is_visible() and not vim.b._codeium_completions
+				end,
+
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "codeium" },
@@ -63,24 +71,36 @@ return {
 							vim.api.nvim_replace_termcodes(vim.fn["codeium#Accept"](), true, true, true),
 							""
 						)
-					end, luasnip.expand_or_jump),
+					end, copilot.accept, luasnip.expand_or_jump),
 					["<C-n>"] = cmp_mapping(function()
 						cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
 					end, function()
 						vim.fn["codeium#CycleCompletions"](1)
-					end, nil),
+					end, copilot.next, nil),
 					["<C-p>"] = cmp_mapping(function()
 						cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
 					end, function()
 						vim.fn["codeium#CycleCompletions"](-1)
-					end, nil),
+					end, copilot.prev, nil),
 					["<C-w>"] = cmp.mapping(function(_)
 						cmp.abort()
+						copilot.dismiss()
+
 						---@diagnostic disable-next-line: undefined-field
 						if vim.b._codeium_completions then
 							vim.fn["codeium#Clear"]()
 						else
 							vim.fn["codeium#Complete"]()
+						end
+					end),
+					["<C-q>"] = cmp.mapping(function(_)
+						cmp.abort()
+						vim.fn["codeium#Clear"]()
+
+						if copilot.is_visible() then
+							copilot.dismiss()
+						else
+							copilot.next()
 						end
 					end),
 					["<C-e>"] = cmp_mapping(cmp.abort, nil, nil),
@@ -154,6 +174,63 @@ return {
 			vim.g.codeium_manual = true
 		end,
 		event = "InsertEnter",
-		cmd = "Codeium",
+	},
+
+	{
+		"zbirenbaum/copilot.lua",
+		opts = {
+			panel = {
+				enabled = false,
+			},
+			suggestion = {
+				enabled = true,
+				auto_trigger = false,
+				debounce = 75,
+				keymap = {
+					["*"] = false,
+				},
+			},
+			filetypes = {
+				["*"] = true,
+			},
+		},
+		event = "InsertEnter",
+	},
+
+	{
+		"gptlang/copilotchat.nvim",
+		build = function()
+			local copilot_chat_dir = vim.fn.stdpath("data") .. "/lazy/CopilotChat.nvim"
+			vim.fn.system({ "cp", "-r", copilot_chat_dir .. "/rplugin", vim.fn.stdpath("config") })
+			print("Run ':UpdateRemotePlugins', then restart Neovim.")
+		end,
+		keys = {
+			{ "<leader>cc", "<CMD>:let @\"=''<CR>:CopilotChat ", desc = "Copilot chat" },
+			{
+				"<leader>cf",
+				function()
+					vim.fn.feedkeys("yaf")
+					vim.fn.feedkeys(":CopilotChat Explain this function")
+				end,
+				desc = "Copilot explain function",
+			},
+			{
+				"<leader>ce",
+				function()
+					vim.fn.feedkeys("yac")
+					vim.fn.feedkeys(":CopilotChat Explain this class")
+				end,
+				desc = "Copilot explain class",
+			},
+			{
+				"<leader>cp",
+				function()
+					vim.fn.feedkeys("yap")
+					vim.fn.feedkeys(":CopilotChat ")
+				end,
+				desc = "Copilot chat paragraph",
+			},
+			{ "<leader>ca", "ggyG:CopilotChat ", desc = "Copilot chat all file" },
+		},
 	},
 }

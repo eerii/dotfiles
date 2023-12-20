@@ -6,6 +6,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-refactor",
+			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })
@@ -35,6 +36,18 @@ return {
 					highlight_definitions = { enable = true },
 					smart_rename = { enable = true },
 					navigation = { enable = true },
+				},
+				textobjects = {
+					select = {
+						enable = true,
+
+						keymaps = {
+							["af"] = "@function.outer",
+							["if"] = "@function.inner",
+							["ac"] = "@class.outer",
+							["ic"] = "@class.inner",
+						},
+					},
 				},
 			})
 		end,
