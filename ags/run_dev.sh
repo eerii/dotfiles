@@ -10,7 +10,7 @@ function _ags() {
 }
 
 function _sass() {
-    sassc "$WORKDIR/style/main.scss" "$WORKDIR/style.css"
+    sassc "$WORKDIR/scss/main.scss" "$WORKDIR/style.css"
 }
 
 debounce_secs=2.0

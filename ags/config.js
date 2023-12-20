@@ -1,8 +1,10 @@
-import { App } from "./imports.js"
-import Bar from "./windows/bar.js"
+import { App } from "./js/imports.js"
+import Bar from "./js/bar/bar.js"
+import Notifications from "./js/notifications/list.js"
 
 const windows = () => [
-    Bar(0)
+    Bar(0),
+    Notifications(0)
 ]
 
 export default {

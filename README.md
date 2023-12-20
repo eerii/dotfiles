@@ -15,7 +15,7 @@
 
 - **window manager:** [swayfx](https://github.com/WillPower3309/swayfx)
 - **launcher:** [rofi (lbonn)](https://github.com/lbonn/rofi)
-- **bar and widgets:** [eww](https://github.com/elkowar/eww)
+- **bar and widgets:** [ags](https://github.com/aylur/ags)
 - **terminal:** [foot](https://codeberg.org/dnkl/foot)
 - **shell:** [fish](https://github.com/fish-shell/fish-shell) + [bash](https://www.gnu.org/software/bash/)
 - **editor:** [neovim](https://github.com/neovim/neovim)

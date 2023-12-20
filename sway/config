@@ -53,6 +53,7 @@ input * {
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
     exec swww init
+    exec ags &
 
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store

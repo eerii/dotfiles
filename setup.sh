@@ -137,8 +137,7 @@ link $dir/nvim ~/.config/nvim
 install -e zathura zathura-pdf-poppler mpv imv
 
 # themes
-install colloid-icon-theme-git
-install swww
+install colloid-icon-theme-git swww
 
 # pandoc
 install -e tectonic pandoc-bin
