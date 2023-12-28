@@ -4,16 +4,15 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $opacity 1.0
+set $opacity 0.95
 
 include /etc/sway/config.d/*
 
 # Colors
-# include "$HOME/.cache/wal/colors-sway"
-# client.focused $color0 $background $foreground $color7 $background
+include "$HOME/.config/sway/kanagawa"
 
 # Displays
-output eDP-1 resolution 2880x1800 position 0,0 scale 1.6
+output eDP-1 resolution 2880x1800 position 0,0 scale 1.5
 output DP-1 resolution 3840x2160 position 1646,0 scale 1.35
 
 # Seats
@@ -90,6 +89,7 @@ input * {
     for_window [app_id="thunderbird" title="^((?!Mozilla Thunderbird).)*$"] floating enable
     for_window [app_id="thunderbird" title="Mozilla Thunderbird"] move workspace 4
     for_window [title="Open *"] floating enable
+    for_window [title="Messi"] floating enable
 
     layer_effects "rofi" blur enable; shadows enable; corner_radius 10
 

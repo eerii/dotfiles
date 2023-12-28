@@ -6,8 +6,6 @@
 [[ $- != *i* ]] && return
 PS1='[\u@\h \W]\$ '
 
-(cat $HOME/.cache/wal/sequences &)
-
 # gpg
 export GPG_TTY=$(tty)
 

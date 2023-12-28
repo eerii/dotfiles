@@ -210,7 +210,7 @@ return {
 				"<leader>cf",
 				function()
 					vim.fn.feedkeys("yaf")
-					vim.fn.feedkeys(":CopilotChat Explain this function")
+					vim.fn.feedkeys(":CopilotChat ")
 				end,
 				desc = "Copilot explain function",
 			},
@@ -218,7 +218,7 @@ return {
 				"<leader>ce",
 				function()
 					vim.fn.feedkeys("yac")
-					vim.fn.feedkeys(":CopilotChat Explain this class")
+					vim.fn.feedkeys(":CopilotChat ")
 				end,
 				desc = "Copilot explain class",
 			},

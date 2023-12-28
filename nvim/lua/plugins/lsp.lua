@@ -216,9 +216,18 @@ return {
 		"simrat39/rust-tools.nvim",
 		config = function()
 			require("rust-tools").setup({
+				inlay_hints = {
+					only_current_line = true,
+				},
 				settings = {
 					["rust-analyzer"] = {
-						checkOnSave = { command = "clippy" },
+						assist = { expressionFillDefault = "default" },
+						checkOnSave = {
+							allFeatures = true,
+							command = "clippy",
+							extraArgs = { "--no-deps" },
+						},
+						diagnostics = { experimental = { enable = true } },
 					},
 				},
 				server = {

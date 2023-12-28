@@ -3,12 +3,12 @@ function fish_prompt
         echo -n (set_color brred)"$USER"(set_color white)'@'(set_color yellow)(prompt_hostname)' '
     end
 
-    echo -n (set_color green)(path basename -- $PWD)' '
-
     set_color -o
+    echo -n (set_color purple)(path basename -- $PWD)
+
     if fish_is_root_user
         echo -n (set_color red)'# '
     end
-    echo -n (set_color yellow)'~ '
+    echo -n (set_color 444 brblack)': '
     set_color normal
 end
