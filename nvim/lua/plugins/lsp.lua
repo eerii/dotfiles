@@ -62,7 +62,7 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"hrsh7th/nvim-cmp",
-			"folke/neodev.nvim", -- Neovim development
+			{ "folke/neodev.nvim", ft = "lua" },
 		},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -133,6 +133,9 @@ return {
 						workspace = {
 							checkThirdParty = false,
 						},
+						hint = {
+							enable = true,
+						},
 					},
 				},
 			})
@@ -145,6 +148,19 @@ return {
 			{ "<leader>lsp", ":LspInfo<CR>", desc = "[LSP] Info" },
 		},
 	},
+
+	{
+		"mysticaldevil/inlay-hints.nvim",
+		dependencies = { "neovim/nvim-lspconfig" },
+		config = function()
+			require("inlay-hints").setup()
+		end,
+		keys = {
+			{ "<leader>h", "<CMD>InlayHintsToggle<CR>", desc = "Inline hints" },
+		},
+		event = "LspAttach",
+	},
+
 	{
 		"williamboman/mason.nvim",
 		dependencies = {
@@ -214,24 +230,38 @@ return {
 
 	-- Rust
 	{
-		"simrat39/rust-tools.nvim",
+		"mrcjkb/rustaceanvim",
 		config = function()
-			require("rust-tools").setup({
-				tools = {
-					inlay_hints = {
-						only_current_line = true,
-					},
-				},
+			vim.g.rustaceanvim = {
+				tools = {},
 				server = {
-					assist = { expressionFillDefault = "default" },
-					checkOnSave = {
-						allFeatures = true,
-						command = "clippy",
-						extraArgs = { "--no-deps" },
+					on_attach = function(_, buf)
+						vim.keymap.set(
+							"n",
+							"<leader>lr",
+							"<CMD>RustLsp runnables<CR>",
+							{ buffer = buf, desc = "RustLsp run" }
+						)
+						vim.keymap.set(
+							"n",
+							"<leader>le",
+							"<CMD>RustLsp explainError<CR>",
+							{ buffer = buf, desc = "RustLsp explain error" }
+						)
+					end,
+					settings = {
+						["rust-analyzer"] = {
+							assist = { expressionFillDefault = "default" },
+							checkOnSave = {
+								allFeatures = true,
+								command = "clippy",
+								extraArgs = { "--no-deps" },
+							},
+							diagnostics = { experimental = { enable = true } },
+						},
 					},
-					diagnostics = { experimental = { enable = true } },
 				},
-			})
+			}
 		end,
 		ft = "rust",
 	},
