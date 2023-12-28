@@ -58,7 +58,7 @@ return {
 					{ name = "codeium" },
 					{ name = "nvim_lsp_document_symbol" },
 					{ name = "nvim_lsp_signature_help" },
-					{ name = "luasnip", max_item_count = 3 },
+					{ name = "luasnip" },
 					{ name = "nvim_lua" },
 					{ name = "diag-codes", option = { in_comment = true } },
 				},
@@ -93,7 +93,7 @@ return {
 							vim.fn["codeium#Complete"]()
 						end
 					end),
-					["<C-q>"] = cmp.mapping(function(_)
+					["<C-W>"] = cmp.mapping(function(_)
 						cmp.abort()
 						vim.fn["codeium#Clear"]()
 
@@ -142,10 +142,6 @@ return {
 						col_offset = 0,
 						side_padding = 0,
 					},
-				},
-				performance = {
-					debounce = 150,
-					max_view_entries = 8,
 				},
 				experimental = {
 					ghost_text = true,
@@ -205,7 +201,8 @@ return {
 			print("Run ':UpdateRemotePlugins', then restart Neovim.")
 		end,
 		keys = {
-			{ "<leader>cc", "<CMD>:let @\"=''<CR>:CopilotChat ", desc = "Copilot chat" },
+			{ "<leader>cc", ":CopilotChat ", desc = "Copilot chat" },
+			{ "<leader>cx", "<CMD>:let @\"=''<CR>:CopilotChat ", desc = "Copilot chat (delete clipboard)" },
 			{
 				"<leader>cf",
 				function()

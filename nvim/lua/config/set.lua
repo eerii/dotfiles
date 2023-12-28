@@ -33,6 +33,9 @@ vim.o.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v
 -- Line padding
 vim.o.linespace = 4
 
+-- Max completion menu items
+vim.o.pumheight = 5
+
 -- Hide cmd line
 vim.o.cmdheight = 0
 

@@ -22,7 +22,7 @@ return {
 			{ "<leader>gp", "<CMD>Gitsigns preview_hunk<CR>", desc = "[G]it preview" },
 			{ "<leader>gd", "<CMD>Gitsigns diffthis<CR>", desc = "[G]it diff" },
 			{ "<leader>gt", "<CMD>Gitsigns toggle_deleted<CR>", desc = "[G]it toggle delete" },
-			{ "ih", "<CMD>><C-U>Gitsigns select_hunk<CR>", mode = { "o", "x" }, desc = "[G]it select hunk" },
+			{ "ih", "<CMD>Gitsigns select_hunk<CR>", mode = { "o", "x" }, desc = "[G]it select hunk" },
 		},
 	},
 }

@@ -122,6 +122,7 @@ return {
 						})
 					end,
 					["jdtls"] = function() end,
+					["rust_analyzer"] = function() end,
 				},
 			})
 
@@ -150,7 +151,7 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 		},
 		cmd = { "Mason", "MasonUpdate" },
-		keys = { { "<leader>m", ":Mason<CR>", desc = "[M]ason Language Servers" } },
+		keys = { { "<leader>M", ":Mason<CR>", desc = "[M]ason Language Servers" } },
 	},
 
 	-- Java
@@ -216,22 +217,19 @@ return {
 		"simrat39/rust-tools.nvim",
 		config = function()
 			require("rust-tools").setup({
-				inlay_hints = {
-					only_current_line = true,
-				},
-				settings = {
-					["rust-analyzer"] = {
-						assist = { expressionFillDefault = "default" },
-						checkOnSave = {
-							allFeatures = true,
-							command = "clippy",
-							extraArgs = { "--no-deps" },
-						},
-						diagnostics = { experimental = { enable = true } },
+				tools = {
+					inlay_hints = {
+						only_current_line = true,
 					},
 				},
 				server = {
-					on_attach = function(_, _) end,
+					assist = { expressionFillDefault = "default" },
+					checkOnSave = {
+						allFeatures = true,
+						command = "clippy",
+						extraArgs = { "--no-deps" },
+					},
+					diagnostics = { experimental = { enable = true } },
 				},
 			})
 		end,

@@ -7,8 +7,8 @@
 - `<leader>n`: new file
 - `<leader>z`: zen mode
 - `<leader>w`: toggle wrap
-- `<leader>l`: lazy plugins
-- `<leader>m`: mason
+- `<leader>L`: lazy plugins
+- `<leader>M`: mason
 - `<leader>lsp`: lsp info
 - `<leader>p/x`: paste/delete without losing buffer
 - `<C-c>/<leader>y/<C-v>`: paste/copy to system clipboard

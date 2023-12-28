@@ -15,6 +15,15 @@ map("v", "K", "<CMD>m '<-2<CR>gv=gv", { desc = "Move line up" })
 map("n", "<C-d>", "<C-d>zz", { desc = "Half page down" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Half page up" })
 
+-- Move between windows with <C-hjkl>
+map("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
+map("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
+map("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
+
+-- New line without comment in insert mode
+map("i", "<C-CR>", "<CR><C-U>", { desc = "New line without comment" })
+
 -- Search terms stay centered
 map("n", "n", "nzzzv", { desc = "Search next" })
 map("n", "N", "Nzzzv", { desc = "Search previous" })
@@ -45,7 +54,7 @@ map("n", "U", "<C-r>", { desc = "Redo" })
 map("n", "<C-x>", "<C-^>", { desc = "Go to previous buffer" })
 
 -- Open lazy plugin window
-map("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Lazy plugin manager" })
+map("n", "<leader>L", "<CMD>Lazy<CR>", { desc = "Lazy plugin manager" })
 
 -- New file with nf
 map("n", "<leader>n", "<CMD>enew<CR>", { desc = "New file" })

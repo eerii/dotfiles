@@ -48,11 +48,4 @@ return {
 			{ "<leader>mi", "<CMD>PasteImg<CR>", desc = "Markdown paste image" },
 		},
 	},
-
-	-- Parinfer (work with lisp like languages)
-	{
-		"eraserhd/parinfer-rust",
-		build = "cargo build --release",
-		ft = "yuck",
-	},
 }

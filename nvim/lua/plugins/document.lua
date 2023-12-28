@@ -98,13 +98,15 @@ return {
 		config = function()
 			require("mini.trailspace").setup()
 		end,
-		keys = { {
-			"<leader>tt",
-			function()
-				require("mini.trailspace").trim()
-			end,
-			desc = "Trim trailspace",
-		} },
+		keys = {
+			{
+				"<leader>tt",
+				function()
+					require("mini.trailspace").trim()
+				end,
+				desc = "Trim trailspace",
+			},
+		},
 	},
 
 	-- Zen mode

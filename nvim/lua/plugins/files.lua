@@ -5,10 +5,12 @@ return {
 		version = false,
 		opts = {
 			mappings = {
+				close = "<ESC>",
 				go_in_plus = "<CR>",
 			},
 			options = {
 				permanent_delete = false,
+				use_as_default_explorer = true,
 			},
 		},
 		keys = {
