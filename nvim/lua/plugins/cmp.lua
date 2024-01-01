@@ -141,6 +141,7 @@ return {
 						scrollbar = false,
 						col_offset = 0,
 						side_padding = 0,
+						scrolloff = 5,
 					},
 				},
 				experimental = {

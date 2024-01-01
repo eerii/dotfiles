@@ -107,9 +107,9 @@ install -e cliphist
 link $dir/rofi ~/.config/rofi
 link ~/.cache/wal/config.rasi ~/.config/rofi/config.rasi
 
-# ags
-install aylurs-gtk-shell inotify-tools sassc upower
-link $dir/ags ~/.config/ags
+# eww
+install eww-git
+link $dir/eww ~/.config/eww
 
 # foot terminal
 install foot

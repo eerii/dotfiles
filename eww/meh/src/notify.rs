@@ -81,6 +81,12 @@ pub struct Manager {
     notifications: Vec<Notification>,
 }
 
+impl Default for Manager {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Manager {
     pub fn new() -> Self {
         Self {

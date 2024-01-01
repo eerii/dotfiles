@@ -43,8 +43,8 @@ impl HasPrev for NetInfo {
     }
 }
 
-impl NetInfo {
-    pub fn new() -> Self {
+impl Default for NetInfo {
+    fn default() -> Self {
         NetInfo {
             icon: ICON_UNKNOWN.to_string(),
             name: "".to_string(),
@@ -54,7 +54,9 @@ impl NetInfo {
             prev: None,
         }
     }
+}
 
+impl NetInfo {
     pub fn update(&mut self) {
         let dbus = dbus::blocking::Connection::new_system().expect("failed to connect to dbus");
         let nm = NetworkManager::new(&dbus);

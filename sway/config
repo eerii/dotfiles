@@ -13,7 +13,7 @@ include "$HOME/.config/sway/kanagawa"
 
 # Displays
 output eDP-1 resolution 2880x1800 position 0,0 scale 1.5
-output DP-1 resolution 3840x2160 position 1646,0 scale 1.35
+output DP-1 resolution 3840x2160 position 1800,0 scale 1.35
 
 # Seats
 seat * hide_cursor 3000
@@ -51,8 +51,9 @@ input * {
 # Exec
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
+    exec meh -kd
+    exec eww daemon && eww open bar
     exec swww init
-    exec ags &
 
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store

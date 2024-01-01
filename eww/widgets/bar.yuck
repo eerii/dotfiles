@@ -21,10 +21,8 @@
         (eventbox
             :class "island_center"
             :cursor "pointer"
-
             (box
                 :class "workspaces"
-
                 (box
                     :space-evenly false
                     :spacing 10

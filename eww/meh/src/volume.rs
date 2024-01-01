@@ -47,8 +47,8 @@ impl HasPrev for VolumeInfo {
     }
 }
 
-impl VolumeInfo {
-    pub fn new() -> Self {
+impl Default for VolumeInfo {
+    fn default() -> Self {
         VolumeInfo {
             volume: 0,
             icon: ICON_UNKNOWN.to_string(),
@@ -56,7 +56,9 @@ impl VolumeInfo {
             prev: None,
         }
     }
+}
 
+impl VolumeInfo {
     pub fn update(&mut self) {
         self.run_wpctl(Wpctl::GetVolume);
         write_data(self, "volume");
@@ -115,7 +117,7 @@ impl VolumeInfo {
 
         match action {
             Wpctl::GetVolume => {
-                let res = from_utf8(&out.stdout[..]).unwrap().split(" ");
+                let res = from_utf8(&out.stdout[..]).unwrap().split(' ');
 
                 let vol = res
                     .clone()

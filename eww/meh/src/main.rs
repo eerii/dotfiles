@@ -22,7 +22,7 @@ pub fn main() {
     }
 
     if args.daemon {
-        Daemon::new().start();
+        Daemon::default().start();
     }
 
     if args.kill_daemon || args.daemon {
@@ -57,15 +57,15 @@ pub fn main() {
                 toggle_mute,
             } => {
                 if let Some(v) = set {
-                    VolumeInfo::new().set_volume(v);
+                    VolumeInfo::default().set_volume(v);
                 } else if let Some(v) = add {
-                    VolumeInfo::new().add_volume(v);
+                    VolumeInfo::default().add_volume(v);
                 } else if let Some(v) = sub {
-                    VolumeInfo::new().add_volume(-v);
+                    VolumeInfo::default().add_volume(-v);
                 } else if let Some(v) = mute {
-                    VolumeInfo::new().mute(v);
+                    VolumeInfo::default().mute(v);
                 } else if toggle_mute {
-                    VolumeInfo::new().toggle_mute();
+                    VolumeInfo::default().toggle_mute();
                 }
             }
         }

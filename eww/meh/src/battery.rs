@@ -41,8 +41,8 @@ impl HasPrev for BatteryInfo {
     }
 }
 
-impl BatteryInfo {
-    pub fn new() -> Self {
+impl Default for BatteryInfo {
+    fn default() -> Self {
         let manager = Manager::new().expect("error getting battery manager");
 
         BatteryInfo {
@@ -53,7 +53,9 @@ impl BatteryInfo {
             prev: None,
         }
     }
+}
 
+impl BatteryInfo {
     pub fn update(&mut self) {
         write_data(self, "battery");
 

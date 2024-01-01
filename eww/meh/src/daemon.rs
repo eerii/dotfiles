@@ -23,19 +23,21 @@ pub struct Daemon {
     dbus_manager: Arc<RwLock<notify::Manager>>,
 }
 
-impl Daemon {
-    pub fn new() -> Self {
+impl Default for Daemon {
+    fn default() -> Self {
         Daemon {
             info: Info {
-                volume: VolumeInfo::new(),
-                network: NetInfo::new(),
-                battery: BatteryInfo::new(),
+                volume: VolumeInfo::default(),
+                network: NetInfo::default(),
+                battery: BatteryInfo::default(),
             },
             it: 0,
             dbus_manager: Arc::new(RwLock::new(notify::Manager::new())),
         }
     }
+}
 
+impl Daemon {
     pub fn start(mut self) {
         fs::create_dir_all(DIR_FILE).expect("couldn't create the daemon directory");
         let stdout = File::create(OUT_FILE).unwrap();
@@ -104,7 +106,7 @@ impl Daemon {
 
 pub fn kill() -> Result<(), Box<dyn Error>> {
     let pid = read_to_string(PID_FILE)
-        .or_else(|_| Err("the daemon doesn't seem to be running"))?
+        .map_err(|_| "the daemon doesn't seem to be running")?
         .trim()
         .parse::<usize>()?;
     let s = System::new_all();

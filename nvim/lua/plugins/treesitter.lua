@@ -7,6 +7,7 @@ return {
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-refactor",
 			"nvim-treesitter/nvim-treesitter-textobjects",
+			"nvim-treesitter/nvim-treesitter-context",
 		},
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })
@@ -50,6 +51,8 @@ return {
 					},
 				},
 			})
+
+			require("treesitter-context").setup({ max_lines = 1, trim_scope = "outer" })
 		end,
 		event = "BufReadPre",
 	},

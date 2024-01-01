@@ -139,6 +139,12 @@ return {
 					},
 				},
 			})
+
+			lsp.ocamllsp.setup({
+				capabilities = capabilities,
+				-- on_attach = nil,
+				-- handlers = nil,
+			})
 		end,
 		event = "BufRead",
 		keys = {
@@ -277,6 +283,7 @@ return {
 				java = { "clang-format" },
 				python = { "isort", "black" },
 				rust = { "rustfmt" },
+				ocaml = { "ocamlformat" },
 			},
 			format_after_save = function(buf)
 				if vim.g.disable_autoformat or vim.b[buf].disable_autoformat then

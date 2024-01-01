@@ -41,6 +41,9 @@ return {
 			background_colour = "#000000",
 			render = "compact",
 			timeout = 3000,
+			max_height = function()
+				return math.ceil(math.max(vim.opt.lines:get() / 3, 4))
+			end,
 		},
 	},
 
@@ -56,6 +59,13 @@ return {
 		keys = {
 			{ "<leader>sn", "<CMD>Noice telescope<CR>", desc = "Search notifications" },
 		},
+	},
+
+	-- Improve UI (select, input)
+	{
+		"stevearc/dressing.nvim",
+		opts = {},
+		event = "VeryLazy",
 	},
 
 	-- Status line
