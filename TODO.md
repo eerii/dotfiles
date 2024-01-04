@@ -1,32 +1,15 @@
 # todo
 
-- [x] global rofi rice
-    - [x] clipboard
-    - [x] emojis
-    - [ ] calculator
+## neovim
 
-- [ ] color picker
+- [ ] mini mode (no lsp, cmp, plugins...)
+- [x] redo cmp
 
-- [ ] create a custom colorscheme
-    - [ ] mix rose pine, catppuccin, kanawaga, ...
-    - [x] match colorscheme to backgrounds?
-    - [x] dynamic backgrounds
-    - [ ] improve neovim theme, propper fork
-    - [ ] add to gtk, qt, java, sov, code
-    - [ ] multiple options?
-    - [x] sunpaper in python
+## eww
 
-- [x] change cursor again
-- [x] revisit icon theme
-
-- [ ] neovim
-    - [ ] mini mode (no lsp, cmp, plugins...)
-    - [x] redo cmp
-
-- [ ] move to ags
 - [ ] power off menu
 - [ ] fan control menu
-- [ ] ags bar
+- [ ] top bar
     - [ ] wifi selection
     - [ ] audio manager
         - [ ] volume
@@ -40,9 +23,15 @@
     - [ ] workspaces
     - [ ] notifications
     - [ ] notification center
+- [ ] replace wob with something
+- [ ] color picker
 
-- [ ] replace wob with something using ags
-    - [x] sov can stay as it is pretty nice
+- [x] global rofi rice
+    - [x] clipboard
+    - [x] emojis
+    - [ ] calculator
+
+## compositor
 
 - [ ] swayfx
     - [ ] fade in/out animations
@@ -55,7 +44,20 @@
     - [x] fix unlock passwords
 - [ ] improve lock screen
 
-- [ ] email client
+- [x] change cursor again
+- [x] revisit icon theme
+
+## zellij
+
+- [ ] ...
+
+## other
+
+- [x] email client
 - [x] work on messages client
 
-- [ ] zellij
+- [ ] create a custom colorscheme
+    - [ ] mix rose pine, catppuccin, kanawaga, ...
+    - [x] match colorscheme to backgrounds?
+    - [x] dynamic backgrounds
+    - [x] sunpaper in python
