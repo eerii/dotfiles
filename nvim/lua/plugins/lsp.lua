@@ -145,6 +145,16 @@ return {
 				-- on_attach = nil,
 				-- handlers = nil,
 			})
+
+			lsp.cssls.setup({
+				settings = {
+					css = {
+						lint = {
+							emptyRules = "ignore",
+						},
+					},
+				},
+			})
 		end,
 		event = "BufRead",
 		keys = {
@@ -159,7 +169,9 @@ return {
 		"mysticaldevil/inlay-hints.nvim",
 		dependencies = { "neovim/nvim-lspconfig" },
 		config = function()
-			require("inlay-hints").setup()
+			require("inlay-hints").setup({
+				autocmd = { enable = false },
+			})
 		end,
 		keys = {
 			{ "<leader>h", "<CMD>InlayHintsToggle<CR>", desc = "Inline hints" },
@@ -284,6 +296,7 @@ return {
 				python = { "isort", "black" },
 				rust = { "rustfmt" },
 				ocaml = { "ocamlformat" },
+				css = { "prettier" },
 			},
 			format_after_save = function(buf)
 				if vim.g.disable_autoformat or vim.b[buf].disable_autoformat then

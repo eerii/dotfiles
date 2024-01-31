@@ -58,11 +58,10 @@ input * {
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store
 
-    exec udiskie &
     exec easyeffects --gapplication-service &
 
-    exec env --chdir=/home/eri/.local/share/applications -S gtk-launch beeper.desktop
-    exec env --chdir=/usr/share/applications -S gtk-launch thunderbird.desktop
+    # exec env --chdir=/home/eri/.local/share/applications -S gtk-launch beeper.desktop
+    # exec env --chdir=/usr/share/applications -S gtk-launch thunderbird.desktop
 
     # exec swayidle -w \
     #     timeout 300 'sh ~/.config/sway/bin/swaylock' \
@@ -84,6 +83,7 @@ input * {
 
     for_window [app_id="foot-ps"] move scratchpad; scratchpad show
     for_window [app_id="foot-btm"] move scratchpad; scratchpad show; resize set 1500 900
+    for_window [app_id="Beeper"] move scratchpad; scratchpad show
 
     for_window [app_id="mpv"] fullscreen
     
@@ -162,7 +162,7 @@ input * {
 
     bindsym $mod+Shift+minus move scratchpad
     bindsym $mod+minus scratchpad show
-    bindsym $mod+m [app_id="kebihpkoclefnhgdieipmimdjhpdkbjc"] scratchpad show
+    bindsym $mod+m [app_id="Beeper"] scratchpad show
     bindsym $mod+Shift+m [app_id="localsend_app"] scratchpad show
 
     bindsym $mod+Shift+p exec foot --app-id="foot-ps" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm -e --default_widget_type process"

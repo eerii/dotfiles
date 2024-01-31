@@ -20,6 +20,7 @@ return {
 				},
 				overrides = function(colors)
 					local theme = colors.theme
+					local diagnostics = "#595975"
 					return {
 						Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg },
 						PmenuSel = { fg = "NONE", bg = theme.ui.bg_p1 },
@@ -35,6 +36,10 @@ return {
 						-- TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
 						-- TelescopePreviewNormal = { bg = theme.ui.bg_dim },
 						-- TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+						DiagnosticVirtualTextHint = { fg = diagnostics },
+						DiagnosticVirtualTextInfo = { fg = diagnostics },
+						DiagnosticVirtualTextWarn = { fg = diagnostics },
+						DiagnosticVirtualTextError = { fg = diagnostics },
 					}
 				end,
 			})

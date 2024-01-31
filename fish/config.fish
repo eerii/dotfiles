@@ -10,6 +10,7 @@ end
 abbr -a -- p 'paru'
 abbr -a -- pc 'paru -Qtdq | ifne paru -Rns - && paru -Qqd | ifne paru -Rsu -'
 abbr -a -- rm 'rip'
+abbr -a -- RM '/bin/rm -rf'
 abbr -a -- ls 'eza'
 abbr -a -- grep 'rg'
 abbr -a -- cat 'bat -p'
@@ -28,6 +29,7 @@ abbr -a -- nc 'ncat'
 abbr -a -- grdl 'gradle -q --console plain run'
 abbr -a -- n 'neovide'
 abbr -a -- nv 'nvim'
+abbr -a -- todo 'rg TODO -NI --trim | sed "s/.*TODO:/- [ ]/"'
 
 function gr!
     git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE="%cD" git commit --amend --no-edit' rebase -i

@@ -12,12 +12,12 @@ fish_color_match --background=brblue
 fish_color_search_match bryellow --background=brblack
 fish_color_selection white --bold --background=brblack
 fish_color_history_current --bold
-fish_color_operator brcyan
+fish_color_operator cyan
 fish_color_escape brcyan
-fish_color_cwd brpurple
+fish_color_cwd purple
 fish_color_valid_path --underline
 fish_color_cwd_root red
-fish_color_user brpurple
+fish_color_user purple
 fish_color_autosuggestion 555 brblack
 fish_pager_color_completion normal
 fish_color_host normal
