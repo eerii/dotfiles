@@ -48,6 +48,9 @@ vim.g.shell = "/bin/fish"
 -- Disable netrw banner
 vim.g.netrw_banner = 0
 
+-- Disable folds by default
+vim.o.foldlevel = 99
+
 -- Indent lines
 -- vim.opt.list = true
 -- vim.opt.listchars = { leadmultispace = "│ ", multispace = "│ ", tab = "│ " }

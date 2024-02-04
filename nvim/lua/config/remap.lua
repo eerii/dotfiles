@@ -21,6 +21,9 @@ map("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
+-- Close window
+map("n", "<C-q>", "<C-w>c", { desc = "Close window" })
+
 -- New line without comment in insert mode
 map("i", "<C-CR>", "<CR><C-U>", { desc = "New line without comment" })
 
@@ -40,6 +43,8 @@ map({ "n", "v" }, "<C-c>", '"+y', { desc = "Copy to system clipboard" })
 -- Delete to the void register
 map("n", "<leader>x", '"_d', { desc = "Delete to void register" })
 map("v", "<leader>x", '"_d', { desc = "Delete to void register" })
+map("n", "<leader>d", '"_d', { desc = "Delete to void register" })
+map("v", "<leader>d", '"_d', { desc = "Delete to void register" })
 
 -- Don't press capital Q
 map("n", "Q", "<nop>", { desc = "Don't press capital Q" })

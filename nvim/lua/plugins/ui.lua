@@ -1,34 +1,34 @@
-local colors = {
-	red = "#E46876",
-	yellow = "#DCA561",
-	green = "#76946A",
-	blue = "#7E9CD8",
-	magenta = "#957FB8",
-}
+-- local colors = {
+-- 	red = "#E46876",
+-- 	yellow = "#DCA561",
+-- 	green = "#76946A",
+-- 	blue = "#7E9CD8",
+-- 	magenta = "#957FB8",
+-- }
 
 local lualine_mode = {
 	-- mode component
 	function()
 		return "██"
 	end,
-	color = function()
-		-- auto change color according to neovims mode
-		local mode_color = {
-			n = colors.blue,
-			i = colors.green,
-			v = colors.magenta,
-			[""] = colors.magenta,
-			V = colors.magenta,
-			c = colors.yellow,
-			t = colors.blue,
-		}
-		-- If color in table, color, else, red
-		local color = mode_color[vim.fn.mode()]
-		if color == nil then
-			color = colors.red
-		end
-		return { fg = color }
-	end,
+	-- color = function()
+	-- 	-- auto change color according to neovims mode
+	-- 	local mode_color = {
+	-- 		n = colors.blue,
+	-- 		i = colors.green,
+	-- 		v = colors.magenta,
+	-- 		[""] = colors.magenta,
+	-- 		V = colors.magenta,
+	-- 		c = colors.yellow,
+	-- 		t = colors.blue,
+	-- 	}
+	-- 	-- If color in table, color, else, red
+	-- 	local color = mode_color[vim.fn.mode()]
+	-- 	if color == nil then
+	-- 		color = colors.red
+	-- 	end
+	-- 	return { fg = color }
+	-- end,
 	padding = 0,
 	separator = "",
 }
@@ -82,12 +82,6 @@ return {
 				lualine_c = {},
 				lualine_x = {},
 				lualine_y = {
-					{
-						"%3{codeium#GetStatusString()}",
-						cond = function()
-							return vim.fn.exists("*codeium#Accept") ~= 0
-						end,
-					},
 					"diff",
 					"progress",
 				},
@@ -100,10 +94,9 @@ return {
 		event = "VeryLazy",
 	},
 
-	-- TODO: Breadcrumbs (needs 0.10)
+	-- Breadcrumbs
 	{
-		"Bekaboo/dropbar.nvim",
-		enabled = false,
+		"bekaboo/dropbar.nvim",
 		dependencies = {
 			"nvim-telescope/telescope-fzf-native.nvim",
 		},

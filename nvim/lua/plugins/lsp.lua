@@ -142,8 +142,6 @@ return {
 
 			lsp.ocamllsp.setup({
 				capabilities = capabilities,
-				-- on_attach = nil,
-				-- handlers = nil,
 			})
 
 			lsp.cssls.setup({
@@ -156,7 +154,7 @@ return {
 				},
 			})
 		end,
-		event = "BufRead",
+		event = "InsertEnter",
 		keys = {
 			{ "[d", vim.diagnostic.goto_next, desc = "LSP next [D]iagnostic" },
 			{ "]d", vim.diagnostic.goto_prev, desc = "LSP previous [D]iagnostic" },
@@ -281,6 +279,7 @@ return {
 				},
 			}
 		end,
+		event = "InsertEnter",
 		ft = "rust",
 	},
 

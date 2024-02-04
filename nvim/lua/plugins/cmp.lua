@@ -23,20 +23,16 @@ return {
 			"saadparwaiz1/cmp_luasnip",
 			"onsails/lspkind.nvim",
 			"jmarkin/cmp-diag-codes",
-			"exafunction/codeium.vim",
 		},
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
-			local copilot = require("copilot.suggestion")
 
 			local cmp_mapping = function(fn_cmp, fn_codeium, fn_copilot, fn_luasnip)
 				return cmp.mapping(function(fallback)
 					---@diagnostic disable-next-line: undefined-field
 					if vim.b._codeium_completions ~= nil and fn_codeium then
 						fn_codeium()
-					elseif copilot.is_visible() and fn_copilot then
-						fn_copilot()
 					elseif cmp.visible() and fn_cmp then
 						fn_cmp()
 					elseif luasnip.expand_or_jumpable() and fn_luasnip then
@@ -50,7 +46,7 @@ return {
 			cmp.setup({
 				enabled = function()
 					---@diagnostic disable-next-line: undefined-field
-					return not copilot.is_visible() and not vim.b._codeium_completions
+					return not vim.b._codeium_completions
 				end,
 
 				sources = {
@@ -71,36 +67,25 @@ return {
 							vim.api.nvim_replace_termcodes(vim.fn["codeium#Accept"](), true, true, true),
 							""
 						)
-					end, copilot.accept, luasnip.expand_or_jump),
+					end, luasnip.expand_or_jump),
 					["<C-n>"] = cmp_mapping(function()
 						cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
 					end, function()
 						vim.fn["codeium#CycleCompletions"](1)
-					end, copilot.next, nil),
+					end, nil),
 					["<C-p>"] = cmp_mapping(function()
 						cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
 					end, function()
 						vim.fn["codeium#CycleCompletions"](-1)
-					end, copilot.prev, nil),
+					end, nil),
 					["<C-w>"] = cmp.mapping(function(_)
 						cmp.abort()
-						copilot.dismiss()
 
 						---@diagnostic disable-next-line: undefined-field
 						if vim.b._codeium_completions then
 							vim.fn["codeium#Clear"]()
 						else
 							vim.fn["codeium#Complete"]()
-						end
-					end),
-					["<C-W>"] = cmp.mapping(function(_)
-						cmp.abort()
-						vim.fn["codeium#Clear"]()
-
-						if copilot.is_visible() then
-							copilot.dismiss()
-						else
-							copilot.next()
 						end
 					end),
 					["<C-e>"] = cmp_mapping(cmp.abort, nil, nil),
@@ -149,6 +134,7 @@ return {
 				},
 			})
 		end,
+		event = "InsertEnter",
 		keys = {
 			{ "<leader>tc", "<CMD>ToggleCmp<CR>", desc = "Toggle auto compeltions" },
 		},
@@ -165,6 +151,30 @@ return {
 	},
 
 	{
+		"chrisgrieser/nvim-scissors",
+		opts = {
+			snippetDir = vim.fn.stdpath("config") .. "/snippets",
+		},
+		keys = {
+			{
+				"<leader>Sc",
+				function()
+					require("scissors").addNewSnippet()
+				end,
+				mode = { "n", "x" },
+				desc = "Create new snippet",
+			},
+			{
+				"<leader>Se",
+				function()
+					require("scissors").editSnippet()
+				end,
+				desc = "Edit snippet",
+			},
+		},
+	},
+
+	{
 		"exafunction/codeium.vim",
 		config = function()
 			vim.g.codeium_disable_bindings = true
@@ -174,61 +184,22 @@ return {
 	},
 
 	{
-		"zbirenbaum/copilot.lua",
-		opts = {
-			panel = {
-				enabled = false,
-			},
-			suggestion = {
-				enabled = true,
-				auto_trigger = false,
-				debounce = 75,
-				keymap = {
-					["*"] = false,
-				},
-			},
-			filetypes = {
-				["*"] = true,
-			},
+		"jellydn/copilotchat.nvim",
+		dependencies = {
+			"zbirenbaum/copilot.lua",
 		},
-		event = "InsertEnter",
-	},
-
-	{
-		"gptlang/copilotchat.nvim",
-		build = function()
-			local copilot_chat_dir = vim.fn.stdpath("data") .. "/lazy/CopilotChat.nvim"
-			vim.fn.system({ "cp", "-r", copilot_chat_dir .. "/rplugin", vim.fn.stdpath("config") })
-			print("Run ':UpdateRemotePlugins', then restart Neovim.")
-		end,
+		build = ":UpdateRemotePlugins",
+		opts = {
+			debug = true,
+			show_help = "yes",
+			prompts = {},
+		},
 		keys = {
-			{ "<leader>cc", ":CopilotChat ", desc = "Copilot chat" },
-			{ "<leader>cx", "<CMD>:let @\"=''<CR>:CopilotChat ", desc = "Copilot chat (delete clipboard)" },
-			{
-				"<leader>cf",
-				function()
-					vim.fn.feedkeys("yaf")
-					vim.fn.feedkeys(":CopilotChat ")
-				end,
-				desc = "Copilot explain function",
-			},
-			{
-				"<leader>ce",
-				function()
-					vim.fn.feedkeys("yac")
-					vim.fn.feedkeys(":CopilotChat ")
-				end,
-				desc = "Copilot explain class",
-			},
-			{
-				"<leader>cp",
-				function()
-					vim.fn.feedkeys("yap")
-					vim.fn.feedkeys(":CopilotChat ")
-				end,
-				desc = "Copilot chat paragraph",
-			},
-			{ "<leader>ca", "ggyG:CopilotChat ", desc = "Copilot chat all file" },
+			{ "<leader>ci", "<CMD>CopilotChatInPlace<CR>", mode = "x", desc = "Copilot chat window" },
+			{ "<leader>ce", "<CMD>CopilotChatExplain<CR>", desc = "Copilot chat explain" },
+			{ "<leader>ct", "<CMD>CopilotChatTests<CR>", desc = "Copilot chat tests" },
+			{ "<leader>cc", "<CMD>CopilotChat ", desc = "Copilot chat" },
+			{ "<leader>cv", "<CMD>CopilotChatVisual ", mode = "x", desc = "Copilot chat (visual mode)" },
 		},
 	},
 }

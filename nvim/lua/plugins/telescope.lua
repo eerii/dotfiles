@@ -99,6 +99,6 @@ return {
 		keys = {
 			{ "<leader>sp", "<CMD>Telescope neoclip<CR>", desc = "Search yank clipboard" },
 		},
-		event = "BufReadPost",
+		event = "ModeChanged",
 	},
 }

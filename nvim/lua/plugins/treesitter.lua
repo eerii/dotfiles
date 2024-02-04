@@ -7,7 +7,7 @@ return {
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-refactor",
 			"nvim-treesitter/nvim-treesitter-textobjects",
-			"nvim-treesitter/nvim-treesitter-context",
+			-- "nvim-treesitter/nvim-treesitter-context",
 		},
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })
@@ -52,7 +52,7 @@ return {
 				},
 			})
 
-			require("treesitter-context").setup({ max_lines = 1, trim_scope = "outer" })
+			-- require("treesitter-context").setup({ max_lines = 1, trim_scope = "outer" })
 		end,
 		event = "BufReadPre",
 	},
@@ -64,13 +64,6 @@ return {
 		dependencies = { "godlygeek/tabular" },
 		config = function()
 			vim.g.vim_markdown_folding_style_pythonic = 1
-
-			vim.api.nvim_create_autocmd("Filetype", {
-				pattern = "markdown",
-				callback = function()
-					vim.o.foldlevel = 99
-				end,
-			})
 		end,
 		ft = "markdown",
 	},

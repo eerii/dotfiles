@@ -1,7 +1,30 @@
 return {
+	-- Rose pine
+	{
+		"rose-pine/neovim",
+		name = "rose-pine",
+		enabled = false,
+		lazy = false,
+		priority = 1000,
+		init = function()
+			vim.cmd.colorscheme("rose-pine")
+		end,
+	},
+
+	-- Nvimgelion
+	{
+		"nyngwang/nvimgelion",
+		lazy = false,
+		priority = 1000,
+		init = function()
+			vim.cmd.colorscheme("nvimgelion")
+		end,
+	},
+
 	-- Kanawaga theme
 	{
 		"rebelot/kanagawa.nvim",
+		enabled = false,
 		lazy = false,
 		priority = 1000,
 		config = function()
@@ -29,13 +52,6 @@ return {
 						CmpDoc = { fg = theme.ui.shade0, bg = theme.ui.bg },
 						CmpBorder = { fg = theme.syn.keyword, bg = theme.ui.bg },
 						FloatBorder = { fg = theme.syn.keyword, bg = theme.ui.bg },
-						-- TelescopeTitle = { fg = theme.syn.identifier, bold = true },
-						-- TelescopePromptNormal = { bg = theme.ui.bg_p1 },
-						-- TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
-						-- TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
-						-- TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
-						-- TelescopePreviewNormal = { bg = theme.ui.bg_dim },
-						-- TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
 						DiagnosticVirtualTextHint = { fg = diagnostics },
 						DiagnosticVirtualTextInfo = { fg = diagnostics },
 						DiagnosticVirtualTextWarn = { fg = diagnostics },

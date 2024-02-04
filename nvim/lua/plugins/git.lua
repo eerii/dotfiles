@@ -32,4 +32,11 @@ return {
 			{ "ih", "<CMD>Gitsigns select_hunk<CR>", mode = { "o", "x" }, desc = "[G]it select hunk" },
 		},
 	},
+
+	-- Github
+	{
+		"pwntester/octo.nvim",
+		opts = {},
+		cmd = { "Octo" },
+	},
 }
