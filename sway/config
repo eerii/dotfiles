@@ -12,7 +12,7 @@ include /etc/sway/config.d/*
 include "$HOME/.config/sway/kanagawa"
 
 # Displays
-output eDP-1 resolution 2880x1800 position 0,0 scale 1.5
+output eDP-1 resolution 2880x1800 position 0,0 scale 1.35
 output DP-1 resolution 3840x2160 position 1800,0 scale 1.35
 
 # Seats
@@ -59,7 +59,6 @@ input * {
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store
 
-    exec easyeffects --gapplication-service &
 
     # exec env --chdir=/home/eri/.local/share/applications -S gtk-launch beeper.desktop
     # exec env --chdir=/usr/share/applications -S gtk-launch thunderbird.desktop
@@ -72,19 +71,24 @@ input * {
     exec_always ~/.config/sway/bin/clamshell
     exec autotiling-rs
 
+    exec foot --app-id="foot-break" /bin/bash -c "arttime -k ~/.config/arttime/timer.break"
+    exec element-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland
+    exec gtk-launch thunderbird
+    exec easyeffects --gapplication-service &
+
     set $nag exec swaynagmode
 
 # Window rules
     for_window [app_id=".*"] inhibit_idle fullscreen
     for_window [app_id=".*"] opacity $opacity
 
-    for_window [app_id="kebihpkoclefnhgdieipmimdjhpdkbjc"] move scratchpad
     for_window [app_id="localsend_app"] move scratchpad; scratchpad show
     for_window [app_id="com.github.Aylur.ags"] move scratchpad
 
     for_window [app_id="foot-ps"] move scratchpad; scratchpad show
     for_window [app_id="foot-btm"] move scratchpad; scratchpad show; resize set 1500 900
-    for_window [app_id="Beeper"] move scratchpad; scratchpad show
+    for_window [app_id="foot-break"] move scratchpad
+    for_window [app_id="Element"] move scratchpad
 
     for_window [app_id="mpv"] fullscreen
     
@@ -163,7 +167,8 @@ input * {
 
     bindsym $mod+Shift+minus move scratchpad
     bindsym $mod+minus scratchpad show
-    bindsym $mod+m [app_id="Beeper"] scratchpad show
+    bindsym $mod+m [app_id="Element"] scratchpad show
+    bindsym $mod+Shift+b [app_id="foot-break"] scratchpad show
     bindsym $mod+Shift+m [app_id="localsend_app"] scratchpad show
 
     bindsym $mod+Shift+p exec foot --app-id="foot-ps" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm -e --default_widget_type process"

@@ -1,0 +1,25 @@
+# -*- conf -*-
+# Catppuccin
+
+[cursor]
+color=16161d edeff0
+
+[colors]
+foreground=edeff0
+background=16161d #0c0e0f
+regular0=232526  # black
+regular1=df5b61  # red
+regular2=78b892  # green
+regular3=de8f78  # yellow
+regular4=6791c9  # blue
+regular5=bc83e3  # magenta
+regular6=67afc1  # cyan
+regular7=e4e6e7  # white
+bright0=2c2e2f   # bright black
+bright1=e8646a   # bright red
+bright2=81c19b   # bright green
+bright3=e79881   # bright yellow
+bright4=709ad2   # bright blue
+bright5=c58cec   # bright magenta
+bright6=70b8ca   # bright cyan
+bright7=f2f4f5   # bright white

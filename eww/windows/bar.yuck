@@ -4,8 +4,6 @@
     (box :class "bar"
         (box :class "start widget" :halign "start" :space-evenly false
             (clock))
-        (box :class "center widget" :halign "center" :space-evenly false
-            (island))
         (box :class "end widget" :halign "end"
             (box :space-evenly false :spacing 10
                 (volume-icon) (network) (battery)))))

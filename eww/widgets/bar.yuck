@@ -2,40 +2,14 @@
     (eventbox
         :class "clock"
 
-        (box :class "date" :space-evenly false :spacing 10
-            (box :class "clock" :space-evenly false :spacing 3
+        (box :class "date" :space-evenly false :spacing 5
+            (box :class "clock" :space-evenly false :spacing 2
                 (label :class "clock hour" :text {formattime(EWW_TIME, "%H", "Europe/Madrid")})
                 (label :class "clock ellipsis" :text ":")
                 (label :class "clock minute" :text {formattime(EWW_TIME, "%M", "Europe/Madrid")}))
 
             (label :class "period" :text "·")
             (label :class "today" :text {formattime(EWW_TIME, "%d %b", "Europe/Madrid")}))))
-
-
-(defwidget island []
-    (box
-        :class "island"
-        :space-evenly false
-        :spacing 10
-
-        (eventbox
-            :class "island_center"
-            :cursor "pointer"
-            (box
-                :class "workspaces"
-                (box
-                    :space-evenly false
-                    :spacing 10
-                    :halign "center"
-
-                    (for workspace in {workspaces}
-                        (eventbox
-                            :cursor "pointer"
-                            :halign "center"
-                            (button
-                                :class "workspace ${workspace.focused ? 'active' : workspace.empty ? 'empty' : 'inactive'}"))))))))
-        ;; change this to something like the dynamic island
-        ;; for example, grow with music, grow notifications from there, live activities...
 
 (defwidget volume-icon []
     (box

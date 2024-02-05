@@ -1,58 +1,22 @@
 .bar {
-    margin: 0 8px;
+    margin: 0 12px;
+
     .widget {
         @include widget($shadow: false);
-        padding: 0.2rem 1rem;
 
         .date {
             @include button($flat: true);
             color: $fg;
 
             .clock {
+
                 &.hour,
                 &.minute {
-                    font-weight: 500;
+                    font-weight: 600;
                 }
 
                 &.ellipsis {
                     margin-top: -0.3rem;
-                }
-            }
-        }
-
-        .island { 
-            .island_center {
-                &:hover {
-                    .workspaces {
-                        padding: 0 4rem;
-                    }
-                }
-                .workspaces {
-                    padding: 0 1rem;
-
-                    .workspace {
-                        border-radius: 1rem;
-                        min-height: 0.8rem;
-                        min-width: 0.8rem;
-                        margin: 0.5rem 0;
-                        background: $accent;
-
-                        &.empty {
-                            background: lighten($color: $bg, $amount: 15%);
-                        }
-                        &.active {
-                            min-width: 1.5rem;
-                        }
-
-                        &:hover {
-                            &.empty {
-                                background: lighten($color: $bg, $amount: 25%);
-                            }
-                            &.active, &.inactive {
-                                background: lighten($color: $accent, $amount: 10%);
-                            }
-                        }
-                    }
                 }
             }
         }
