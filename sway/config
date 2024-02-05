@@ -51,6 +51,7 @@ input * {
 # Exec
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
+    exec dunst &
     exec meh -kd
     exec eww daemon && eww open bar
     exec swww init

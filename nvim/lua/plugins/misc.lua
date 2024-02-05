@@ -165,4 +165,13 @@ return {
 		opts = {},
 		event = "VeryLazy",
 	},
+
+	-- Hydrate
+	{
+		"stefanlogue/hydrate.nvim",
+		opts = {
+			minute_interval = 30,
+			persist_timer = true,
+		},
+	},
 }

@@ -58,27 +58,27 @@ impl Daemon {
     }
 
     fn run(&mut self) {
-        let (sender, receiver) = mpsc::channel();
-        thread::spawn(move || register_dbus_handler(sender));
+        // let (sender, receiver) = mpsc::channel();
+        // thread::spawn(move || register_dbus_handler(sender));
 
         // notification loop
-        let dbus = self.dbus_manager.clone();
-        thread::spawn(move || loop {
-            if let Ok(recv) = receiver.recv() {
-                match recv {
-                    Action::Show(n) => {
-                        println!(
-                            "received notification: {}\napp: {}\n{}\n{}",
-                            n.id, n.app_name, n.summary, n.body
-                        );
-                        dbus.write()
-                            .expect("failed to write into the dbus manager")
-                            .add(n);
-                    }
-                    Action::Close(_) => {}
-                }
-            }
-        });
+        // let dbus = self.dbus_manager.clone();
+        // thread::spawn(move || loop {
+        //     if let Ok(recv) = receiver.recv() {
+        //         match recv {
+        //             Action::Show(n) => {
+        //                 println!(
+        //                     "received notification: {}\napp: {}\n{}\n{}",
+        //                     n.id, n.app_name, n.summary, n.body
+        //                 );
+        //                 dbus.write()
+        //                     .expect("failed to write into the dbus manager")
+        //                     .add(n);
+        //             }
+        //             Action::Close(_) => {}
+        //         }
+        //     }
+        // });
 
         // daemon loop
         loop {

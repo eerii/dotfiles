@@ -184,22 +184,23 @@ return {
 	},
 
 	{
-		"jellydn/copilotchat.nvim",
+		"gptlang/copilotchat.nvim",
 		dependencies = {
 			"zbirenbaum/copilot.lua",
 		},
 		build = ":UpdateRemotePlugins",
 		opts = {
-			debug = true,
-			show_help = "yes",
+			debug = false,
+			disable_extra_info = "yes",
+			show_help = "no",
 			prompts = {},
 		},
 		keys = {
-			{ "<leader>ci", "<CMD>CopilotChatInPlace<CR>", mode = "x", desc = "Copilot chat window" },
+			{ "<leader>ci", "<CMD>CopilotChatInPlace<CR>", mode = { "n", "x" }, desc = "Copilot chat window" },
 			{ "<leader>ce", "<CMD>CopilotChatExplain<CR>", desc = "Copilot chat explain" },
 			{ "<leader>ct", "<CMD>CopilotChatTests<CR>", desc = "Copilot chat tests" },
-			{ "<leader>cc", "<CMD>CopilotChat ", desc = "Copilot chat" },
-			{ "<leader>cv", "<CMD>CopilotChatVisual ", mode = "x", desc = "Copilot chat (visual mode)" },
+			{ "<leader>cc", ":CopilotChat ", desc = "Copilot chat" },
+			{ "<leader>cc", ":CopilotChatVisual ", mode = "x", desc = "Copilot chat (visual mode)" },
 		},
 	},
 }

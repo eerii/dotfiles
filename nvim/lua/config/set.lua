@@ -49,7 +49,11 @@ vim.g.shell = "/bin/fish"
 vim.g.netrw_banner = 0
 
 -- Disable folds by default
-vim.o.foldlevel = 99
+vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter" }, {
+    desc = "no folds",
+  pattern = "*",
+  command = "set nofoldenable foldmethod=manual foldlevelstart=99"
+})
 
 -- Indent lines
 -- vim.opt.list = true
