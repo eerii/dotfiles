@@ -64,9 +64,6 @@ map("n", "<leader>L", "<CMD>Lazy<CR>", { desc = "Lazy plugin manager" })
 -- New file with nf
 map("n", "<leader>n", "<CMD>enew<CR>", { desc = "New file" })
 
--- Toggle line wrap
-map("n", "<leader>w", "<CMD>set wrap!<CR>", { desc = "Toggle line wrap" })
-
 -- Terminal
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal" })
 map("t", "<M-c>", "<Esc>", { desc = "Send escape to terminal" })

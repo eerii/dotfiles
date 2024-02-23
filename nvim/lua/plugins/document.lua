@@ -109,16 +109,17 @@ return {
 		},
 	},
 
-	-- Zen mode
+	-- Zen mode and pencil
 	{
 		"folke/zen-mode.nvim",
 		dependencies = {
 			"folke/twilight.nvim",
+			"preservim/vim-pencil",
 		},
 		opts = {
 			window = {
 				backdrop = 1, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
-				width = 80,
+				width = 100,
 				options = {
 					signcolumn = "no", -- disable signcolumn
 					number = false, -- disable number column
@@ -127,11 +128,13 @@ return {
 					cursorcolumn = false, -- disable cursor column
 					foldcolumn = "0", -- disable fold column
 					list = false, -- disable whitespace characters
-					wrap = true, -- set text wrap
 					linebreak = true, -- break whole words
 				},
 			},
 		},
-		keys = { { "<leader>z", "<CMD>ZenMode<CR>", desc = "Zen mode" } },
+		keys = {
+			{ "<leader>z", "<CMD>ZenMode<CR><CMD>TogglePencil<CR>", desc = "Zen mode" },
+			{ "<leader>w", "<CMD>TogglePencil<CR>", desc = "Wrap" },
+		},
 	},
 }

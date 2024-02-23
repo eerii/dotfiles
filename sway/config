@@ -4,7 +4,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $opacity 0.95
+set $opacity 0.9
 
 include /etc/sway/config.d/*
 
@@ -17,7 +17,6 @@ output DP-1 resolution 3840x2160 position 1800,0 scale 1.35
 
 # Seats
 seat * hide_cursor 3000
-seat * hide_cursor when-typing enable
 
 # Idle
 # TODO: 
@@ -31,9 +30,9 @@ input * {
 }
 
 # Graphical
-    gaps inner 8
+    gaps inner 6
 
-    corner_radius 14
+    corner_radius 10
     default_border none
     default_floating_border none
 
@@ -43,17 +42,15 @@ input * {
 
     shadows enable
     shadows_on_csd enable
-    shadow_blur_radius 30
-    shadow_color #0000007F
+    shadow_blur_radius 3
+    shadow_color #bc83e35F
 
     scratchpad_minimize enable
 
 # Exec
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
-    exec dunst &
     exec meh -kd
-    exec eww daemon && eww open bar
     exec swww init
 
     exec wl-paste --type text --watch cliphist store
@@ -87,6 +84,7 @@ input * {
 
     for_window [app_id="foot-ps"] move scratchpad; scratchpad show
     for_window [app_id="foot-btm"] move scratchpad; scratchpad show; resize set 1500 900
+    for_window [app_id="foot-nohyper"] move scratchpad; scratchpad show
     for_window [app_id="foot-break"] move scratchpad
     for_window [app_id="Element"] move scratchpad
 
@@ -106,14 +104,13 @@ input * {
     bindsym $mod+a exec nautilus -w
 
     bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f -
-    bindsym $mod+Shift+r exec obs-cli recording toggle
 
     bindsym $mod+space exec pkill rofi || rofi -show drun -show-icons | xargs swaymsg exec --
     bindsym $mod+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy
     bindsym $mod+Shift+f exec pkill rofi || locate /home/eri | rofi -dmenu
     bindsym Ctrl+space exec pkill rofi || foot -D "$(zoxide query --list | rofi -dmenu)"
     bindsym $mod+Shift+e exec ~/.config/rofi/bin/emoji
-    bindsym $mod+Shift+n exec ~/.config/rofi/bin/emoji nerd_font
+    bindsym $mod+Shift+r exec ~/.config/rofi/bin/emoji nerd_font
 
     bindsym $mod+q kill
     bindsym $mod+Shift+c reload
@@ -169,6 +166,7 @@ input * {
     bindsym $mod+minus scratchpad show
     bindsym $mod+m [app_id="Element"] scratchpad show
     bindsym $mod+Shift+b [app_id="foot-break"] scratchpad show
+    bindsym $mod+Shift+n [app_id="foot-nohyper"] scratchpad show
     bindsym $mod+Shift+m [app_id="localsend_app"] scratchpad show
 
     bindsym $mod+Shift+p exec foot --app-id="foot-ps" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm -e --default_widget_type process"

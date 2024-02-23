@@ -86,6 +86,35 @@ return {
 		},
 	},
 
+	-- Markdown navigation
+	{
+		"jakewvincent/mkdnflow.nvim",
+		opts = {
+			links = { conceal = true },
+		},
+		ft = "markdown",
+	},
+
+	-- Help for keymaps
+	{
+		"folke/which-key.nvim",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+		opts = {},
+		event = "VeryLazy",
+	},
+
+	-- Hydrate
+	{
+		"stefanlogue/hydrate.nvim",
+		opts = {
+			minute_interval = 30,
+			persist_timer = true,
+		},
+	},
+
 	-- Jupyter notebooks
 	-- {
 	-- 	"benlubas/molten-nvim",
@@ -154,24 +183,4 @@ return {
 	-- 	},
 	-- 	ft = { "quarto", "markdown" },
 	-- },
-
-	-- Help for keymaps
-	{
-		"folke/which-key.nvim",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {},
-		event = "VeryLazy",
-	},
-
-	-- Hydrate
-	{
-		"stefanlogue/hydrate.nvim",
-		opts = {
-			minute_interval = 30,
-			persist_timer = true,
-		},
-	},
 }
