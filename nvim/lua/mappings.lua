@@ -6,11 +6,22 @@ local unmap = vim.keymap.del
 -- unmap some of nvchad keymaps
 
 unmap("n", "<leader>lf")
+unmap("n", "<leader>th")
+unmap("n", "<leader>fw")
+unmap("n", "<leader>fb")
+unmap("n", "<leader>fh")
+unmap("n", "<leader>fo")
+unmap("n", "<leader>fz")
+unmap("n", "<leader>ff")
+unmap("n", "<leader>fa")
+unmap("n", "<leader>cm")
+unmap("n", "<leader>cc")
+unmap("n", "<leader>pt")
 unmap("n", "<leader>q")
 unmap("n", "<leader>h")
 unmap("n", "<leader>v")
-unmap("n", "<C-s>")
 unmap("n", "<C-c>")
+unmap("n", "<C-s>")
 
 -- general
 
@@ -29,7 +40,7 @@ map("n", "<C-x>", "<C-^>", { desc = "Go to previous buffer" })
 map("i", "<C-CR>", "<CR><C-U>", { desc = "New line without comment" })
 
 map("x", "<leader>p", '"_dP', { desc = "Paste without losing buffer" })
-map({"n", "v"}, "<leader>x", '"_d', { desc = "Delete without losing buffer" })
+map({ "n", "v" }, "<leader>x", '"_d', { desc = "Delete without losing buffer" })
 
 map("n", "U", "<C-r>", { desc = "Redo" })
 

@@ -4,12 +4,11 @@ return {
         dependencies = {
             "nvim-treesitter/nvim-treesitter-refactor",
             "nvim-treesitter/nvim-treesitter-textobjects",
-            -- "nvim-treesitter/nvim-treesitter-context",
         },
         opts = {
             ensure_installed = {
                 "c", "cpp", "regex", "rust", "python", "vim", "vimdoc", "lua",
-                "markdown", "markdown_inline", "bash", "html", "css"
+                "markdown", "markdown_inline", "bash", "html", "css", "toml"
             },
             auto_install = true,
             incremental_selection = {
@@ -34,7 +33,7 @@ return {
                     goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
                 },
             },
-        },
+        }
     },
 
     -- todo comments

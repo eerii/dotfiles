@@ -36,4 +36,84 @@ return {
             { "<leader>sw", function() require("trouble").toggle("workspace_diagnostics") end, desc = "Trouble workspace diagnostics" },
         },
     },
+
+    -- inline hints
+    {
+        "mysticaldevil/inlay-hints.nvim",
+        opts = {
+            autocmd = { enable = false },
+        },
+        keys = {
+            { "<leader>h", "<CMD>InlayHintsToggle<CR>", desc = "Inline hints" },
+        },
+    },
+
+    -- rust
+    {
+        "mrcjkb/rustaceanvim",
+        opts = {
+            server = {
+                on_attach = function(client, bufnr)
+                    require "configs.onattach" (client, bufnr)
+
+                    local function opts(desc)
+                        return { buffer = bufnr, desc = desc }
+                    end
+
+                    vim.keymap.set("n", "ga", function() vim.cmd.RustLsp("codeAction") end,
+                        opts "Rust code action")
+                    vim.keymap.set("n", "<leader>rd", function() vim.cmd.RustLsp("renderDiagnostic") end,
+                        opts "Rust diagnostics")
+                    vim.keymap.set("n", "<leader>rb", function() vim.cmd.RustLsp("debuggables") end,
+                        opts "Rust debuggables")
+                    vim.keymap.set("n", "<leader>rr", function() vim.cmd.RustLsp("runnables") end,
+                        opts "Rust runnables")
+                    vim.keymap.set("n", "<leader>rt", function() vim.cmd.RustLsp("testables") end,
+                        opts "Rust testables")
+                    vim.keymap.set("n", "<leader>re", function() vim.cmd.RustLsp("explainError") end,
+                        opts "Rust explain error")
+                    vim.keymap.set("n", "<leader>rj", function() vim.cmd.RustLsp("joinLines") end,
+                        opts "Rust join lines")
+                end,
+                default_settings = {
+                    ["rust-analyzer"] = {
+                        assist = { expressionFillDefault = "default" },
+                        cargo = {
+                            allFeatures = true,
+                            loadOutDirsFromCheck = true,
+                            runBuildScripts = true,
+                        },
+                        checkOnSave = {
+                            allFeatures = true,
+                            command = "clippy",
+                            extraArgs = { "--no-deps" },
+                        },
+                        diagnostics = { experimental = { enable = true } },
+                        procMacro = {
+                            enable = true,
+                            ignored = {
+                                ["async-trait"] = { "async_trait" },
+                                ["napi-derive"] = { "napi" },
+                                ["async-recursion"] = { "async_recursion" },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        config = function(_, opts)
+            vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+        end,
+        ft = "rust",
+    },
+
+    {
+        "saecki/crates.nvim",
+        opts = {
+            src = {
+                cmp = { enabled = true },
+            },
+        },
+        event = { "BufRead Cargo.toml" },
+    },
 }

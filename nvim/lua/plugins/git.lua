@@ -1,5 +1,5 @@
 return {
-    -- Git sign column
+    -- git sign column
     {
         "lewis6991/gitsigns.nvim",
         opts = {
@@ -33,7 +33,7 @@ return {
         },
     },
 
-    -- Github
+    -- github
     {
         "pwntester/octo.nvim",
         opts = {},

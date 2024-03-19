@@ -3,6 +3,7 @@ local M = {}
 
 M.ui = {
     theme = "ayu_dark",
+    transparency = false,
 
     hl_override = {
         Comment = { italic = true },
@@ -10,6 +11,7 @@ M.ui = {
     },
 
     statusline = {
+        theme = "minimal",
         separator_style = "block",
     },
 
@@ -18,8 +20,13 @@ M.ui = {
     },
 
     nvdash = {
-        load_on_startup = true,
-    }
+        load_on_startup = false,
+    },
+
+    cmp = {
+        lspkind_text = false,
+        style = "flat_dark",
+    },
 }
 
 return M
