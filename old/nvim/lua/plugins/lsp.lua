@@ -113,7 +113,7 @@ return {
 					"jdtls",
 				},
 				automatic_installation = {
-					exclude = { "rust_analyzer" },
+					exclude = { "rust_analyzer", "clangd" },
 				},
 				handlers = {
 					function(server_name)
@@ -153,6 +153,10 @@ return {
 					},
 				},
 			})
+
+            lsp.clangd.setup({
+                capabilities = capabilities,
+            })
 		end,
 		event = "InsertEnter",
 		keys = {
@@ -251,31 +255,24 @@ return {
 			vim.g.rustaceanvim = {
 				tools = {},
 				server = {
-					on_attach = function(_, buf)
-						vim.keymap.set(
-							"n",
-							"<leader>lr",
-							"<CMD>RustLsp runnables<CR>",
-							{ buffer = buf, desc = "RustLsp run" }
-						)
-						vim.keymap.set(
-							"n",
-							"<leader>le",
-							"<CMD>RustLsp explainError<CR>",
-							{ buffer = buf, desc = "RustLsp explain error" }
-						)
-					end,
-					settings = {
-						["rust-analyzer"] = {
-							assist = { expressionFillDefault = "default" },
-							checkOnSave = {
-								allFeatures = true,
-								command = "clippy",
-								extraArgs = { "--no-deps" },
+					settings = function(project_root)
+						local ra = require("rustaceanvim.config.server")
+						local default = {
+							["rust-analyzer"] = {
+								assist = { expressionFillDefault = "default" },
+								checkOnSave = {
+									allFeatures = true,
+									command = "clippy",
+									extraArgs = { "--no-deps" },
+								},
+								diagnostics = { experimental = { enable = true } },
 							},
-							diagnostics = { experimental = { enable = true } },
-						},
-					},
+						}
+						local settings = ra.load_rust_analyzer_settings(project_root, {
+							settings_file_pattern = "rust-analyzer.json",
+						})
+						return vim.tbl_deep_extend("force", default, settings)
+					end,
 				},
 			}
 		end,

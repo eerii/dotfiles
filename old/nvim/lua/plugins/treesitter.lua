@@ -6,7 +6,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-refactor",
-			"nvim-treesitter/nvim-treesitter-textobjects",
+			-- "nvim-treesitter/nvim-treesitter-textobjects",
 			-- "nvim-treesitter/nvim-treesitter-context",
 		},
 		build = function()
@@ -38,18 +38,18 @@ return {
 					smart_rename = { enable = true },
 					navigation = { enable = true },
 				},
-				textobjects = {
-					select = {
-						enable = true,
-
-						keymaps = {
-							["af"] = "@function.outer",
-							["if"] = "@function.inner",
-							["ac"] = "@class.outer",
-							["ic"] = "@class.inner",
-						},
-					},
-				},
+				-- textobjects = {
+				-- 	select = {
+				-- 		enable = true,
+				--
+				-- 		keymaps = {
+				-- 			["af"] = "@function.outer",
+				-- 			["if"] = "@function.inner",
+				-- 			["ac"] = "@class.outer",
+				-- 			["ic"] = "@class.inner",
+				-- 		},
+				-- 	},
+				-- },
 			})
 
 			-- require("treesitter-context").setup({ max_lines = 1, trim_scope = "outer" })
