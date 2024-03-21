@@ -60,7 +60,6 @@ return {
         },
         keys = {
             { "<leader>ca", ":CopilotChat ",                     mode = { "n", "v" },         desc = "Chat Copilot ask" },
-            { "<leader>cb", ":CopilotChat @buffer ",             mode = { "n", "v" },         desc = "Chat Copilot ask buffer" },
             { "<leader>cw", ":CopilotChat @buffers ",            mode = { "n", "v" },         desc = "Chat Copilot ask workspace" },
             { "<leader>ce", "<CMD>CopilotChatExplain<CR>",       mode = { "n", "v" },         desc = "Chat Copilot explain" },
             { "<leader>cf", "<CMD>CopilotChatFix<CR>",           mode = { "n", "v" },         desc = "Chat Copilot fix" },
@@ -70,6 +69,16 @@ return {
             { "<leader>cD", "<CMD>CopilotChatDocs<CR>",          mode = { "n", "v" },         desc = "Chat Copilot docs" },
             { "<leader>cC", "<CMD>CopilotChatCommit<CR>",        mode = { "n", "v" },         desc = "Chat Copilot commit" },
             { "<leader>ct", "<CMD>CopilotChatToggle<CR>",        desc = "Chat Copilot toggle" },
+            {
+                "<leader>cb",
+                function()
+                    local input = vim.fn.input("Buffer Chat: ")
+                    if input ~= "" then
+                        require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+                    end
+                end,
+                desc = "Chat Copilot ask buffer"
+            },
         }
     },
 

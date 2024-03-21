@@ -3,16 +3,20 @@ local opts = {
         "lua-language-server",
         "stylua",
         "clangd",
+        "clang-format",
         "html-lsp",
         "css-lsp",
         "prettier",
+        "bash-language-server",
+        "beautish",
         "jdtls",
         "taplo",
-        "codelldb",
+        "basedpyright",
+        "black",
     },
     automatic_installation = {
         exclude = { "rust_analyzer" },
     },
 }
 
-require "mason".setup(opts)
+return opts

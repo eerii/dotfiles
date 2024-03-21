@@ -68,7 +68,6 @@ input * {
     exec_always ~/.config/sway/bin/clamshell
     exec autotiling-rs
 
-    exec foot --app-id="foot-break" /bin/bash -c "arttime -k ~/.config/arttime/timer.break"
     exec gtk-launch beeper
     exec gtk-launch thunderbird
     exec easyeffects --gapplication-service &

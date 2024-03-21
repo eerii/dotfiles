@@ -12,9 +12,7 @@ return {
     -- install modules
     {
         "williamboman/mason.nvim",
-        config = function()
-            require "configs.mason"
-        end,
+        opts = require "configs.mason",
     },
 
     -- file formatting
@@ -24,7 +22,9 @@ return {
             require "configs.conform"
         end,
         event = "BufWritePre",
-
+        keys = {
+            { "<leader>tf", "<CMD>ToggleFormat<CR>", desc = "Toggle auto-format" },
+        },
     },
 
     -- trouble (diagnostics list)
@@ -32,8 +32,20 @@ return {
         "folke/trouble.nvim",
         opts = {},
         keys = {
-            { "<leader>sd", function() require("trouble").toggle("document_diagnostics") end,  desc = "Trouble document diagnostics" },
-            { "<leader>sw", function() require("trouble").toggle("workspace_diagnostics") end, desc = "Trouble workspace diagnostics" },
+            {
+                "<leader>sd",
+                function()
+                    require("trouble").toggle "document_diagnostics"
+                end,
+                desc = "Trouble document diagnostics",
+            },
+            {
+                "<leader>sw",
+                function()
+                    require("trouble").toggle "workspace_diagnostics"
+                end,
+                desc = "Trouble workspace diagnostics",
+            },
         },
     },
 
@@ -44,7 +56,7 @@ return {
             autocmd = { enable = false },
         },
         keys = {
-            { "<leader>h", "<CMD>InlayHintsToggle<CR>", desc = "Inline hints" },
+            { "<leader>ih", "<CMD>InlayHintsToggle<CR>", desc = "Inline hints" },
         },
     },
 
@@ -54,26 +66,33 @@ return {
         opts = {
             server = {
                 on_attach = function(client, bufnr)
-                    require "configs.onattach" (client, bufnr)
+                    require "configs.onattach"(client, bufnr)
 
                     local function opts(desc)
                         return { buffer = bufnr, desc = desc }
                     end
 
-                    vim.keymap.set("n", "ga", function() vim.cmd.RustLsp("codeAction") end,
-                        opts "Rust code action")
-                    vim.keymap.set("n", "<leader>rd", function() vim.cmd.RustLsp("renderDiagnostic") end,
-                        opts "Rust diagnostics")
-                    vim.keymap.set("n", "<leader>rb", function() vim.cmd.RustLsp("debuggables") end,
-                        opts "Rust debuggables")
-                    vim.keymap.set("n", "<leader>rr", function() vim.cmd.RustLsp("runnables") end,
-                        opts "Rust runnables")
-                    vim.keymap.set("n", "<leader>rt", function() vim.cmd.RustLsp("testables") end,
-                        opts "Rust testables")
-                    vim.keymap.set("n", "<leader>re", function() vim.cmd.RustLsp("explainError") end,
-                        opts "Rust explain error")
-                    vim.keymap.set("n", "<leader>rj", function() vim.cmd.RustLsp("joinLines") end,
-                        opts "Rust join lines")
+                    vim.keymap.set("n", "ga", function()
+                        vim.cmd.RustLsp "codeAction"
+                    end, opts "Rust code action")
+                    vim.keymap.set("n", "<leader>rd", function()
+                        vim.cmd.RustLsp "renderDiagnostic"
+                    end, opts "Rust diagnostics")
+                    vim.keymap.set("n", "<leader>rb", function()
+                        vim.cmd.RustLsp "debuggables"
+                    end, opts "Rust debuggables")
+                    vim.keymap.set("n", "<leader>rr", function()
+                        vim.cmd.RustLsp "runnables"
+                    end, opts "Rust runnables")
+                    vim.keymap.set("n", "<leader>rt", function()
+                        vim.cmd.RustLsp "testables"
+                    end, opts "Rust testables")
+                    vim.keymap.set("n", "<leader>re", function()
+                        vim.cmd.RustLsp "explainError"
+                    end, opts "Rust explain error")
+                    vim.keymap.set("n", "<leader>rj", function()
+                        vim.cmd.RustLsp "joinLines"
+                    end, opts "Rust join lines")
                 end,
                 default_settings = {
                     ["rust-analyzer"] = {

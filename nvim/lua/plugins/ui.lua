@@ -18,5 +18,5 @@ return {
             { "<leader>sn", "<CMD>Noice telescope<CR>", desc = "Search notifications" },
         },
         event = "VeryLazy",
-    }
+    },
 }
