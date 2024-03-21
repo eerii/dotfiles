@@ -97,7 +97,7 @@ input * {
     layer_effects "rofi" blur enable; shadows enable; corner_radius 10
 
 # Binds
-    bindsym $mod+t exec foot
+    bindsym $mod+t exec wezterm
     bindsym $mod+b exec firefox
     bindsym $mod+n exec neovide
     bindsym $mod+a exec nautilus -w

@@ -1,14 +1,11 @@
-import { App } from "./js/imports.js"
-import Bar from "./js/bar/bar.js"
-import Notifications from "./js/notifications/list.js"
+import { monitorFile } from 'resource:///com/github/Aylur/ags/utils.js';
 
-const windows = () => [
-    Bar(0),
-    Notifications(0)
-]
+monitorFile(
+    `${App.configDir}/style.css`,
+    function() {
+        App.resetCss();
+        App.applyCss(`${App.configDir}/style.css`);
+    },
+);
 
-export default {
-    windows: windows().flat(),
-    style: App.configDir + "/style.css",
-    maxStreamVolume: 1.05,
-}
+export default (await import('./js/main.js')).default;
