@@ -47,4 +47,10 @@ return {
             },
         },
     },
+
+    -- navigate between panes and multiplexers
+    {
+        "mrjones2014/smart-splits.nvim",
+        lazy = false,
+    },
 }

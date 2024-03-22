@@ -1,14 +1,10 @@
 if vim.g.neovide then
-	-- Window
-	vim.g.neovide_background_color = "#121217FF"
-	vim.g.neovide_remember_window_size = true
-
 	-- Padding
 	vim.g.neovide_padding_top = 24
 	vim.g.neovide_padding_left = 16
 
 	-- Font
-	vim.o.guifont = "JetBrains Mono:h11"
+	vim.o.guifont = "JetBrains Mono:h14"
 
 	-- Panels
 	vim.g.neovide_floating_blur_amount_x = 2.0

@@ -17,14 +17,16 @@ vim.opt.rtp:prepend(lazypath)
 local lazy_config = require "configs.lazy"
 
 -- load plugins
-require "lazy".setup({
+require("lazy").setup({
     -- we use nvchad as the base for the config
     {
         "nvchad/nvchad",
         lazy = false,
         branch = "v2.5",
         import = "nvchad.plugins",
-        config = function() require "options" end,
+        config = function()
+            require "options"
+        end,
     },
     -- we also import some of lazyvim configured extras
     { "lazyvim/lazyvim", import = "lazyvim.plugins.extras.editor.harpoon2" },

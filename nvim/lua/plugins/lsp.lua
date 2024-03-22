@@ -135,4 +135,10 @@ return {
         },
         event = { "BufRead Cargo.toml" },
     },
+
+    -- java
+    {
+        "mfussenegger/nvim-jdtls",
+        ft = "java",
+    },
 }
