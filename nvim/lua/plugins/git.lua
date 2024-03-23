@@ -43,6 +43,35 @@ return {
         },
     },
 
+    -- git viewer
+    {
+        "SuperBo/fugit2.nvim",
+        opts = {},
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            {
+                "chrisgrieser/nvim-tinygit",
+                dependencies = { "stevearc/dressing.nvim" },
+            },
+        },
+        cmd = { "Fugit2", "Fugit2Graph" },
+        keys = {
+            { "<leader>gg", "<CMD>Fugit2<CR>", desc = "Git client" },
+        },
+    },
+
+    -- view diffs
+    {
+        "sindrets/diffview.nvim",
+        cmd = {
+            "DiffviewFileHistory",
+            "DiffviewOpen",
+            "DiffviewToggleFiles",
+            "DiffviewFocusFiles",
+            "DiffviewRefresh",
+        },
+    },
+
     -- github
     {
         "pwntester/octo.nvim",
