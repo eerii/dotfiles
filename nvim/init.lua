@@ -28,8 +28,6 @@ require("lazy").setup({
             require "options"
         end,
     },
-    -- we also import some of lazyvim configured extras
-    { "lazyvim/lazyvim", import = "lazyvim.plugins.extras.editor.harpoon2" },
     { import = "plugins" },
 }, lazy_config)
 
