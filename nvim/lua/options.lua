@@ -36,6 +36,9 @@ vim.o.autoread = true
 vim.o.undodir = vim.fn.expand "~/.local/share/nvim/undofiles"
 vim.o.undofile = true
 
+-- enable per project config
+vim.o.exrc = true
+
 -- diagnostics
 vim.diagnostic.config {
     underline = {

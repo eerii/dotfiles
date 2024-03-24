@@ -97,25 +97,12 @@ return {
                 default_settings = {
                     ["rust-analyzer"] = {
                         assist = { expressionFillDefault = "default" },
-                        cargo = {
-                            allFeatures = true,
-                            loadOutDirsFromCheck = true,
-                            runBuildScripts = true,
-                        },
-                        checkOnSave = {
-                            allFeatures = true,
+                        check = {
                             command = "clippy",
                             extraArgs = { "--no-deps" },
                         },
                         diagnostics = { experimental = { enable = true } },
-                        procMacro = {
-                            enable = true,
-                            ignored = {
-                                ["async-trait"] = { "async_trait" },
-                                ["napi-derive"] = { "napi" },
-                                ["async-recursion"] = { "async_recursion" },
-                            },
-                        },
+                        procMacro = { enable = false },
                     },
                 },
             },
