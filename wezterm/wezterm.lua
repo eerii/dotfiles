@@ -4,7 +4,7 @@ local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smar
 local config = {}
 
 config.font = wezterm.font("JetBrains Mono")
-config.font_size = 14
+config.font_size = 12
 config.color_scheme = "Ayu Dark (Gogh)"
 config.window_background_opacity = 0.9
 
