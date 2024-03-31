@@ -1,5 +1,7 @@
 # todo
 
+- [ ] move from fish to zsh for bash compatibility
+
 ## neovim
 
 - [ ] mini mode (no lsp, cmp, plugins...)

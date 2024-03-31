@@ -15,8 +15,9 @@
 
 - **window manager:** [swayfx](https://github.com/WillPower3309/swayfx)
 - **launcher:** [rofi (lbonn)](https://github.com/lbonn/rofi)
-- **bar and widgets:** [eww](https://github.com/elkowar/eww)
-- **terminal:** [foot](https://codeberg.org/dnkl/foot)
+- **bar:** [waybar](https://github.com/Alexays/Waybar)
+- **notifications:** [dunst](https://github.com/dunst-project/dunst)
+- **terminal:** [foot](https://codeberg.org/dnkl/foot) + [wezterm](https://github.com/wez/wezterm) 
 - **shell:** [fish](https://github.com/fish-shell/fish-shell) + [bash](https://www.gnu.org/software/bash/)
 - **editor:** [neovim](https://github.com/neovim/neovim)
 
@@ -29,7 +30,7 @@ however, if you wish to install all the configuration, follow these instructions
 1. clone the repo
 
 ```sh
-git clone https://github.com/josekoalas/dotfiles.git
+git clone https://github.com/eerii/dotfiles.git
 ```
 
 2. (optional) choose a package manager

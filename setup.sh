@@ -60,18 +60,22 @@ fi
 
 # link
 link() {
+    ROOT=""
+    if [[ $3 == "--root" ]]; then
+        ROOT="sudo"
+    fi
     if [ -L $2 ]; then
         if [ ! $2 -ef $1 ]; then
-            rm $2
+            $ROOT rm $2
         fi
     elif [ -f $2 ] || [ -d $2 ]; then
-        mkdir -p $backup_dir
-		mv $2 $backup_dir
+        $ROOT mkdir -p $backup_dir
+		$ROOT mv $2 $backup_dir
         echo "backup: $2 to $backup_dir"
 	fi
 
     if [ ! -L $2 ]; then
-        ln -sf $1 $2
+        $ROOT ln -sf $1 $2
         echo "link: $2"
     fi
 }
@@ -79,27 +83,17 @@ link() {
 # ---
 
 # sway
-install swayfx-git swaybg swayidle swaylock-effects-git swaynagmode
+install swayfx-git swayidle swaylock-effects-git swaynagmode
 link $dir/sway ~/.config/sway
 
-if [ "$EUID" -ne 0 ]; then
-    echo "run as root to link environment"
-else
-    link $dir/sway/environment /etc/environment
-fi
+link $dir/sway/environment /etc/environment --root
 
 # sway utils
-install -e autotiling-rs
-
-# login
-install -e ly
-# TODO: ly config
-
-# wayland utils
-install -e pipewire pipewire-pulse wireplumber grim slurp udiskie
+install -e autotiling-rs pipewire pipewire-pulse wireplumber \
+    brightnessctl grim slurp swappy udiskie cliphist hyprpicker
 
 # general utils
-install -e glow zoxide ripgrep rm-improved eza bat
+install -e zoxide ripgrep rm-improved eza bat dust fd rsync
 
 # rofi
 install rofi-lbonn-wayland rofimoji
@@ -107,37 +101,37 @@ install -e cliphist
 link $dir/rofi ~/.config/rofi
 link ~/.cache/wal/config.rasi ~/.config/rofi/config.rasi
 
-# eww
-install eww-git
-link $dir/eww ~/.config/eww
+# waybar
+install waybar power-profiles-daemon
+link $dir/waybar ~/.config/waybar
 
-# foot terminal
-install foot
+# terminals
+install foot wezterm
 install -e ttf-nerd-fonts-symbols-mono apple-fonts noto-fonts-emoji
 link $dir/foot ~/.config/foot
+link $dir/wezterm ~/.config/wezterm
 
-# lf
-install lf archivefs perl-file-mimetype
-link $dir/lf ~/.config/lf
-
-# fish
+# fish and bash
 install fish fisher direnv
 link $dir/fish ~/.config/fish
 link $dir/fish/.bashrc ~/.bashrc
 
-# zellij
-install -e zellij
-link $dir/zellij ~/.config/zellij
-
 # neovim
-install neovim fzf
+install neovim-nightly-bin fzf
 link $dir/nvim ~/.config/nvim
 
+# lf
+install lf archivefs perl-file-mimeinfo
+link $dir/lf ~/.config/lf
+
 # media
-install -e zathura zathura-pdf-poppler mpv imv
+install -e zathura zathura-pdf-poppler celluloid imv localsend-bin easyeffects
+
+# web and mail
+install -e firefox firefox-ublock-origin thunderbird
 
 # themes
-install colloid-icon-theme-git swww
+install colloid-icon-theme-git swww adwaita-qt4 adwaita-qt5-git adwaita-qt6-git
 
 # pandoc
 install -e tectonic pandoc-bin

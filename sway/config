@@ -79,8 +79,6 @@ input * {
     for_window [app_id=".*"] opacity $opacity
 
     for_window [app_id="localsend_app"] move scratchpad; scratchpad show
-    for_window [app_id="com.github.Aylur.ags"] move scratchpad
-
     for_window [app_id="foot-ps"] move scratchpad; scratchpad show
     for_window [app_id="foot-btm"] move scratchpad; scratchpad show; resize set 1500 900
     for_window [app_id="foot-nohyper"] move scratchpad; scratchpad show
