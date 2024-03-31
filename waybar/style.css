@@ -1,0 +1,64 @@
+* {
+  border: none;
+  font-family: "Inter", "Symbols Nerd Font Mono";
+  font-size: 14px;
+}
+
+window#waybar {
+  background: transparent;
+}
+
+.modules-right,
+.modules-center,
+.modules-left {
+  margin: 8px 8px 0 8px;
+  min-height: 32px;
+}
+
+.modules-right {
+  margin: 8px 8px 0 0;
+}
+
+#workspaces,
+#tray,
+label.module {
+  color: #b4befe;
+  background-color: #080c10;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#workspaces button {
+  color: #b4befe;
+  padding: 6px;
+}
+
+#power-profiles-daemon,
+#custom-dunst {
+  border-radius: 10px 0 0 10px;
+  padding-right: 12px;
+}
+#custom-timer,
+#pulseaudio,
+#network {
+  border-radius: 0;
+  padding: 0 12px 0 0;
+}
+#clock,
+#battery {
+  border-radius: 0 10px 10px 0;
+  padding-left: 0;
+}
+
+#clock,
+#custom-arch,
+#workspaces,
+#custom-scratchpad,
+#custom-github {
+  margin-right: 8px;
+}
+
+#tray {
+  margin-right: 8px;
+}

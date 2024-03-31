@@ -50,15 +50,11 @@ input * {
 # Exec
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
-    exec meh -kd
+    exec waybar &
     exec swww init
 
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store
-
-
-    # exec env --chdir=/home/eri/.local/share/applications -S gtk-launch beeper.desktop
-    # exec env --chdir=/usr/share/applications -S gtk-launch thunderbird.desktop
 
     # exec swayidle -w \
     #     timeout 300 'sh ~/.config/sway/bin/swaylock' \
@@ -71,6 +67,10 @@ input * {
     exec gtk-launch beeper
     exec gtk-launch thunderbird
     exec easyeffects --gapplication-service &
+
+    workspace 2
+    exec firefox
+    workspace 3
 
     set $nag exec swaynagmode
 
@@ -90,7 +90,7 @@ input * {
     for_window [app_id="mpv"] fullscreen
     
     for_window [app_id="thunderbird" title="^((?!Mozilla Thunderbird).)*$"] floating enable
-    for_window [app_id="thunderbird" title="Mozilla Thunderbird"] move workspace 4
+    for_window [app_id="thunderbird" title="Mozilla Thunderbird"] move workspace 1
     for_window [title="Open *"] floating enable
     for_window [title="Messi"] floating enable
 
@@ -103,6 +103,7 @@ input * {
     bindsym $mod+a exec nautilus -w
 
     bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f -
+    bindsym $mod+Shift+y exec hyprpicker | wl-copy
 
     bindsym $mod+space exec pkill rofi || rofi -show drun -show-icons | xargs swaymsg exec --
     bindsym $mod+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy
@@ -171,9 +172,9 @@ input * {
     bindsym $mod+Shift+p exec foot --app-id="foot-ps" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm -e --default_widget_type process"
     bindsym $mod+Shift+o exec foot --app-id="foot-btm" /bin/bash -c "cat $HOME/.cache/wal/sequences && btm"
 
-    bindsym --locked XF86AudioRaiseVolume exec meh volume --add 5
-    bindsym --locked XF86AudioLowerVolume exec meh volume --sub 5
-    bindsym --locked XF86AudioMute exec meh volume --toggle-mute
+    bindsym --locked XF86AudioRaiseVolume exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.0
+    bindsym --locked XF86AudioLowerVolume exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.0
+    bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+ | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
@@ -216,4 +217,4 @@ mode "nag" {
         Shift+Tab $nag --select next
     }
 }
-swaynag_command $nag -R
+    swaynag_command $nag -R

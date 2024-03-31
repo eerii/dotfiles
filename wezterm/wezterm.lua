@@ -9,6 +9,7 @@ config.color_scheme = "Ayu Dark (Gogh)"
 config.window_background_opacity = 0.9
 
 config.hide_tab_bar_if_only_one_tab = true
+config.warn_about_missing_glyphs = false
 
 local act = wezterm.action
 config.keys = {
