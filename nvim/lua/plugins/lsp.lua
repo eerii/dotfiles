@@ -94,17 +94,36 @@ return {
                         vim.cmd.RustLsp "joinLines"
                     end, opts "Rust join lines")
                 end,
-                default_settings = {
-                    ["rust-analyzer"] = {
-                        assist = { expressionFillDefault = "default" },
-                        check = {
-                            command = "clippy",
-                            extraArgs = { "--no-deps" },
+                settings = function(project_root)
+                    local default = {
+                        ["rust-analyzer"] = {
+                            assist = { expressionFillDefault = "default" },
+                            checkOnSave = {
+                                command = "clippy",
+                                extraArgs = { "--no-deps" },
+                            },
+                            diagnostics = {
+                                disabled = { "unresolved-proc-macro" },
+                                experimental = { enable = true },
+                            },
+                            procMacro = {
+                                enable = false,
+                                attributes = { enable = false },
+                            },
                         },
-                        diagnostics = { experimental = { enable = true } },
-                        procMacro = { enable = false },
-                    },
-                },
+                    }
+                    -- Check if project_root/rust-analyzer.lua exists
+                    local settings_file = project_root .. "/rust-analyzer.lua"
+                    if vim.fn.filereadable(settings_file) == 0 then
+                        return default
+                    end
+
+                    -- Extend the table with it
+                    package.path = package.path .. settings_file
+                    local settings = require "rust-analyzer"
+                    default["rust-analyzer"] = vim.tbl_deep_extend("force", default["rust-analyzer"], settings)
+                    return default
+                end,
             },
         },
         config = function(_, opts)

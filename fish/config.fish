@@ -8,7 +8,10 @@ end
 
 # Abbreviations
 abbr -a -- p 'paru'
-abbr -a -- pc 'paru -Qtdq | ifne paru -Rns - && paru -Qqd | ifne paru -Rsu -'
+abbr -a -- pc 'paru -Qtdq | ifne paru -Rns - && paru -Qqd | ifne paru -Rsu - && paru -Sccd'
+abbr -a -- pu 'paru -Syu && paru -Qeq | rg "\-git" | xargs paru -S --needed'
+abbr -a -- rc 'cargo sweep -r -t 30 /'
+abbr -a -- ru 'rustup update && cargo sweep -ri /'
 abbr -a -- rm 'rip'
 abbr -a -- RM '/bin/rm -rf'
 abbr -a -- ls 'eza'

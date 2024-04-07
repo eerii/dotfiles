@@ -2,7 +2,7 @@
 local M = {}
 
 M.ui = {
-    theme = "ayu_dark",
+    theme = "yoru",
     transparency = false,
 
     hl_override = {

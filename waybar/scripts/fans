@@ -1,0 +1,27 @@
+#!/bin/bash
+
+FAN_DEFAULT=6156
+FAN_REDUCED=4000
+CONFIG_FILE=/etc/mbpfan.conf
+
+IS_DEFAULT=false
+VALUE=$(grep -i "max_fan1_speed" $CONFIG_FILE | awk -F'=' '{print $2}' | tr -d ' ')
+if [ "$VALUE" -eq "$FAN_DEFAULT" ]; then
+    IS_DEFAULT=true
+fi
+
+if [ "$1" != "--get" ]; then
+    if $IS_DEFAULT; then
+        sudo /home/eri/.config/sway/bin/fans $FAN_REDUCED
+        IS_DEFAULT=false
+    else
+        sudo /home/eri/.config/sway/bin/fans
+        IS_DEFAULT=true
+    fi
+else
+    if $IS_DEFAULT; then
+        echo 󰈐
+    else
+        echo 󰠝
+    fi
+fi

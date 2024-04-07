@@ -13,7 +13,7 @@ include "$HOME/.config/sway/kanagawa"
 
 # Displays
 output eDP-1 resolution 2880x1800 position 0,0 scale 1.25
-output DP-1 resolution 3840x2160 position 1800,0 scale 1.5
+output DP-1 resolution 3840x2160 position 1800,0 scale 1.25
 
 # Seats
 seat * hide_cursor 3000
@@ -65,7 +65,7 @@ input * {
     exec autotiling-rs
 
     exec gtk-launch beeper
-    exec gtk-launch thunderbird
+    exec gtk-launch org.mozilla.Thunderbird
     exec easyeffects --gapplication-service &
 
     workspace 2

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+FAN1_DEFAULT=6156
+FAN2_DEFAULT=5700
+CONFIG_FILE=/etc/mbpfan.conf
+
+if [ -z "$1" ]; then
+    # No argument provided, reset to default speeds
+    sed -i "s/max_fan1_speed = .*/max_fan1_speed = $FAN1_DEFAULT/" $CONFIG_FILE
+    sed -i "s/max_fan2_speed = .*/max_fan2_speed = $FAN2_DEFAULT/" $CONFIG_FILE
+else
+    # Argument provided, set fan speed to this value
+    sed -i "s/max_fan1_speed = .*/max_fan1_speed = $1/" $CONFIG_FILE
+    sed -i "s/max_fan2_speed = .*/max_fan2_speed = $1/" $CONFIG_FILE
+fi
+
+systemctl restart mbpfan

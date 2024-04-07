@@ -11,6 +11,7 @@ return {
     -- codeium (completions disabled)
     {
         "exafunction/codeium.vim",
+        enabled = false,
         config = function()
             vim.g.codeium_disable_bindings = true
             vim.g.codeium_manual = true
@@ -18,8 +19,8 @@ return {
         end,
         keys = {
             { "<leader>cd", "<CMD>call codeium#Chat()<CR>", desc = "Chat Codeium" },
-            { "<C-q>",      mode = { "i", "s" } },
-        }
+            { "<C-q>", mode = { "i", "s" } },
+        },
     },
 
     -- copilot chat
@@ -59,27 +60,35 @@ return {
             },
         },
         keys = {
-            { "<leader>ca", ":CopilotChat ",                     mode = { "n", "v" },         desc = "Chat Copilot ask" },
-            { "<leader>cw", ":CopilotChat @buffers ",            mode = { "n", "v" },         desc = "Chat Copilot ask workspace" },
-            { "<leader>ce", "<CMD>CopilotChatExplain<CR>",       mode = { "n", "v" },         desc = "Chat Copilot explain" },
-            { "<leader>cf", "<CMD>CopilotChatFix<CR>",           mode = { "n", "v" },         desc = "Chat Copilot fix" },
-            { "<leader>cF", "<CMD>CopilotChatFixDiagnostic<CR>", mode = { "n", "v" },         desc = "Chat Copilot fix diagnostic" },
-            { "<leader>co", "<CMD>CopilotChatOptimize<CR>",      mode = { "n", "v" },         desc = "Chat Copilot optimize" },
-            { "<leader>cT", "<CMD>CopilotChatTests<CR>",         mode = { "n", "v" },         desc = "Chat Copilot tests" },
-            { "<leader>cD", "<CMD>CopilotChatDocs<CR>",          mode = { "n", "v" },         desc = "Chat Copilot docs" },
-            { "<leader>cC", "<CMD>CopilotChatCommit<CR>",        mode = { "n", "v" },         desc = "Chat Copilot commit" },
-            { "<leader>ct", "<CMD>CopilotChatToggle<CR>",        desc = "Chat Copilot toggle" },
+            {
+                "<leader>ca",
+                ":CopilotChat ",
+                mode = { "n", "v" },
+                desc = "Chat Copilot ask",
+            },
+            {
+                "<leader>cw",
+                ":CopilotChat @buffers ",
+                mode = { "n", "v" },
+                desc = "Chat Copilot ask workspace",
+            },
+            {
+                "<leader>cT",
+                "<CMD>CopilotChatTests<CR>",
+                mode = { "n", "v" },
+                desc = "Chat Copilot tests",
+            },
+            { "<leader>ct", "<CMD>CopilotChatToggle<CR>", desc = "Chat Copilot toggle" },
             {
                 "<leader>cb",
                 function()
-                    local input = vim.fn.input("Buffer Chat: ")
+                    local input = vim.fn.input "Buffer Chat: "
                     if input ~= "" then
                         require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
                     end
                 end,
-                desc = "Chat Copilot ask buffer"
+                desc = "Chat Copilot ask buffer",
             },
-        }
+        },
     },
-
 }

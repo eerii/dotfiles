@@ -18,6 +18,9 @@ export EDITOR=nvim
 # cache
 export CCACHE=sccache
 
+# java home
+export JAVA_HOME=/usr/lib/jvm/default-runtime
+
 # fish
 if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} ]]; then 
     shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=''

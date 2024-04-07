@@ -35,17 +35,18 @@ label.module {
 }
 
 #power-profiles-daemon,
-#custom-dunst {
+#custom-dunst,
+#pulseaudio {
   border-radius: 10px 0 0 10px;
   padding-right: 12px;
 }
-#custom-timer,
-#pulseaudio,
+#custom-fans,
 #network {
   border-radius: 0;
   padding: 0 12px 0 0;
 }
 #clock,
+#custom-timer,
 #battery {
   border-radius: 0 10px 10px 0;
   padding-left: 0;
@@ -55,10 +56,8 @@ label.module {
 #custom-arch,
 #workspaces,
 #custom-scratchpad,
-#custom-github {
-  margin-right: 8px;
-}
-
+#custom-github,
+#custom-timer,
 #tray {
   margin-right: 8px;
 }

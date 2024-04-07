@@ -2,7 +2,7 @@
     "layer": "top",
         "modules-left": ["power-profiles-daemon", "clock", "sway/workspaces", "custom/scratchpad", "custom/github", "systemd-failed-units"],
         "modules-center": [],
-        "modules-right": ["tray", "custom/dunst", "custom/timer", "pulseaudio", "network", "battery"],
+        "modules-right": ["tray", "custom/dunst", "custom/fans", "custom/timer", "pulseaudio", "network", "battery"],
         "clock": {
             "interval": 60,
             "format": "{:%H:%M}",
@@ -45,7 +45,7 @@
         "custom/github": {
             "format": " {}",
             "return-type": "json",
-            "interval": 180,
+            "interval": 300,
             "exec": "~/.config/waybar/scripts/github",
             "on-click": "xdg-open https://github.com/notifications"
         },
@@ -60,6 +60,11 @@
         "custom/dunst": {
             "exec": "~/.config/waybar/scripts/dunst",
             "on-click": "dunstctl set-paused toggle",
+            "restart-interval": 5,
+        },
+        "custom/fans": {
+            "exec": "~/.config/waybar/scripts/fans --get",
+            "on-click": "~/.config/waybar/scripts/fans",
             "restart-interval": 5,
         },
         "custom/timer": {
