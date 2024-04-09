@@ -12,8 +12,8 @@ include /etc/sway/config.d/*
 include "$HOME/.config/sway/kanagawa"
 
 # Displays
-output eDP-1 resolution 2880x1800 position 0,0 scale 1.25
-output DP-1 resolution 3840x2160 position 1800,0 scale 1.25
+output eDP-1 resolution 2880x1800 position 0,0 scale 1.5
+output DP-1 resolution 3840x2160 position 2304,0 scale 1.25
 
 # Seats
 seat * hide_cursor 3000
@@ -56,15 +56,14 @@ input * {
     exec wl-paste --type text --watch cliphist store
     exec wl-paste --type image --watch cliphist store
 
-    # exec swayidle -w \
-    #     timeout 300 'sh ~/.config/sway/bin/swaylock' \
-    #     timeout 330 'swaymsg "output * dpms off"' \
-    #     resume 'swaymsg "output * dpms on"'
+    exec swayidle -w \
+        timeout 300 'sh ~/.config/sway/bin/swaylock' \
+        timeout 330 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"'
 
-    exec_always ~/.config/sway/bin/clamshell
     exec autotiling-rs
 
-    exec gtk-launch beeper
+    exec gtk-launch org.gnome.Fractal
     exec gtk-launch org.mozilla.Thunderbird
     exec easyeffects --gapplication-service &
 
@@ -83,14 +82,14 @@ input * {
     for_window [app_id="foot-btm"] move scratchpad; scratchpad show; resize set 1500 900
     for_window [app_id="foot-nohyper"] move scratchpad; scratchpad show
     for_window [app_id="foot-break"] move scratchpad
-    for_window [app_id="Beeper"] move scratchpad
+    for_window [app_id="org.gnome.Fractal"] move scratchpad
 
     for_window [app_id="mpv"] fullscreen
     
     for_window [app_id="thunderbird" title="^((?!Mozilla Thunderbird).)*$"] floating enable
     for_window [app_id="thunderbird" title="Mozilla Thunderbird"] move workspace 1
+    for_window [app_id="com.github.finefindus.eyedropper"] floating enable
     for_window [title="Open *"] floating enable
-    for_window [title="Messi"] floating enable
 
     layer_effects "rofi" blur enable; shadows enable; corner_radius 10
 
@@ -100,8 +99,8 @@ input * {
     bindsym $mod+n exec neovide
     bindsym $mod+a exec nautilus -w
 
-    bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f -
-    bindsym $mod+Shift+y exec hyprpicker | wl-copy
+    bindsym $mod+Shift+s exec grim -g "$(slurp)" - | satty -f -
+    bindsym $mod+Shift+y exec gtk-launch com.github.finefindus.eyedropper
 
     bindsym $mod+space exec pkill rofi || rofi -show drun -show-icons | xargs swaymsg exec --
     bindsym $mod+v exec pkill rofi || cliphist list | rofi -dmenu | cliphist decode | wl-copy
@@ -149,6 +148,11 @@ input * {
     bindsym $mod+Shift+9 move container to workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10
 
+    bindsym $mod+Shift+Right move workspace to output right
+    bindsym $mod+Shift+Left move workspace to output left
+    bindsym $mod+Shift+Down move workspace to output down
+    bindsym $mod+Shift+Up move workspace to output up
+
     bindsym $mod+left exec ~/.config/sway/bin/swaywork prev
     bindsym $mod+right exec ~/.config/sway/bin/swaywork next
 
@@ -162,7 +166,7 @@ input * {
 
     bindsym $mod+Shift+minus move scratchpad
     bindsym $mod+minus scratchpad show
-    bindsym $mod+m [app_id="Beeper"] scratchpad show
+    bindsym $mod+m [app_id="org.gnome.Fractal"] scratchpad show
     bindsym $mod+Shift+b [app_id="foot-break"] scratchpad show
     bindsym $mod+Shift+n [app_id="foot-nohyper"] scratchpad show
     bindsym $mod+Shift+m [app_id="localsend_app"] scratchpad show

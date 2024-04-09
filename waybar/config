@@ -65,6 +65,7 @@
         "custom/fans": {
             "exec": "~/.config/waybar/scripts/fans --get",
             "on-click": "~/.config/waybar/scripts/fans",
+            "return-type": "json",
             "restart-interval": 5,
         },
         "custom/timer": {

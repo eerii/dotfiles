@@ -19,9 +19,12 @@ if [ "$1" != "--get" ]; then
         IS_DEFAULT=true
     fi
 else
+    FAN1=$(cat /sys/devices/platform/applesmc.768/fan1_output)
+    FAN2=$(cat /sys/devices/platform/applesmc.768/fan2_output)
+    TOOLTIP="$FAN1 $FAN2"
     if $IS_DEFAULT; then
-        echo 󰈐
+        echo '{"text":"󰈐", "tooltip": "'$TOOLTIP'"}'
     else
-        echo 󰠝
+        echo '{"text":"󰠝", "tooltip": "'$TOOLTIP'"}'
     fi
 fi

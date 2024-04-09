@@ -1,31 +1,38 @@
 # todo
 
-- [ ] move from fish to zsh for bash compatibility
+---
 
-## neovim
+## new laptop!
 
-- [ ] mini mode (no lsp, cmp, plugins...)
-- [x] redo cmp
+### installation
 
-## eww
+- [ ] btrfs with encryption
+- [ ] **zsh**
+- [ ] neovim
+
+### compositor
+
+- [ ] swayfx
+- [ ] gnome + apps
+- [ ] fonts
+- [ ] wezterm
+
+### apps
+
+- [ ] firefox
+- [ ] bubblewrap
+
+---
+
+## future customization
+
+- [ ] neovim mini mode (no lsp, cmp, plugins...)
+- [ ] remove nvchad global config and use as plugins
 
 - [ ] power off menu
 - [ ] fan control menu
-- [ ] top bar
-    - [ ] wifi selection
-    - [ ] audio manager
-        - [ ] volume
-        - [ ] output
-        - [ ] bluetooth
-    - [ ] "dynamic island"
-        - [ ] notifications
-        - [ ] timers
-        - [ ] music
-        - [ ] ...
-    - [ ] workspaces
-    - [ ] notifications
-    - [ ] notification center
-- [ ] replace wob with something
+- [ ] notification center
+- [ ] volume up/down indicator
 - [ ] color picker
 
 - [x] global rofi rice
@@ -33,33 +40,8 @@
     - [x] emojis
     - [ ] calculator
 
-## compositor
-
 - [ ] swayfx
     - [ ] fade in/out animations
-    - [ ] window move animations
-
-- [x] calendar notifications window rule
-
-- [x] maybe add a login screen
-    - [x] ly
-    - [x] fix unlock passwords
-- [ ] improve lock screen
-
+    - [ ] window/workspace move animations
 - [x] change cursor again
 - [x] revisit icon theme
-
-## zellij
-
-- [ ] ...
-
-## other
-
-- [x] email client
-- [x] work on messages client
-
-- [ ] create a custom colorscheme
-    - [ ] mix rose pine, catppuccin, kanawaga, ...
-    - [x] match colorscheme to backgrounds?
-    - [x] dynamic backgrounds
-    - [x] sunpaper in python

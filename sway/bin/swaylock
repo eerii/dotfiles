@@ -2,7 +2,7 @@
 
 swaylock -f \
     --grace 5 \
-    -i ~/Media/Pictures/Wallpapers/cliff.jpg \
+    -i ~/Media/Pictures/Wallpapers/logo.png \
     -s fill \
     --font-size 1 \
     --indicator-radius 24 \
