@@ -94,7 +94,7 @@
                 "headphone": "",
                 "default": ["󰕿", "󰖀", "󰕾"]
             },
-            "on-click": "pavucontrol",
+            "on-click": "easyeffects",
             "scroll-step": 1,
             "ignored-sinks": ["Easy Effects Sink"]
         },

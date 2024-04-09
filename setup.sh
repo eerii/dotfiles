@@ -90,7 +90,7 @@ link $dir/sway/environment /etc/environment --root
 
 # sway utils
 install -e autotiling-rs pipewire pipewire-pulse wireplumber \
-    brightnessctl grim slurp swappy udiskie cliphist hyprpicker
+    brightnessctl grim slurp satty udiskie cliphist hyprpicker
 
 # general utils
 install -e zoxide ripgrep rm-improved eza bat dust fd rsync
@@ -131,7 +131,7 @@ install -e zathura zathura-pdf-poppler celluloid imv localsend-bin easyeffects
 install -e firefox firefox-ublock-origin thunderbird
 
 # themes
-install colloid-icon-theme-git swww adwaita-qt4 adwaita-qt5-git adwaita-qt6-git
+install colloid-icon-theme-git swww adwaita-qt5-git adwaita-qt6-git
 
 # pandoc
 install -e tectonic pandoc-bin

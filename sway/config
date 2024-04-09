@@ -49,6 +49,7 @@ input * {
 
 # Exec
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+    exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
     exec waybar &
     exec swww init
@@ -89,6 +90,7 @@ input * {
     for_window [app_id="thunderbird" title="^((?!Mozilla Thunderbird).)*$"] floating enable
     for_window [app_id="thunderbird" title="Mozilla Thunderbird"] move workspace 1
     for_window [app_id="com.github.finefindus.eyedropper"] floating enable
+    for_window [app_id="org.gnome.NautilusPreviewer"] floating enable
     for_window [title="Open *"] floating enable
 
     layer_effects "rofi" blur enable; shadows enable; corner_radius 10

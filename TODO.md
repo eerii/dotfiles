@@ -9,6 +9,10 @@
 - [ ] btrfs with encryption
 - [ ] **zsh**
 - [ ] neovim
+- [ ] maybe use metapackages
+    - [ ] audio dependencies
+    - [ ] cli rust replacements
+    - [ ] ...
 
 ### compositor
 
