@@ -8,8 +8,11 @@ end
 
 # Abbreviations
 abbr -a -- p 'paru'
-abbr -a -- pc 'paru -Qtdq | ifne paru -Rns - && paru -Qqd | ifne paru -Rsu - && paru -Sccd'
-abbr -a -- pu 'paru -Syu && paru -Qeq | rg "\-git" | xargs paru -S --needed'
+abbr -a -- pd 'paru --asdeps -S' # install only temporary
+abbr -a -- pdc 'pd && /usr/bin/fish && pc' # make function that takes arguments
+abbr -a -- pc 'paru -Qtdq | ifne paru -Rns - && paru -Qqd | ifne paru -Rsu -'
+abbr -a -- pcc 'pc && paru -Sccd'
+abbr -a -- pu 'paru -Syu'
 abbr -a -- rc 'cargo sweep -r -t 30 /'
 abbr -a -- ru 'rustup update && cargo sweep -ri /'
 abbr -a -- rm 'rip'
