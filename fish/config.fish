@@ -7,9 +7,14 @@ if status is-login
 end
 
 # Abbreviations
+abbr -a --set-cursor -- b "b '%'"
+abbr -a -- ba 'bash'
 abbr -a -- p 'paru'
-abbr -a -- pc 'paru -Qtdq | ifne paru -Rns - && paru -Qqd | ifne paru -Rsu - && paru -Sccd'
-abbr -a -- pu 'paru -Syu && paru -Qeq | rg "\-git" | xargs paru -S --needed'
+abbr -a -- pd 'paru --asdeps -S' # install only temporary
+abbr -a -- pdc 'pd && /usr/bin/fish && pc' # make function that takes arguments
+abbr -a -- pc 'paru -Qtdq | ifne paru -Rns - && paru -Qqd | ifne paru -Rsu -'
+abbr -a -- pcc 'pc && paru -Sccd'
+abbr -a -- pu 'paru -Syu'
 abbr -a -- rc 'cargo sweep -r -t 30 /'
 abbr -a -- ru 'rustup update && cargo sweep -ri /'
 abbr -a -- rm 'rip'
@@ -50,6 +55,12 @@ end
 
 function fish_user_key_bindings
     bind \ca launch_zellij
+end
+
+function b
+    set -l cmd (string join " " $argv)
+    set cmd (string replace --all '\;' ';' $cmd)
+    bash -c "$cmd"
 end
 
 # lf

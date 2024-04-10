@@ -76,6 +76,8 @@ local servers = {
     },
 
     bashls = {},
+
+    nil_ls = {},
 }
 
 -- register command to start disabled servers

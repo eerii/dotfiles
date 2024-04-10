@@ -25,6 +25,7 @@ local opts = {
         zsh = { "beautish" },
         sh = { "beautish" },
         toml = { "taplo" },
+        nix = { "nixfmt" },
     },
 
     format_on_save = function(bufnr)
