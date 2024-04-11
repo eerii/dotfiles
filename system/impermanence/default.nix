@@ -2,7 +2,7 @@
   imports = [
     inputs.impermanence.nixosModules.impermanence
     inputs.disko.nixosModules.default
-    (import ./disko.nix { device = "/dev/sda"; })
+    ./disko.nix
   ];
 
   # Ephemeral root partition
@@ -46,7 +46,6 @@
   environment.persistence."/persist/system" = {
     hideMounts = true;
     directories = [
-      "/etc/nixos"
       "/var/log"
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
@@ -59,5 +58,25 @@
       }
     ];
     files = [ "/etc/machine-id" ];
+  };
+  environment.persistence."/persist/home" = {
+    hideMounts = true;
+    users.eri = {
+      directories = [
+        "Documentos"
+        "Imágenes"
+        "Videos"
+        "Code"
+        {
+          directory = ".gnupg";
+          mode = "0700";
+        }
+        {
+          directory = ".ssh";
+          mode = "0700";
+        }
+      ];
+      files = [ ];
+    };
   };
 }
