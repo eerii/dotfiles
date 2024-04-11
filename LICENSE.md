@@ -1,7 +1,7 @@
 The MIT License (MIT)
 =====================
 
-Copyright © `2023` `josekoalas`
+Copyright © `2024` `eri`
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
