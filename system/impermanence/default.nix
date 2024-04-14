@@ -64,6 +64,7 @@
     users.eri = {
       directories = [
         "Documentos"
+        # NOTE: Downloads gets deleted
         "Imágenes"
         "Videos"
         "Code"
@@ -75,8 +76,9 @@
           directory = ".ssh";
           mode = "0700";
         }
+        ".local/share/zoxide"
       ];
-      files = [ ];
+      files = [ ".local/share/fish/fish_history" ];
     };
   };
 }
