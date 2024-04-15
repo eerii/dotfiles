@@ -10,15 +10,17 @@
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs extra sys; };
       modules = [
+        # Package overlays
+        {
+          nixpkgs.overlays = [ inputs.nur.overlay ];
+        }
         # Use home manager to manage the user packages
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.${username} = {
-              imports = [ ../home/${username} ../home/base ];
-            };
+            users.${username} = { imports = [ ../home ]; };
             extraSpecialArgs = { inherit inputs extra sys; };
           };
         }

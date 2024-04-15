@@ -12,11 +12,11 @@ check-untracked:
 
 # Deploy the new configuration
 switch: check-untracked
-    nixos-rebuild switch --flake . --use-remote-sudo
+    sudo nixos-rebuild switch --flake .
 
 # Debug the new configuration
 debug: check-untracked
-    nixos-rebuild test --flake . --use-remote-sudo --show-trace --verbose
+    sudo nixos-rebuild test --flake . --show-trace --verbose
     printf "\033[1;34mThe config was tested but not deployed\nRun \`just switch\` to make it permanent\033[0m\n"
 
 # Check that the flake is correct

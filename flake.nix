@@ -5,17 +5,30 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # System
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    impermanence.url = "github:nix-community/impermanence";
+
+    # Home
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence.url = "github:nix-community/impermanence";
+    swayfx = {
+      url = "github:/WillPower3309/swayfx";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # User repo
+
+    nur.url = "github:nix-community/NUR";
   };
 
   # Outputs returns an attribute set with the system configuration

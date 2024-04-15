@@ -11,5 +11,5 @@ with builtins; {
       (dir == "directory") # Include directories
       || ((path != "default.nix") # Ignore default.nix
         && (strings.hasSuffix ".nix" path) # Include .nix files
-      )) (readDir path)));
+      )) (readDir path))); 
 }

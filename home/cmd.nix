@@ -1,18 +1,22 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
-    # Archives
     zip
+    unzip
 
-    # Rust POSIX
     bat # cat
+    bottom # ps
     eza # ls
+    fd # find
     ripgrep # grep
+    rm-improved # rm
     zoxide # cd
 
-    # TODO: Enable in 2-3 days Nix
-    # nix-inspect
+    aria2 # downloads
+
+    nix-inspect # see nix derivations
   ];
 
+  # Jump between directories
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;

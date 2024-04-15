@@ -4,6 +4,7 @@ in {
   # XDG configuration
   xdg = {
     enable = true;
+
     userDirs = {
       enable = true;
       documents = "${home}/Documentos";
@@ -16,5 +17,7 @@ in {
       templates = null;
       extraConfig = { XDG_CODE_DIR = "${home}/Code"; };
     };
+
+    # TODO: Xdg portal
   };
 }
