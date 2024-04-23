@@ -1,4 +1,5 @@
-{ lib, inputs, ... }: {
+{ inputs, sys, ... }:
+{
   imports = [
     inputs.impermanence.nixosModules.impermanence
     inputs.disko.nixosModules.default
@@ -8,31 +9,54 @@
   # Ephemeral root partition
   # This script runs every boot and deletes the root btrfs subvolume
   # A backup is saved in old_roots, that gets cleaned every 2 weeks
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    mkdir -p /mnt
-    mount -o subvol=/ /dev/disk/by-partlabel/rootfs /mnt
+  boot.initrd = {
+    enable = true;
+    supportedFilesystems = [ "btrfs" ];
 
-    if [[ -e /mnt/root ]]; then
-        mkdir -p /mnt/old_roots
-        timestamp=$(date --date="@$(stat -c %Y /mnt/root)" "+%Y-%m-%-d_%H:%M:%S")
-        mv /mnt/root "/mnt/old_roots/$timestamp"
-    fi
+    systemd = {
+      enable = true;
+      services.restore-root = {
+        description = "Rollback btrfs rootfs";
+        wantedBy = [ "initrd.target" ];
+        requires = [ "dev-mapper-nixos.device" ];
+        after = [ "dev-mapper-nixos.device" "systemd-cryptsetup@${sys.hostname}.service" ];
+        before = [ "sysroot.mount" ];
+        unitConfig.DefaultDependencies = "no";
+        serviceConfig.Type = "oneshot";
+        script = ''
+          echo "rolling back ephemeral root file system"
+          mkdir -p /mnt
+          mount -o subvol=/ /dev/mapper/nixos /mnt
 
-    delete_subvolume_recursively() {
-        IFS=$'\n'
-        for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-            delete_subvolume_recursively "/mnt/$i"
-        done
-        btrfs subvolume delete "$1"
-    }
+          if [[ -e /mnt/root ]]; then
+              mkdir -p /mnt/old_roots
+              timestamp=$(date --date="@$(stat -c %Y /mnt/root)" "+%Y-%m-%-d_%H:%M:%S")
+              echo "backing up root to old_roots/$timestamp"
+              mv /mnt/root "/mnt/old_roots/$timestamp"
+          fi
 
-    for i in $(find /mnt/old_roots/ -maxdepth 1 -mtime +14); do
-        delete_subvolume_recursively "$i"
-    done
+          delete_subvolume_recursively() {
+              echo "deleting $1 subvolume"
+              IFS=$'\n'
+              for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                  delete_subvolume_recursively "/mnt/$i"
+              done
+              btrfs subvolume delete "$1"
+          }
 
-    btrfs subvolume create /mnt/root
-    umount /mnt
-  '';
+          for i in $(find /mnt/old_roots/ -maxdepth 1 -mtime +14); do
+              delete_subvolume_recursively "$i"
+          done
+
+          echo "creating new clean root"
+          btrfs subvolume create /mnt/root
+
+          echo "done!"
+          umount /mnt
+        '';
+      };
+    };
+  };
 
   # The persist subvolume is needed for the system to boot as impermanence
   # uses it to save the relevant directories and restore them
@@ -61,7 +85,7 @@
   };
   environment.persistence."/persist/home" = {
     hideMounts = true;
-    users.eri = {
+    users.${sys.username} = {
       directories = [
         "Documentos"
         # NOTE: Downloads gets deleted

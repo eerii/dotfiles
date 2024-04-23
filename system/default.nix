@@ -4,7 +4,7 @@ with lib; {
 
   # System packages
   # The main packages are handled per user, but these are absolutely needed for the system
-  environment.systemPackages = with pkgs; [ vim git just ];
+  environment.systemPackages = with pkgs; [ vim git just pass ];
 
   # Time zone
   time.timeZone = sys.timezone or "Europe/Madrid";
@@ -23,5 +23,5 @@ with lib; {
   users.users.${sys.username}.extraGroups = [ "video" ];
 
   # Dconf
-  programs.dconf.enable = true; 
+  programs.dconf.enable = true;
 }

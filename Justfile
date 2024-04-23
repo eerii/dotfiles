@@ -14,6 +14,9 @@ check-untracked:
 switch: check-untracked
     sudo nixos-rebuild switch --flake .
 
+boot: check-untracked
+    sudo nixos-rebuild boot --flake .
+
 # Debug the new configuration
 debug: check-untracked
     sudo nixos-rebuild test --flake . --show-trace --verbose

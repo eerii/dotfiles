@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, sys, ... }:
 with lib; {
   options = { firefox.enable = mkEnableOption "enable firefox"; };
 
@@ -6,7 +6,7 @@ with lib; {
     programs.firefox = {
       enable = true;
       #policies = {};
-      profiles.eri = {
+      profiles.${sys.username} = {
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           adnauseam
           sponsorblock

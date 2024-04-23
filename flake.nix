@@ -14,6 +14,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     # Home
 
     home-manager = {
@@ -43,9 +45,18 @@
       # The system modules are located in hosts/name
       # The home configuration is per user
       nixosConfigurations = {
-        nixos = sys.mkSystem {
+        # My main laptop
+        nyx = sys.mkSystem {
           username = "eri";
-          hostname = "nixos";
+          hostname = "nyx";
+          device = "/dev/nvme0n1";
+          extraModules =
+            [ inputs.nixos-hardware.nixosModules.framework-16-7040-amd ];
+        };
+        # For using with virtual machines
+        vm = sys.mkSystem {
+          username = "vm";
+          hostname = "vm";
           device = "/dev/sda";
         };
       };

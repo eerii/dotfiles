@@ -8,6 +8,4 @@
   };
 
   hardware.pulseaudio.enable = false;
-
-  # TODO: Easyeffects
 }

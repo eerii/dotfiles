@@ -5,6 +5,7 @@ with lib; {
 
   # Modules enabled by default
   neovim.enable = mkDefault true;
+  pass.enable = mkDefault true;
 
   # Home manager configuration
   home.stateVersion = "24.05";

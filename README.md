@@ -26,3 +26,9 @@ this branch tracks the migration to **nix** 🌙
 ## install 🌳
 
 work in progress
+
+- disko
+    - run `nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./system/impermanence/disko.nix --arg sys '{ device = "/dev/DEVICE_NAME"; }'`
+- users
+    - create user passwords (at least for root and your user) with `mkpasswd > /persist/passwd/USER`
+- install nixos

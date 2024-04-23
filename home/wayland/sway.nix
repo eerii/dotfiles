@@ -7,7 +7,7 @@ with builtins; {
 
       # TODO: Swayfx, a fork of sway with eye candy
       # The flake is used to get the latest development version
-      package = inputs.swayfx.packages.${pkgs.system}.default;
+      # package = inputs.swayfx.packages.${pkgs.system}.default;
 
       config = let
         mod = "Mod4";
@@ -24,7 +24,7 @@ with builtins; {
         # Global settings
 
         modifier = mod;
-        terminal = "wezterm";
+        terminal = "foot";
         menu = "rofi -dmenu";
 
         left = "h";
