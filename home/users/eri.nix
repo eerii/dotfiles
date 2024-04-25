@@ -6,5 +6,7 @@
 
   gnome-apps.enable = true;
   firefox.enable = true;
+  thunderbird.enable = true;
+  matrix.enable = true;
   movies.enable = true;
 }

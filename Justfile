@@ -14,6 +14,7 @@ check-untracked:
 switch: check-untracked
     sudo nixos-rebuild switch --flake .
 
+# Deploy the new configuration (but don't activate it until the next reboot)
 boot: check-untracked
     sudo nixos-rebuild boot --flake .
 
@@ -47,3 +48,21 @@ repl:
 # Use nix-inspect to view the contents of a flake
 inspect:
     nix-inspect -p $PWD
+
+# Install nixos on a new system
+# This will first run disko to create partitions, you need to specify the device where it will be installed
+# Then, it will create passwords for the two main users
+# Finally, it will install nixos
+# Please monitor the progress since the commands will ask for things
+install host disk:
+    printf "\npartitioning the disk...\n\n"
+    sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/disko.nix --arg sys '{ device = "{{disk}}"; }'
+    sudo mkdir /mnt/persist/passwd
+    printf "\ncreating root password...\n\n"
+    sudo sh -c "mkpasswd > /mnt/persist/passwd/root"
+    printf "\ncreating eri password...\n\n"
+    sudo sh -c "mkpasswd > /mnt/persist/passwd/eri"
+    printf "\ninstalling the system...\n\n"
+    sudo cp -r $PWD /mnt/persist/dotfiles
+    sudo nixos-install --root /mnt --flake /mnt/persist/dotfiles#{{host}}
+    printf "\ndone c:\n\n"

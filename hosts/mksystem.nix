@@ -1,4 +1,5 @@
-{ inputs, extra, ... }: {
+{ inputs, extra, lib, ... }:
+with lib; {
   # System settings
   #   - username: The name of the main user
   #   - hostname: The hostname of the configuration
@@ -6,6 +7,9 @@
   #   - extraModules: Extra configuration to pass to to the config
   #   - timezone: Local timezone of the system
   #   - locale: Default language of the system
+  #   - impermanence: Whether to enable impermanence
+  #   - swap: Swap size
+  #   - home-manager: Whether to enable home manager
   mkSystem = { username, hostname, device, extraModules ? [ ], ... }@sys:
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs extra sys; };
@@ -14,6 +18,11 @@
         {
           nixpkgs.overlays = [ inputs.nur.overlay ];
         }
+        # Per host configuration
+        ./${hostname}
+        # Default system modules
+        ../system
+      ] ++ (optionals sys.home-manager or true [
         # Use home manager to manage the user packages
         inputs.home-manager.nixosModules.home-manager
         {
@@ -24,10 +33,6 @@
             extraSpecialArgs = { inherit inputs extra sys; };
           };
         }
-        # Per host configuration
-        ./${hostname}
-        # Default system modules
-        ../system
-      ] ++ extraModules;
+      ]) ++ extraModules;
     };
 }

@@ -34,30 +34,39 @@ in {
           # Any content saved on persist will also be fine
           luks = {
             size = "100%";
-            label = "rootfs";
             content = {
               type = "luks";
               name = "nixos";
-              extraOpenArgs = [ "--allow-discards" ];
+              settings.allowDiscards = true;
               askPassword = true;
               content = {
                 type = "btrfs";
-                extraArgs = [ "-f" ];
+                extraArgs = [ "-f" "-L root" ];
+                postCreateHook = ''
+                  mnt=$(mktemp -d)
+                  mount "/dev/mapper/nixos" "$mnt" -o subvolid=0
+                  btrfs subvolume snapshot -r $mnt/@root $mnt/@blank
+                  umount "$mnt"
+                '';
                 subvolumes = {
-                  "/root" = { mountpoint = "/"; };
+                  "@root" = {
+                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountpoint = "/";
+                  };
 
-                  "/persist" = {
-                    mountOptions = [ "subvol=persist" "noatime" ];
+                  "@persist" = {
+                    mountOptions = [ "compress=zstd" "noatime" ];
                     mountpoint = "/persist";
                   };
 
-                  "/nix" = {
-                    mountOptions = [ "subvol=nix" "noatime" ];
+                  "@nix" = {
+                    mountOptions = [ "compress=zstd" "noatime" ];
                     mountpoint = "/nix";
                   };
 
-                  "/swap" = {
-                    mountOptions = [ "subvol=swap" "noatime" ];
+                  "@swap" = {
+                    mountOptions = [ "noatime" ];
+                    swap.swapfile.size = sys.swap or "4G";
                     mountpoint = "/swap";
                   };
                 };

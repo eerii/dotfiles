@@ -9,6 +9,7 @@ with lib; {
         enable = true;
         wayland = true;
       };
+      desktopManager.xterm.enable = false;
     };
   };
 }

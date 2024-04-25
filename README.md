@@ -25,10 +25,32 @@ this branch tracks the migration to **nix** 🌙
 
 ## install 🌳
 
-work in progress
+1. clone the repository
 
-- disko
-    - run `nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./system/impermanence/disko.nix --arg sys '{ device = "/dev/DEVICE_NAME"; }'`
-- users
-    - create user passwords (at least for root and your user) with `mkpasswd > /persist/passwd/USER`
-- install nixos
+```
+git clone https://github.com/eerii/dotfiles.git
+cd dotfiles
+```
+
+2. choose a host from the `host/` folder, or create a new one
+
+```
+ls host/
+# nyx vm ...
+HOST=nyx
+```
+
+3. find the disk you want to install to (**it will be deleted!**)
+
+```
+lsblk
+# /dev/sda ...
+DISK=/dev/sda
+```
+
+4. run the installation script
+
+```
+nix-shell -p just
+just install $HOST $DISK
+```

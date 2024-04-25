@@ -1,4 +1,4 @@
-{ sys, config, ...}:
+{ sys, config, ... }:
 let home = config.home.homeDirectory;
 in {
   # User specific configuration

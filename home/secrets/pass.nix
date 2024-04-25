@@ -1,5 +1,6 @@
-{ pkgs, lib, config, ... }: with lib; let 
-  dir = config.home.homeDirectory + "/.password-store";
+{ pkgs, lib, config, ... }:
+with lib;
+let dir = config.home.homeDirectory + "/.password-store";
 in {
   options = { pass.enable = mkEnableOption "enable password store"; };
 

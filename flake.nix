@@ -38,7 +38,7 @@
     let
       inherit (inputs.nixpkgs) lib;
       extra = import ./lib { inherit lib; };
-      sys = import ./hosts/mksystem.nix { inherit inputs extra; };
+      sys = import ./hosts/mksystem.nix { inherit inputs extra lib; };
     in {
       # Host configurations
       # Add each host here and a configuration will be created
@@ -50,14 +50,15 @@
           username = "eri";
           hostname = "nyx";
           device = "/dev/nvme0n1";
+          swap = "32G";
           extraModules =
             [ inputs.nixos-hardware.nixosModules.framework-16-7040-amd ];
         };
-        # For using with virtual machines
         vm = sys.mkSystem {
-          username = "vm";
+          username = "eri";
           hostname = "vm";
-          device = "/dev/sda";
+          device = "/dev/sda3";
+          swap = "1G";
         };
       };
     };

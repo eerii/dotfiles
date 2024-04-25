@@ -5,7 +5,6 @@
   # Enable modules
   gdm.enable = true;
   gnome.enable = true;
-  sway.enable = true;
 
   # Graphics
   hardware.opengl = {

@@ -1,6 +1,6 @@
 { lib, config, ... }:
 with lib; {
-  options = { neovim.enable = mkEnableOption "enable neovim"; }; 
+  options = { neovim.enable = mkEnableOption "enable neovim"; };
 
   config = mkIf config.neovim.enable {
     programs.neovim = {

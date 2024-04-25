@@ -39,7 +39,7 @@ with lib; {
         gs = "git status";
         ga = "git add";
         gc = {
-          expansion = "git commit -m \"%\"";
+          expansion = ''git commit -m "%"'';
           setCursor = true;
         };
         "gc!" = "git commit --amend";
