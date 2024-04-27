@@ -1,6 +1,8 @@
 { sys, ... }:
-let device = sys.device;
-in {
+let
+  device = sys.device;
+in
+{
   # Disko can partition the drive for us automatically
   # Run the following command to format the disk:
   # nix run github:nix-community/disko -- --mode disko PATH_TO_THIS_FILE --arg device '"/dev/DEVICE_NAME"'
@@ -41,7 +43,11 @@ in {
               askPassword = true;
               content = {
                 type = "btrfs";
-                extraArgs = [ "-f" "-L root" ];
+                extraArgs = [
+                  "-f"
+                  "-L root"
+                ];
+                # This hook creates a blank snapshot of the root volume that we can restore on each boot
                 postCreateHook = ''
                   mnt=$(mktemp -d)
                   mount "/dev/mapper/nixos" "$mnt" -o subvolid=0
@@ -50,17 +56,26 @@ in {
                 '';
                 subvolumes = {
                   "@root" = {
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                     mountpoint = "/";
                   };
 
                   "@persist" = {
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                     mountpoint = "/persist";
                   };
 
                   "@nix" = {
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                     mountpoint = "/nix";
                   };
 

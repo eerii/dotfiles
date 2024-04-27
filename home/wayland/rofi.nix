@@ -1,5 +1,11 @@
-{ lib, config, pkgs, ... }:
-with lib; {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+with lib;
+{
   config = mkIf config.wayland.enable {
     programs.rofi = {
       enable = true;

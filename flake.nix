@@ -28,6 +28,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # User repo
 
     nur.url = "github:nix-community/NUR";
@@ -59,6 +64,7 @@
           hostname = "vm";
           device = "/dev/sda3";
           swap = "1G";
+          home-manager = false;
         };
       };
     };

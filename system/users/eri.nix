@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   # NOTE: Passwords must be coppied manually in a hashed file to the persist directory
   #       They can be generated using mkpasswd
   # TODO: Encrypt with age on the persist folder

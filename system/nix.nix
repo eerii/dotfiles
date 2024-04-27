@@ -4,7 +4,10 @@
   # Also enables garbage cleaning and optimization
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       auto-optimise-store = true;
       warn-dirty = false;
     };

@@ -1,4 +1,5 @@
-{ sys, ... }: {
+{ sys, ... }:
+{
   # Hostname
   networking.hostName = sys.hostname;
 

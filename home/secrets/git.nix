@@ -1,11 +1,18 @@
 {
+  # Enable git configuration
   programs.git = {
     enable = true;
+    lfs.enable = true;
     userName = "eri";
     userEmail = "eri@inventati.org";
+    extraConfig = {
+      push = {
+        autoSetupRemote = true;
+      };
+    };
   };
 
-  # keep specific repos in sync
-  # configure them with git-sync.repositories.*
+  # Keep specific repos in sync
+  # Configure them with git-sync.repositories.*
   services.git-sync.enable = true;
 }

@@ -1,5 +1,11 @@
-{ inputs, extra, lib, ... }:
-with lib; {
+{
+  inputs,
+  extra,
+  lib,
+  ...
+}:
+with lib;
+{
   # System settings
   #   - username: The name of the main user
   #   - hostname: The hostname of the configuration
@@ -10,29 +16,48 @@ with lib; {
   #   - impermanence: Whether to enable impermanence
   #   - swap: Swap size
   #   - home-manager: Whether to enable home manager
-  mkSystem = { username, hostname, device, extraModules ? [ ], ... }@sys:
+  mkSystem =
+    {
+      username,
+      hostname,
+      device,
+      extraModules ? [ ],
+      ...
+    }@sys:
     inputs.nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs extra sys; };
-      modules = [
-        # Package overlays
-        {
-          nixpkgs.overlays = [ inputs.nur.overlay ];
-        }
-        # Per host configuration
-        ./${hostname}
-        # Default system modules
-        ../system
-      ] ++ (optionals sys.home-manager or true [
-        # Use home manager to manage the user packages
-        inputs.home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.${username} = { imports = [ ../home ]; };
-            extraSpecialArgs = { inherit inputs extra sys; };
-          };
-        }
-      ]) ++ extraModules;
+      specialArgs = {
+        inherit inputs extra sys;
+      };
+      modules =
+        [
+          # Package overlays
+          {
+            nixpkgs.overlays = [
+              inputs.nur.overlay
+              inputs.neovim-nightly-overlay.overlay
+            ];
+          }
+          # Per host configuration
+          ./${hostname}
+          # Default system modules
+          ../system
+        ]
+        ++ (optionals sys.home-manager or true [
+          # Use home manager to manage the user packages
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.${username} = {
+                imports = [ ../home ];
+              };
+              extraSpecialArgs = {
+                inherit inputs extra sys;
+              };
+            };
+          }
+        ])
+        ++ extraModules;
     };
 }

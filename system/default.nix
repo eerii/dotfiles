@@ -1,10 +1,22 @@
-{ extra, sys, lib, pkgs, ... }:
-with lib; {
+{
+  extra,
+  sys,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+{
   imports = extra.importFiles ./.;
 
   # System packages
-  # The main packages are handled per user, but these are absolutely needed for the system
-  environment.systemPackages = with pkgs; [ vim git just foot ];
+  # The main packages are handled per user, but these are pretty much needed for the system
+  environment.systemPackages = with pkgs; [
+    vim
+    git
+    just
+    foot
+  ];
 
   # Time zone
   time.timeZone = sys.timezone or "Europe/Madrid";

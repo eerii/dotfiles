@@ -1,12 +1,9 @@
 {
   # Enable submodules
-  wayland.enable = true;
-  fish.enable = true;
-  foot.enable = true;
-
-  gnome-apps.enable = true;
   firefox.enable = true;
-  thunderbird.enable = true;
+  gnome-apps.enable = true;
   matrix.enable = true;
+  microsoft-fonts.enable = true;
   movies.enable = true;
+  thunderbird.enable = true;
 }

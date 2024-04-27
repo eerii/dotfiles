@@ -64,5 +64,17 @@ install host disk:
     sudo sh -c "mkpasswd > /mnt/persist/passwd/eri"
     printf "\ninstalling the system...\n\n"
     sudo cp -r $PWD /mnt/persist/dotfiles
+    # sudo chown -R eri /mnt/persist/dotfiles
     sudo nixos-install --root /mnt --flake /mnt/persist/dotfiles#{{host}}
     printf "\ndone c:\n\n"
+
+# Bootstrap the system with secrets after the installation
+# You need to provide folders with ssh and gpg keys
+postinstall gpg ssh:
+    printf "\ncopying ssh keys\n\n"
+    mkdir -p ~/.ssh
+    cp {{ssh}}/* ~/.ssh
+    printf "\nadding public gpg keys\n\n"
+    gpg --import {{gpg}}/pub.asc
+    printf "\nadding private gpg keys\n\n"
+    gpg --batch --import {{gpg}}/sec.asc

@@ -1,6 +1,15 @@
-{ lib, config, pkgs, ... }:
-with lib; {
-  options = { fish.enable = mkEnableOption "enable fish"; };
+{
+  lib,
+  config,
+  pkgs,
+  sys,
+  ...
+}:
+with lib;
+{
+  options = {
+    fish.enable = mkEnableOption "enable fish";
+  };
 
   config = mkIf config.fish.enable {
     programs.fish = {
@@ -53,13 +62,22 @@ with lib; {
 
         # Cli utils
         rm = "rip";
-        "rm!" = "/bin/rm -rf";
+        "rm!" = "command rm -rf";
         ls = "eza";
         grep = "rg";
         cat = "bat";
+        tree = "eza -T";
+        find = "fd";
+        n = "nvim";
+
+        # Nix
+        ns = "nix-shell -p";
 
         # Other
         todo = ''rg TODO -NI --trim | sed "s/.*TODO:/- [ ]/"'';
+        sys = "systemctl --user";
+        ssys = "sudo systemctl";
+        jr = "sudo journalctl --boot";
       };
       functions = {
         # Prompt
@@ -89,5 +107,8 @@ with lib; {
         };
       };
     };
+
+    # Impermanence
+    home.persistence."/persist/home/${sys.username}".files = [ ".local/share/fish/fish_history" ];
   };
 }

@@ -1,5 +1,15 @@
-{ lib, config, pkgs, ... }:
-with lib; {
+{
+  lib,
+  config,
+  pkgs,
+  sys,
+  ...
+}:
+with lib;
+let
+  scale = if sys.hostname == "vm" then "1" else "2";
+in
+{
   options = {
     gnome.enable = mkEnableOption "enable gnome";
     sway = {
@@ -19,12 +29,11 @@ with lib; {
     (mkIf config.gnome.enable {
       services = {
         # Gnome is used as a fallback window manager. It's not required, but it's useful to have
-        # It has to be enabled with nix itself, but the gtk and dconf settings are handled by home-manager
         xserver.desktopManager.gnome = {
           enable = true;
           extraGSettingsOverrides = ''
             [org.gnome.desktop.input-sources]
-            sources = [('xkb', 'us'), ('xkb', 'es')]
+            sources = [('xkb', 'us+altgr-intl'), ('xkb', 'es')]
             xkb-options = ['ctrl:nocaps']
 
             [org.gnome.desktop.wm.keybindings]
@@ -40,7 +49,7 @@ with lib; {
             tap-to-click = true
 
             [org.gnome.desktop.interface]
-            scaling-factor = 2
+            scaling-factor = ${scale}
 
             [org.gnome.shell]
             favorite-apps = ['firefox.desktop', 'org.gnome.Nautilus.desktop']
@@ -65,7 +74,7 @@ with lib; {
       # We use swayfx over sway to get the display manager configuration
       programs.sway = {
         enable = true;
-        # package = pkgs.swayfx;
+        package = pkgs.swayfx;
       };
     })
   ];

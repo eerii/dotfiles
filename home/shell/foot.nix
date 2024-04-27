@@ -1,19 +1,27 @@
 { lib, config, ... }:
-with lib; {
-  options = { foot.enable = mkEnableOption "enable foot"; };
+with lib;
+{
+  options = {
+    foot.enable = mkEnableOption "enable foot";
+  };
 
   config = mkIf config.foot.enable {
+    # Foot terminal (simple and fast wayland term)
     programs.foot = {
       enable = true;
       settings = {
         main = {
-          # TODO: font = "Jetbrains Mono:size=12, Symbols Nerd Font Mono:size=10";
-          # TODO: include = "/usr/share/foot/themes/ayu-mirage";
+          font = "Jetbrains Mono:size=12, Symbols Nerd Font Mono:size=10";
           line-height = "18px";
           pad = "12x8 center";
+          # TODO: include = "/usr/share/foot/themes/ayu-mirage";
         };
-        colors = { background = "0B0E14"; };
-        scrollback = { lines = "10000"; };
+        colors = {
+          background = "0B0E14";
+        };
+        scrollback = {
+          lines = "10000";
+        };
         key-bindings = {
           clipboard-copy = "Control+c XF86Copy";
           clipboard-paste = "Control+v XF86Paste";

@@ -1,6 +1,14 @@
-{ pkgs, lib, config, ... }:
-with lib; {
-  options = { gnome-apps.enable = mkEnableOption "enable gnome apps"; };
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+with lib;
+{
+  options = {
+    gnome-apps.enable = mkEnableOption "enable gnome apps";
+  };
 
   config = mkIf config.gnome-apps.enable {
     home.packages = with pkgs; [

@@ -8,6 +8,17 @@
 
 this branch tracks the migration to **nix** 🌙
 
+## todo 📝
+
+- [ ] impermanenece
+    - [ ] home directories
+    - [ ] backups
+- [ ] firefox config
+- [ ] neovim config
+    - [ ] clone dotfiles
+    - [ ] install lsp and formatters
+- [ ] development shells
+
 ## showcase ✨
 
 ![overview](https://github.com/josekoalas/dotfiles/assets/22449369/8437121c-4138-414f-860d-43dc9ab10a85)

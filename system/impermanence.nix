@@ -1,9 +1,33 @@
-{ inputs, sys, ... }: {
+{ inputs, sys, ... }:
+{
   imports = [
     inputs.impermanence.nixosModules.impermanence
     inputs.disko.nixosModules.default
     ../hosts/disko.nix
   ];
+
+  # This specifies which directories should be kept between reboots
+  # NOTE: Anything that is not here will be wiped!
+  environment.persistence."/persist" = {
+    hideMounts = true;
+    directories = [
+      "/var/log"
+      "/var/lib/nixos"
+      "/var/lib/systemd/coredump"
+      "/var/lib/bluetooth"
+      {
+        directory = "/var/lib/colord";
+        user = "colord";
+        group = "colord";
+        mode = "0750";
+      }
+      "/etc/NetworkManager/system-connections"
+    ];
+    files = [
+      "/etc/machine-id"
+      "/var/db/sudo/lectured"
+    ];
+  };
 
   # Ephemeral root partition
   # This script runs every boot and deletes the root btrfs subvolume
@@ -56,25 +80,6 @@
 
   # This is needed for hiding mounts from other users
   programs.fuse.userAllowOther = true;
-
-  # This specifies which directories should be kept between reboots
-  # NOTE: Anything that is not here will be wiped!
-  environment.persistence."/persist" = {
-    hideMounts = true;
-    directories = [
-      "/var/log"
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      "/etc/NetworkManager/system-connections"
-      {
-        directory = "/var/lib/colord";
-        user = "colord";
-        group = "colord";
-        mode = "u=rwx,g=rx,o=";
-      }
-    ];
-    files = [ "/etc/machine-id" ];
-  };
 
   # Create the persist home with propper permissions
   system.activationScripts.persistent-dirs.text = ''

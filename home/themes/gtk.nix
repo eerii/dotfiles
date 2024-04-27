@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   # GTK
   gtk = {
     enable = true;
@@ -12,7 +13,7 @@
     cursorTheme = {
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Ice";
-      size = 24;
+      size = 20;
     };
 
     iconTheme = {
@@ -22,7 +23,7 @@
 
     theme = {
       package = pkgs.gnome.gnome-themes-extra;
-      name = "Adwaita-dark";
+      name = "Adwaita";
     };
 
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
@@ -32,12 +33,7 @@
   qt = {
     enable = true;
     platformTheme.name = "gtk";
-    style.name = "adwaita-dark";
+    style.name = "adwaita";
     style.package = pkgs.adwaita-qt;
-  };
-
-  # Dconf
-  dconf.settings = {
-    "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
   };
 }

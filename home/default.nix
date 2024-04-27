@@ -1,11 +1,12 @@
-{ lib, extra, ... }:
-with lib; {
+{
+  extra,
+  inputs,
+  sys,
+  ...
+}:
+{
   # Submodules
-  imports = extra.importFiles ./.;
-
-  # Modules enabled by default
-  neovim.enable = mkDefault true;
-  pass.enable = mkDefault true;
+  imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ] ++ extra.importFiles ./.;
 
   # Home manager configuration
   home.stateVersion = "24.05";

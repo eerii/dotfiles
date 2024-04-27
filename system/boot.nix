@@ -1,11 +1,15 @@
 { pkgs, lib, ... }:
-with lib; {
+with lib;
+{
   boot = {
     # Latest kernel
     kernelPackages = pkgs.linuxPackages_latest;
 
     # Kernel params
-    kernelParams = [ "quiet" "splash" ];
+    kernelParams = [
+      "quiet"
+      "splash"
+    ];
 
     # UEFI bootloader
     loader = {
@@ -14,9 +18,13 @@ with lib; {
       timeout = 0;
     };
 
-    plymouth = { enable = true; };
+    # Plymouth (graphical boot)
+    # TODO: Add a plymouth theme
+    plymouth = {
+      enable = true;
+    };
 
-    # TODO: Secure boot
-    # TODO: Single password prompt https://discourse.nixos.org/t/encrypted-root-with-single-password-prompt/17054/8
+    # Maybe add secure boot
+    # Single password prompt https://discourse.nixos.org/t/encrypted-root-with-single-password-prompt/17054/8
   };
 }
