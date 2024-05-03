@@ -6,7 +6,8 @@
   # Enable modules
   gdm.enable = true;
   gnome.enable = true;
-  sway.enable = true;
+  # TODO: sway.enable = true;
+  steam.enable = true;
 
   # Graphics
   hardware.opengl = {
@@ -15,6 +16,4 @@
     driSupport32Bit = true;
   };
   services.xserver.videoDrivers = [ "amdgpu" ];
-
-  config.steam.enable = true;
 }

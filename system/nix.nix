@@ -3,6 +3,7 @@
   # Activates the flake and nix experimental features
   # Also enables garbage cleaning and optimization
   nix = {
+    # Enable flakes and optimisations
     settings = {
       experimental-features = [
         "nix-command"
@@ -11,11 +12,19 @@
       auto-optimise-store = true;
       warn-dirty = false;
     };
+
+    # Restrict the nix daemon to the sudoers
+    # This can prevent atackers from doing shady things with the package manager
+    settings.allowed-users = [ "@wheel" ];
+
+    # Garbage clean each week to keep the system light
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 1w";
     };
+
+    # Use Aux, a community fork of Nix
     registry.nixpkgs = {
       from = {
         id = "nixpkgs";

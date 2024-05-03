@@ -1,4 +1,9 @@
-{ lib, osConfig, ... }:
+{
+  lib,
+  sys,
+  osConfig,
+  ...
+}:
 with lib;
 {
   config = mkIf osConfig.steam.enable {

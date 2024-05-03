@@ -1,8 +1,13 @@
 { sys, ... }:
 {
-  # Hostname
-  networking.hostName = sys.hostname;
+  networking = {
+    # Hostname
+    hostName = sys.hostname;
 
-  # Network manager
-  networking.networkmanager.enable = true;
+    # Network manager
+    networkmanager.enable = true;
+
+    # Firewall
+    firewall.enable = true;
+  };
 }

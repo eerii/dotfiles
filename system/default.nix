@@ -18,6 +18,9 @@ with lib;
     foot
   ];
 
+  # Disable the default packages
+  environment.defaultPackages = lib.mkForce [ ];
+
   # Time zone
   time.timeZone = sys.timezone or "Europe/Madrid";
 
