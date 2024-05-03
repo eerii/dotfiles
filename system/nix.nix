@@ -16,6 +16,17 @@
       dates = "weekly";
       options = "--delete-older-than 1w";
     };
+    registry.nixpkgs = {
+      from = {
+        id = "nixpkgs";
+        type = "indirect";
+      };
+      to = {
+        owner = "auxolotl";
+        repo = "nixpkgs";
+        type = "github";
+      };
+    };
   };
 
   # Don't change this

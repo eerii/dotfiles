@@ -3,7 +3,9 @@
 
   # Inputs defines the dependencies of this flake
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Nix Community Fork, https://aux.computer
+
+    nixpkgs.url = "github:auxolotl/nixpkgs/nixos-unstable";
 
     # System
 
@@ -58,13 +60,6 @@
           swap = "32G";
           extraModules =
             [ inputs.nixos-hardware.nixosModules.framework-16-7040-amd ];
-        };
-        vm = sys.mkSystem {
-          username = "eri";
-          hostname = "vm";
-          device = "/dev/sda3";
-          swap = "1G";
-          home-manager = false;
         };
       };
     };

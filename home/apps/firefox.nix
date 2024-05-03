@@ -252,20 +252,20 @@ in
             "eBay".metaData.hidden = true;
             "Google".metaData.alias = "@g";
           };
-
-          userChrome = ''
-            /* Sidebery: hide top tabs when sidebar is open */
-            #main-window #titlebar {
-              overflow: hidden;
-              transition: height 0.3s 0.3s !important;
-            }
-            #main-window #titlebar { height: 3em !important; }
-            #main-window[uidensity="touch"] #titlebar { height: 3.35em !important; }
-            #main-window[uidensity="compact"] #titlebar { height: 2.7em !important; }
-            #main-window[titlepreface*="​"] #titlebar { height: 0 !important; }
-            #main-window[titlepreface*="​"] #tabbrowser-tabs { z-index: 0 !important; }
-          '';
         };
+
+        userChrome = ''
+          /* Sidebery: hide top tabs when sidebar is open */
+          #main-window #titlebar {
+            overflow: hidden;
+            transition: height 0.3s 0.3s !important;
+          }
+          #main-window #titlebar { height: 3em !important; }
+          #main-window[uidensity="touch"] #titlebar { height: 3.35em !important; }
+          #main-window[uidensity="compact"] #titlebar { height: 2.7em !important; }
+          #main-window[titlepreface*="​"] #titlebar { height: 0 !important; }
+          #main-window[titlepreface*="​"] #tabbrowser-tabs { z-index: 0 !important; }
+        '';
       };
     };
 
