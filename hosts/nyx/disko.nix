@@ -1,8 +1,14 @@
-{ sys, ... }:
+{ inputs, sys, ... }:
 let
   device = sys.device;
+  options = [
+    "compress=zstd"
+    "noatime"
+  ];
 in
 {
+  imports = [ inputs.disko.nixosModules.default ];
+
   # Disko can partition the drive for us automatically
   # Run the following command to format the disk:
   # nix run github:nix-community/disko -- --mode disko PATH_TO_THIS_FILE --arg device '"/dev/DEVICE_NAME"'
@@ -56,26 +62,17 @@ in
                 '';
                 subvolumes = {
                   "@root" = {
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                    ];
+                    mountOptions = options;
                     mountpoint = "/";
                   };
 
                   "@persist" = {
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                    ];
+                    mountOptions = options;
                     mountpoint = "/persist";
                   };
 
                   "@nix" = {
-                    mountOptions = [
-                      "compress=zstd"
-                      "noatime"
-                    ];
+                    mountOptions = options;
                     mountpoint = "/nix";
                   };
 

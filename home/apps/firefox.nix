@@ -270,8 +270,6 @@ in
     };
 
     # Impermanence
-    home.persistence."/persist/home/${sys.username}".directories = [
-      ".mozilla/firefox/${sys.username}"
-    ];
+    persistence.dirs = [ ".mozilla/firefox/${sys.username}" ];
   };
 }

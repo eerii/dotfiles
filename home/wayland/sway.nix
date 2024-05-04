@@ -8,6 +8,28 @@
 }:
 with lib;
 with builtins;
+let
+  swayfxConfig =
+    if osConfig.sway.swayfx then
+      ''
+        # Swayfx
+
+        corner_radius 10
+
+        blur enable
+        blur_passes 5
+        blur_radius 3
+
+        shadows enable
+        shadows_on_csd enable
+        shadow_blur_radius 3
+        shadow_color #bc83e35F
+
+        scratchpad_minimize enable
+      ''
+    else
+      "";
+in
 {
   config = mkIf config.wayland.enable (
     mkIf osConfig.sway.enable {
@@ -15,7 +37,7 @@ with builtins;
         enable = true;
 
         # Swayfx, a fork of sway with eye candy
-        package = inputs.swayfx.packages.${pkgs.system}.default;
+        package = mkIf osConfig.sway.swayfx inputs.swayfx.packages.${pkgs.system}.default;
 
         config =
           let
@@ -188,25 +210,12 @@ with builtins;
 
         # Extra configuration
         extraConfig = ''
-          # Swayfx
-
-          corner_radius 10
-
-          blur enable
-          blur_passes 5
-          blur_radius 3
-
-          shadows enable
-          shadows_on_csd enable
-          shadow_blur_radius 3
-          shadow_color #bc83e35F
-
-          scratchpad_minimize enable
-
           # Gestures
 
           bindgesture swipe:right workspace prev_on_output
           bindgesture swipe:left workspace next_on_output
+
+          ${swayfxConfig}
         '';
 
         # Environment

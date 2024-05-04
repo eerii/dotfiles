@@ -1,19 +1,19 @@
 { pkgs, config, ... }:
 {
   # This is the computer specific hardware configuration
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./disko.nix
+  ];
 
   # Enable modules
   gdm.enable = true;
   gnome.enable = true;
-  # TODO: sway.enable = true;
+  impermanence.enable = true;
+  sway.enable = true;
+  sway.swayfx = false; # TODO: Swayfx
   steam.enable = true;
 
-  # Graphics
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  # Drivers
   services.xserver.videoDrivers = [ "amdgpu" ];
 }

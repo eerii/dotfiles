@@ -43,13 +43,10 @@ in
   };
 
   # Impermanence
-  home.persistence."/persist/home/${sys.username}" = {
-    allowOther = true;
-    directories = [
-      "Documentos"
-      "Imagenes"
-      "Videos"
-      "Code"
-    ];
-  };
+  persistence.dirs = [
+    "Documentos"
+    "Imagenes"
+    "Videos"
+    "Code"
+  ];
 }

@@ -32,5 +32,5 @@
   };
 
   # Impermanence
-  home.persistence."/persist/home/${sys.username}".directories = [ ".local/share/zoxide" ];
+  persistence.dirs = [ ".local/share/zoxide" ];
 }

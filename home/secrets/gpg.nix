@@ -8,7 +8,7 @@
   };
 
   # Impermanence
-  home.persistence."/persist/home/${sys.username}".directories = [
+  persistence.dirs = [
     ".gnupg"
     ".ssh"
     ".local/share/keyrings"

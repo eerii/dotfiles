@@ -15,7 +15,7 @@ with lib;
   #   - locale: Default language of the system
   #   - impermanence: Whether to enable impermanence
   #   - swap: Swap size
-  #   - home-manager: Whether to enable home manager
+  #   - homeManager: Whether to enable home manager
   mkSystem =
     {
       username,
@@ -42,7 +42,7 @@ with lib;
           # Default system modules
           ../system
         ]
-        ++ (optionals sys.home-manager or true [
+        ++ (optionals sys.homeManager or true [
           # Use home manager to manage the user packages
           inputs.home-manager.nixosModules.home-manager
           {

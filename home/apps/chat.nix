@@ -15,6 +15,6 @@ with lib;
     home.packages = with pkgs; [ fractal ];
 
     # Impermanence
-    home.persistence."/persist/home/${sys.username}".directories = [ ".local/share/fractal" ];
+    persistence.dirs = [ ".local/share/fractal" ];
   };
 }

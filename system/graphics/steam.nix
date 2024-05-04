@@ -2,9 +2,7 @@
 with lib;
 with builtins;
 {
-  options = {
-    steam.enable = mkEnableOption "enable steam";
-  };
+  options.steam.enable = mkEnableOption "enable steam";
 
   # Steam should be enabled on the system level since it needs to change the environment
   config = mkIf config.steam.enable {

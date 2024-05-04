@@ -8,7 +8,7 @@ with lib;
 {
   config = mkIf osConfig.steam.enable {
     # Impermanence
-    home.persistence."/persist/home/${sys.username}".directories = [
+    persistence.dirs = [
       ".local/share/Steam"
       ".steam"
     ];

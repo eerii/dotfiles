@@ -1,9 +1,7 @@
 { lib, config, ... }:
 with lib;
 {
-  options = {
-    gdm.enable = mkEnableOption "enable gdm";
-  };
+  options.gdm.enable = mkEnableOption "enable gdm";
 
   # Enable gdm as the login manager
   config = mkIf config.gdm.enable {

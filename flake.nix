@@ -4,11 +4,9 @@
   # Inputs defines the dependencies of this flake
   inputs = {
     # Nix Community Fork, https://aux.computer
-
     nixpkgs.url = "github:auxolotl/nixpkgs/nixos-unstable";
 
     # System
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,7 +17,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # Home
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,17 +33,18 @@
     };
 
     # User repo
-
     nur.url = "github:nix-community/NUR";
   };
 
   # Outputs returns an attribute set with the system configuration
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       inherit (inputs.nixpkgs) lib;
       extra = import ./lib { inherit lib; };
       sys = import ./hosts/mksystem.nix { inherit inputs extra lib; };
-    in {
+    in
+    {
       # Host configurations
       # Add each host here and a configuration will be created
       # The system modules are located in hosts/name
@@ -58,8 +56,7 @@
           hostname = "nyx";
           device = "/dev/nvme0n1";
           swap = "32G";
-          extraModules =
-            [ inputs.nixos-hardware.nixosModules.framework-16-7040-amd ];
+          extraModules = [ inputs.nixos-hardware.nixosModules.framework-16-7040-amd ];
         };
       };
     };

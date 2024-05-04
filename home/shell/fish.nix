@@ -109,6 +109,6 @@ with lib;
     };
 
     # Impermanence
-    home.persistence."/persist/home/${sys.username}".files = [ ".local/share/fish/fish_history" ];
+    persistence.files = [ ".local/share/fish/fish_history" ];
   };
 }
