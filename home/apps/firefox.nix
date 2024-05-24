@@ -25,14 +25,23 @@ in
       profiles.${sys.username} = {
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           adnauseam
-          sponsorblock
-          return-youtube-dislikes
+          browserpass
           duckduckgo-privacy-essentials
+          return-youtube-dislikes
           refined-github
+          sponsorblock
         ];
 
         # Settings based on Betterfox
         settings = {
+          # Custom
+          ## Restore session
+          "browser.startup.couldRestoreSession.count" = 1;
+          "browser.laterrun.bookkeeping.sessionCount" = 1;
+          ## Other
+          "browser.toolbars.bookmarks.visibility" = "never";
+          "identity.fxaccounts.toolbar.enabled" = false;
+
           # Fastfox
           ## General
           "content.notify.interval" = "100000";
@@ -267,6 +276,12 @@ in
           #main-window[titlepreface*="​"] #tabbrowser-tabs { z-index: 0 !important; }
         '';
       };
+    };
+
+    # Browserpass host binary
+    programs.browserpass = mkIf config.pass.enable {
+      enable = true;
+      browsers = [ "firefox" ];
     };
 
     # Impermanence

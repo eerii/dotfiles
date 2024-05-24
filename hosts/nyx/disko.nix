@@ -1,4 +1,4 @@
-{ inputs, sys, ... }:
+{ sys, ... }:
 let
   device = sys.device;
   options = [
@@ -7,8 +7,6 @@ let
   ];
 in
 {
-  imports = [ inputs.disko.nixosModules.default ];
-
   # Disko can partition the drive for us automatically
   # Run the following command to format the disk:
   # nix run github:nix-community/disko -- --mode disko PATH_TO_THIS_FILE --arg device '"/dev/DEVICE_NAME"'

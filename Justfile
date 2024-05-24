@@ -56,7 +56,7 @@ inspect:
 # Please monitor the progress since the commands will ask for things
 install host disk:
     printf "\npartitioning the disk...\n\n"
-    sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/disko.nix --arg sys '{ device = "{{disk}}"; }'
+    sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/{{host}}/disko.nix --arg sys '{ device = "{{disk}}"; }'
     sudo mkdir /mnt/persist/passwd
     printf "\ncreating root password...\n\n"
     sudo sh -c "mkpasswd > /mnt/persist/passwd/root"

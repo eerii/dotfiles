@@ -1,9 +1,10 @@
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 {
   # This is the computer specific hardware configuration
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
+    inputs.disko.nixosModules.default
   ];
 
   # Enable modules
