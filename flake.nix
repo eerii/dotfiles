@@ -4,7 +4,7 @@
   # Inputs defines the dependencies of this flake
   inputs = {
     # Nix Community Fork, https://aux.computer
-    nixpkgs.url = "github:auxolotl/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # System
     disko = {

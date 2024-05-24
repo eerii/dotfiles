@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   config,
   pkgs,
   ...
@@ -7,6 +8,7 @@
 with lib;
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
+  neovim-nightly = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
 in
 {
   options = {
@@ -18,7 +20,7 @@ in
     programs.neovim = {
       enable = true;
       defaultEditor = true;
-      package = pkgs.neovim-nightly;
+      package = neovim-nightly;
       # Do I need to add treesitter here or does it already work?
       # plugins = with pkgs.vimPlugins; [ ];
     };

@@ -6,9 +6,7 @@
 }:
 with lib;
 {
-  options = {
-    thunderbird.enable = mkEnableOption "enable thunderbird";
-  };
+  options.thunderbird.enable = mkEnableOption "enable thunderbird";
 
   config = mkIf config.thunderbird.enable {
     # Email client

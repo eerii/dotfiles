@@ -34,7 +34,6 @@ with lib;
           {
             nixpkgs.overlays = [
               inputs.nur.overlay
-              inputs.neovim-nightly-overlay.overlay
             ];
           }
           # Per host configuration
