@@ -18,6 +18,7 @@ with lib;
       environment.persistence."/persist" = {
         hideMounts = true;
         directories = [
+          "/var/db/sudo"
           "/var/log"
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
@@ -30,10 +31,7 @@ with lib;
           }
           "/etc/NetworkManager/system-connections"
         ];
-        files = [
-          "/etc/machine-id"
-          "/var/db/sudo/lectured"
-        ];
+        files = [ "/etc/machine-id" ];
       };
 
       # Ephemeral root partition

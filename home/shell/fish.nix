@@ -109,6 +109,6 @@ with lib;
     };
 
     # Impermanence
-    persistence.files = [ ".local/share/fish/fish_history" ];
+    persistence.dirs = [ ".local/share/fish" ];
   };
 }

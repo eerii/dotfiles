@@ -25,6 +25,7 @@ with lib;
       dialect # translation
       eyedropper # color picker
       fragments # torrent
+      resources # system resources
     ];
   };
 }

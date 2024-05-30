@@ -1,27 +1,6 @@
-require "nvchad.mappings"
+require("nvchad.mappings")
 
 local map = vim.keymap.set
-local unmap = vim.keymap.del
-
--- unmap some of nvchad keymaps
-
-unmap("n", "<leader>lf")
-unmap("n", "<leader>th")
-unmap("n", "<leader>fw")
-unmap("n", "<leader>fb")
-unmap("n", "<leader>fh")
-unmap("n", "<leader>fo")
-unmap("n", "<leader>fz")
-unmap("n", "<leader>ff")
-unmap("n", "<leader>fa")
-unmap("n", "<leader>cm")
-unmap("n", "<leader>cc")
-unmap("n", "<leader>pt")
-unmap("n", "<leader>q")
-unmap("n", "<leader>h")
-unmap("n", "<leader>v")
-unmap("n", "<C-c>")
-unmap("n", "<C-s>")
 
 -- general
 
@@ -52,7 +31,7 @@ map({ "n", "v" }, "ga", vim.lsp.buf.code_action, { desc = "LSP code action" })
 -- movement
 
 require("smart-splits").setup()
-local ss = require "smart-splits"
+local ss = require("smart-splits")
 map("n", "<C-h>", ss.move_cursor_left, { desc = "Move cursor left" })
 map("n", "<C-j>", ss.move_cursor_down, { desc = "Move cursor down" })
 map("n", "<C-k>", ss.move_cursor_up, { desc = "Move cursor up" })
@@ -70,11 +49,11 @@ map("n", "<C-S-l>", ss.resize_right, { desc = "Resize right" })
 -- neovide
 
 if vim.g.neovide then
-    -- ctrl c and ctrl v copy paste
-    map("x", "<C-c>", "<C-v>y", { desc = "Copy to clipboard" })
-    map("n", "<C-v>", "k+p", { desc = "Paste from clipboard" })
-    map("i", "<C-v>", "<C-r>+", { desc = "Paste from clipboard" })
+	-- ctrl c and ctrl v copy paste
+	map("x", "<C-c>", "<C-v>y", { desc = "Copy to clipboard" })
+	map("n", "<C-v>", "k+p", { desc = "Paste from clipboard" })
+	map("i", "<C-v>", "<C-r>+", { desc = "Paste from clipboard" })
 
-    -- on the terminal, map super+c to ctrl+c
-    map("t", "<D-c>", "<C-c>", { desc = "Stop process" })
+	-- on the terminal, map super+c to ctrl+c
+	map("t", "<D-c>", "<C-c>", { desc = "Stop process" })
 end

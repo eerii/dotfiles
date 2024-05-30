@@ -1,16 +1,12 @@
+{ extra, ... }:
 {
-  lib,
-  sys,
-  osConfig,
-  ...
-}:
-with lib;
-{
-  config = mkIf osConfig.steam.enable {
-    # Impermanence
-    persistence.dirs = [
-      ".local/share/Steam"
-      ".steam"
-    ];
-  };
+  imports = extra.importFiles ./.;
+
+  persistence.dirs = [
+    {
+      directory = ".local/share/Steam";
+      method = "symlink";
+    }
+    # ".steam"
+  ];
 }

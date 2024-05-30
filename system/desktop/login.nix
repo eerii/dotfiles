@@ -15,6 +15,4 @@ with lib;
       desktopManager.xterm.enable = false;
     };
   };
-
-  # TODO: Gdm window scaling
 }

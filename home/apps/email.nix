@@ -11,7 +11,6 @@ with lib;
   config = mkIf config.thunderbird.enable {
     # Email client
     # TODO: Add email accounts
-    # TODO: Persistence
     # TODO: Calendars
     programs.thunderbird = {
       enable = true;
@@ -19,5 +18,7 @@ with lib;
         isDefault = true;
       };
     };
+
+    persistence.dirs = [ ".thunderbird/${sys.username}" ];
   };
 }

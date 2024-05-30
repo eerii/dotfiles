@@ -11,10 +11,9 @@ with lib;
       enable = true;
       settings = {
         main = {
-          font = "Jetbrains Mono:size=12, Symbols Nerd Font Mono:size=10";
-          line-height = "18px";
-          pad = "12x8 center";
-          # TODO: include = "/usr/share/foot/themes/ayu-mirage";
+          font = "Jetbrains Mono:size=11, Symbols Nerd Font Mono:size=10";
+          line-height = "16px";
+          pad = "6x6 center";
         };
         colors = {
           background = "0B0E14";

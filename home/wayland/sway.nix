@@ -26,6 +26,8 @@ let
         shadow_color #bc83e35F
 
         scratchpad_minimize enable
+
+	output * adaptive_sync on
       ''
     else
       "";
@@ -112,11 +114,12 @@ in
             # workspaceOutputAssign = [];
 
             # Graphics
-            colors = {
-              # TODO: Colors
-            };
+            colors = {};
 
-            window.border = 0;
+            window = {
+              titlebar = false;
+              border = 0;
+            };
             floating.border = 0;
 
             gaps.inner = 8;
@@ -124,10 +127,14 @@ in
             # Input
             input = {
               "*" = {
-                xkb_layout = "es";
+                xkb_layout = "us,es";
+                xkb_variant = "altgr-intl";
                 xkb_options = "ctrl:nocaps";
                 repeat_delay = "220";
                 repeat_rate = "40";
+                tap = "enabled";
+                drag = "enabled";
+                natural_scroll = "enabled";
               };
             };
             seat = {
@@ -218,8 +225,10 @@ in
           ${swayfxConfig}
         '';
 
-        # Environment
+        # Temporary fix for swayfx 0.4 / sway 1.9
+        checkConfig = false;
 
+        # Environment
         extraSessionCommands = ''
           export SDL_VIDEODRIVER=wayland
           export QT_QPA_PLATFORM=wayland

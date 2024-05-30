@@ -19,6 +19,7 @@
     ripgrep # grep
     rm-improved # rm
     zoxide # cd
+    # TODO: du/dust/ncu
 
     aria2 # downloads
 
