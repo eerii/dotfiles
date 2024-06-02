@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  sys,
   ...
 }:
 with lib;
@@ -37,6 +36,9 @@ with lib;
         }
       ];
       interactiveShellInit = ''
+        # Use nix shell with fish by default
+        nix-your-shell fish | source
+
         # Disable greeting
         set fish_greeting
 
@@ -71,7 +73,7 @@ with lib;
         n = "nvim";
 
         # Nix
-        ns = "nix-shell -p";
+        ns = "nix shell nixpkgs#";
 
         # Other
         todo = ''rg TODO -NI --trim | sed "s/.*TODO:/- [ ]/"'';
@@ -87,7 +89,9 @@ with lib;
           end
 
           if test -n "$IN_NIX_SHELL"
-              echo -n (set_color blue)"  "
+              echo -n (set_color blue)" "
+          else if echo "$PATH" | grep -qc '/nix/store'
+              echo -n (set_color blue)" "
           end
 
           echo -n (set_color brmagenta)(path basename -- $PWD)
@@ -110,5 +114,8 @@ with lib;
 
     # Impermanence
     persistence.dirs = [ ".local/share/fish" ];
+
+    # Use in nix shell
+    home.packages = with pkgs; [ nix-your-shell ];
   };
 }

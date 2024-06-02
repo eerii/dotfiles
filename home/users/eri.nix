@@ -2,6 +2,7 @@
   # Enable submodules
   blender.enable = true;
   bottles.enable = true;
+  cartridges.enable = true;
   firefox.enable = true;
   gnome-apps.enable = true;
   matrix.enable = true;
