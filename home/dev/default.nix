@@ -1,9 +1,14 @@
-{ pkgs, extra, ... }: {
+{ pkgs, extra, ... }:
+{
   imports = extra.importFiles ./.;
 
   home.packages = with pkgs; [
     # Declarative development environments
     devenv
+
+    # Make and GCC for system-wide tool support
+    gnumake
+    gcc
 
     # Python
     # This is a system-wide python that is only meant for convenience and running scripts

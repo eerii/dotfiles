@@ -12,6 +12,7 @@ with lib;
 
   config = mkIf config.movies.enable {
     home.packages = with pkgs; [ stremio ];
-    # TODO: Add persistence
+
+    persistence.dirs = [ ".local/share/Smart Code ltd/Stremio" ];
   };
 }

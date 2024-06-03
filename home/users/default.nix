@@ -47,6 +47,9 @@ in
     "Documentos"
     "Imagenes"
     "Videos"
-    "Code"
+    {
+      directory = "Code";
+      method = "symlink"; # Works more reliably for building code
+    }
   ];
 }

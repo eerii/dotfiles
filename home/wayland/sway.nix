@@ -27,40 +27,61 @@ let
 
         scratchpad_minimize enable
 
-	output * adaptive_sync on
+        output * adaptive_sync on
       ''
     else
       "";
+
+  swayWorkspaces = pkgs.writeShellScriptBin "swayWorkspaces" ''
+    ACTIVE_WS=$(swaymsg -t get_workspaces | ${pkgs.jq}/bin/jq --raw-output 'map(select(.focused == true)) | .[0].name' | awk '{print $1}')
+    MAX_WS=$(swaymsg -t get_workspaces | ${pkgs.jq}/bin/jq --raw-output 'map(select(.representation)) | max_by (.num) | .num' | awk '{print $1}')
+
+    if [ "$1" = "window" ]; then
+    	CMD="swaymsg move window to workspace"
+    	shift
+    else
+    	CMD="swaymsg workspace number"
+    fi
+
+    if [ "$1" = "next" ]; then
+    	test $ACTIVE_WS -gt $MAX_WS && exit 1
+    	$CMD $((ACTIVE_WS + 1))
+    elif [ "$1" = "prev" ]; then
+    	test $ACTIVE_WS -eq 0 && exit 1
+    	$CMD $((ACTIVE_WS - 1))
+    fi
+  '';
 in
 {
   config = mkIf config.wayland.enable (
     mkIf osConfig.sway.enable {
-      wayland.windowManager.sway = {
-        enable = true;
+      wayland.windowManager.sway =
+        let
+          mod = "Mod4";
+          workspaces = lists.range 0 9;
+          jumpToWorkspace = listToAttrs (
+            map (v: {
+              name = "${mod}+${toString v}";
+              value = "workspace number ${toString v}";
+            }) workspaces
+          );
+          moveToWorkspace = listToAttrs (
+            map (v: {
+              name = "${mod}+Shift+${toString v}";
+              value = "move container to workspace number ${toString v}";
+            }) workspaces
+          );
+        in
+        {
+          enable = true;
 
-        # Swayfx, a fork of sway with eye candy
-        package = mkIf osConfig.sway.swayfx inputs.swayfx.packages.${pkgs.system}.default;
+          # Swayfx, a fork of sway with eye candy
+          package = mkIf osConfig.sway.swayfx inputs.swayfx.packages.${pkgs.system}.default;
 
-        config =
-          let
-            mod = "Mod4";
-            workspaces = lists.range 1 9;
-            jumpToWorkspace = listToAttrs (
-              map (v: {
-                name = "${mod}+${toString v}";
-                value = "workspace number ${toString v}";
-              }) workspaces
-            );
-            moveToWorkspace = listToAttrs (
-              map (v: {
-                name = "${mod}+Shift+${toString v}";
-                value = "move container to workspace number ${toString v}";
-              }) workspaces
-            );
-          in
-          rec {
+          config = rec {
             # Global settings
             modifier = mod;
+            floating.modifier = mod;
             terminal = "foot";
             menu = "rofi -dmenu";
 
@@ -92,19 +113,21 @@ in
 
             # Logic
             assigns = {
-              "0: email" = [ { app_id = "thunderbird"; } ];
-              "1: web" = [ { app_id = "firefox-main"; } ];
+              "0" = [ { app_id = "thunderbird"; } ];
+              "1" = [ { app_id = "firefox-main"; } ];
             };
 
             startup = [
-              # { command = "waybar"; }
-              # { command = "swww init"; }
-              # { command = "gtk-launch ..."; }
+              { command = "waybar"; }
+              { command = "swww-daemon"; }
+              { command = "dunst"; }
               { command = "autotiling-rs"; }
               { command = "wl-paste --type text --watch cliphist store"; }
               { command = "wl-paste --type image --watch cliphist store"; }
               { command = "firefox --name=firefox-main"; }
               { command = "thunderbird"; }
+              { command = "gtk-launch org.gnome.Fractal"; }
+              { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
             ];
 
             bars = [ ]; # Disable swaybar
@@ -114,11 +137,19 @@ in
             # workspaceOutputAssign = [];
 
             # Graphics
-            colors = {};
+            colors = { };
 
             window = {
               titlebar = false;
               border = 0;
+              commands = [
+                {
+                  command = "move scratchpad";
+                  criteria = {
+                    app_id = "org.gnome.Fractal";
+                  };
+                }
+              ];
             };
             floating.border = 0;
 
@@ -170,7 +201,7 @@ in
                 "${mod}+q" = "kill";
                 "${mod}+Shift+c" = "reload";
                 "${mod}+Shift+q" = ''
-                  exec swaynagmode -t "warning" -m "Exit Sway?" -b "Exit" "swaymsg exit" -b "Reload" "swaymsg reload"
+                  exec swaynag -t "warning" -m "Exit Sway?" -b "Exit" "swaymsg exit" -b "Reload" "swaymsg reload"
                 '';
 
                 # Movements
@@ -184,8 +215,8 @@ in
                 "${mod}+Shift+${up}" = "move up";
                 "${mod}+Shift+${right}" = "move right";
 
-                "${mod}+left" = "workspace prev_on_output";
-                "${mod}+right" = "workspace next_on_output";
+                "${mod}+left" = "exec ${swayWorkspaces}/bin/swayWorkspaces prev";
+                "${mod}+right" = "exec ${swayWorkspaces}/bin/swayWorkspaces next";
 
                 "${mod}+Shift+left" = "move workspace to output left";
                 "${mod}+Shift+right" = "move workspace to output right";
@@ -215,35 +246,43 @@ in
             ];
           };
 
-        # Extra configuration
-        extraConfig = ''
-          # Gestures
+          # Extra configuration
+          extraConfig = ''
+            # Gestures
 
-          bindgesture swipe:right workspace prev_on_output
-          bindgesture swipe:left workspace next_on_output
+            bindgesture swipe:right exec ${swayWorkspaces}/bin/swayWorkspaces prev
+            bindgesture swipe:left exec ${swayWorkspaces}/bin/swayWorkspaces next
 
-          ${swayfxConfig}
-        '';
+            bindsym ${mod}+m [app_id="org.gnome.Fractal"] scratchpad show
 
-        # Temporary fix for swayfx 0.4 / sway 1.9
-        checkConfig = false;
+            ${swayfxConfig}
+          '';
 
-        # Environment
-        extraSessionCommands = ''
-          export SDL_VIDEODRIVER=wayland
-          export QT_QPA_PLATFORM=wayland
-          export QT_QPA_PLATFORMTHEME=gtk2
-          export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-          export _JAVA_AWT_WM_NONREPARENTING=1
-        '';
+          # Temporary fix for swayfx 0.4 / sway 1.9
+          checkConfig = false;
 
-        swaynag.enable = true;
-      };
+          # Environment
+          extraSessionCommands = ''
+            export SDL_VIDEODRIVER=wayland
+            export QT_QPA_PLATFORM=wayland
+            export QT_QPA_PLATFORMTHEME=gtk2
+            export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+            export _JAVA_AWT_WM_NONREPARENTING=1 
+          '';
+
+          swaynag.enable = true;
+        };
 
       # Clipboard history
-      services.cliphist = {
-        enable = true;
-        systemdTarget = "sway-session.target";
+      services = {
+        cliphist = {
+          enable = true;
+          systemdTarget = "sway-session.target";
+        };
+        gnome-keyring = {
+          enable = true;
+          components = [ "secrets" ];
+        };
       };
 
       home.packages = with pkgs; [
@@ -257,7 +296,13 @@ in
         grim
         slurp
         satty
+
+        # Wallpapers
+        swww
       ];
+
+      # Impermanence
+      persistence.dirs = [ ".cache/swww" ];
     }
   );
 }

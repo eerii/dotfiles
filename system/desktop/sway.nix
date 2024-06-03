@@ -17,7 +17,7 @@ with lib;
       description = "internal display resolution";
     };
     scale = mkOption {
-      default = 1.5;
+      default = 1.33;
       description = "internal display scale";
     };
   };

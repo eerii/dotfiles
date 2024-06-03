@@ -14,5 +14,8 @@ with lib;
       # We already install foot, we don't need xterm
       desktopManager.xterm.enable = false;
     };
+
+    # Unlock keyring with gdm
+    security.pam.services.gdm.enableGnomeKeyring = true;
   };
 }

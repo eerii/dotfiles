@@ -14,5 +14,5 @@
 
   # Keep specific repos in sync
   # Configure them with git-sync.repositories.*
-  services.git-sync.enable = true;
+  # services.git-sync.enable = true;
 }

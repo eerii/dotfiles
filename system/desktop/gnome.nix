@@ -52,8 +52,14 @@ in
           gnome-settings-daemon
         ];
       };
-      # Disable all gnome apps (they can be installed with home manager)
-      gnome.core-utilities.enable = false;
+
+      gnome = {
+        # Disable all gnome apps (they can be installed with home manager)
+        core-utilities.enable = false;
+      };
     };
+
+    # Secret manager
+    programs.seahorse.enable = true;
   };
 }
