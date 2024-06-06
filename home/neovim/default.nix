@@ -9,6 +9,7 @@ with lib;
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   neovim-nightly = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+  dotfiles = "${config.xdg.userDirs.extraConfig.XDG_CODE_DIR}/dotfiles";
 in
 {
   options = {
@@ -43,12 +44,21 @@ in
     ];
 
     # Symlink the lua config to the appropiate place (i'm not migrating it lol)
-    home.file."${config.xdg.configHome}/nvim" = {
-      source = mkOutOfStoreSymlink ./.;
-      recursive = true;
+    xdg.configFile = {
+      "nvim/lazy-lock.json".source = mkOutOfStoreSymlink "${dotfiles}/home/neovim/lazy-lock.json";
+
+      "nvim/init.lua".source = ./init.lua;
+
+      "nvim/lua" = {
+        source = mkOutOfStoreSymlink ./lua;
+        recursive = true;
+      };
     };
 
     # Just in case set the editor here as well
     home.sessionVariables.EDITOR = "nvim";
+
+    # Impermanence
+    persistence.dirs = [ ".local/share/nvim" ];
   };
 }

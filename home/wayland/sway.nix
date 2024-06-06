@@ -158,8 +158,7 @@ in
             # Input
             input = {
               "*" = {
-                xkb_layout = "us,es";
-                xkb_variant = "altgr-intl";
+                xkb_layout = "us(altgr-intl),es";
                 xkb_options = "ctrl:nocaps";
                 repeat_delay = "220";
                 repeat_rate = "40";
