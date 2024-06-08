@@ -18,10 +18,6 @@ in
       xserver.desktopManager.gnome = {
         enable = true;
         extraGSettingsOverrides = ''
-          [org.gnome.desktop.input-sources]
-          sources = [('xkb', 'us+altgr-intl'), ('xkb', 'es')]
-          xkb-options = ['ctrl:nocaps']
-
           [org.gnome.desktop.wm.keybindings]
           close = ['<Super>q']
           [org.gnome.desktop.wm.preferences]
@@ -37,15 +33,11 @@ in
           [org.gnome.desktop.interface]
           scaling-factor = ${scale}
 
-          [org.gnome.shell]
-          favorite-apps = ['firefox.desktop', 'org.gnome.Nautilus.desktop']
-          welcome-dialog-last-shown-version = '9999999999'
-
           [org.gnome.settings-daemon.plugins.power]
           ambient-enabled = false
 
           [org.gnome.mutter]
-          experimental-features = ['scale-monitor-framebuffer']
+          experimental-features = ['scale-monitor-framebuffer', 'variable-refresh-rate']
         '';
         extraGSettingsOverridePackages = with pkgs.gnome; [
           mutter

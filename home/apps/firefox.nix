@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   config,
   pkgs,
@@ -19,7 +20,6 @@ in
 
   config = mkIf config.firefox.enable {
     # Firefox browser with sane defaults
-    # TODO: Add all extensions and activate them
     programs.firefox = {
       enable = true;
       profiles.${sys.username} = {
@@ -231,6 +231,11 @@ in
           "general.smoothScroll.currentVelocityWeighting" = 1.0;
           "general.smoothScroll.stopDecelerationWeighting" = 1.0;
           "mousewheel.default.delta_multiplier_y" = 300;
+
+          # GTK Theme
+          "browser.tabs.drawInTitlebar" = true;
+          "svg.context-properties.content.enabled" = true;
+          "extensions.activeThemeID" = "firefox-compact@mozilla.org";
         };
 
         search = {
@@ -264,6 +269,10 @@ in
         };
 
         userChrome = ''
+          /* GTK Theme */
+          @import "firefox-gnome-theme/userChrome.css";
+          @import "firefox-gnome-theme/theme/colors/dark.css"; 
+
           /* Sidebery: hide top tabs when sidebar is open */
           #main-window #titlebar {
             overflow: hidden;
@@ -276,6 +285,12 @@ in
           #main-window[titlepreface*="​"] #tabbrowser-tabs { z-index: 0 !important; }
         '';
       };
+    };
+
+    # GTK Theme
+    home.file."firefox-gnome-theme" = {
+      target = ".mozilla/firefox/${sys.username}/chrome/firefox-gnome-theme";
+      source = inputs.firefox-gnome-theme;
     };
 
     # Browserpass host binary

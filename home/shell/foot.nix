@@ -13,7 +13,7 @@ with lib;
         main = {
           font = "Jetbrains Mono:size=11, Symbols Nerd Font Mono:size=10";
           line-height = "16px";
-          pad = "6x6 center";
+          pad = "12x12 center";
         };
         colors = {
           background = "0B0E14";
@@ -37,6 +37,7 @@ with lib;
           find-next = "Control+n";
           find-prev = "Control+p";
         };
+        csd.preferred = "none";
       };
     };
   };

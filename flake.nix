@@ -39,6 +39,17 @@
 
     # User repo
     nur.url = "github:nix-community/NUR";
+
+    # Non flake inputs
+    firefox-gnome-theme = {
+      url = "github:rafaelmardojai/firefox-gnome-theme";
+      flake = false;
+    };
+
+    thunderbird-gnome-theme = {
+      url = "github:rafaelmardojai/thunderbird-gnome-theme";
+      flake = false;
+    };
   };
 
   # Outputs returns an attribute set with the system configuration

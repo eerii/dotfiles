@@ -10,11 +10,11 @@
       size = 12;
     };
 
-    cursorTheme = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
-      size = 20;
-    };
+    # cursorTheme = {
+    #   package = pkgs.bibata-cursors;
+    #   name = "Bibata-Modern-Ice";
+    #   size = 20;
+    # };
 
     iconTheme = {
       package = pkgs.gnome.adwaita-icon-theme;
@@ -22,8 +22,8 @@
     };
 
     theme = {
-      package = pkgs.gnome.gnome-themes-extra;
-      name = "Adwaita";
+      package = pkgs.adw-gtk3;
+      name = "adw-gtk3";
     };
 
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
