@@ -1,14 +1,14 @@
 {
   pkgs,
   lib,
-  config,
   osConfig,
   ...
 }:
-with lib;
-with lib.hm.gvariant;
+let
+  gvar = lib.hm.gvariant;
+in
 {
-  config = mkIf osConfig.gnome.enable {
+  config = lib.mkIf osConfig.gnome.enable {
     # Gnome extensions
     home.packages = with pkgs.gnomeExtensions; [
       paperwm
@@ -19,11 +19,11 @@ with lib.hm.gvariant;
     dconf.settings = {
       "org/gnome/desktop/input-sources" = {
         sources = [
-          (mkTuple [
+          (gvar.mkTuple [
             "xkb"
             "us+altgr-intl"
           ])
-          (mkTuple [
+          (gvar.mkTuple [
             "xkb"
             "es"
           ])
@@ -65,8 +65,8 @@ with lib.hm.gvariant;
       };
 
       "org/gnome/desktop/peripherals/keyboard" = {
-        delay = mkUint32 180;
-        repeat-interval = mkUint32 15;
+        delay = gvar.mkUint32 180;
+        repeat-interval = gvar.mkUint32 15;
       };
 
       "org/gnome/desktop/peripherals/touchpad" = {

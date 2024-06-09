@@ -5,11 +5,10 @@
   sys,
   ...
 }:
-with lib;
 {
-  options.thunderbird.enable = mkEnableOption "enable thunderbird";
+  options.thunderbird.enable = lib.mkEnableOption "enable thunderbird";
 
-  config = mkIf config.thunderbird.enable {
+  config = lib.mkIf config.thunderbird.enable {
     # Email client
     # TODO: Add email accounts
     # TODO: Calendars

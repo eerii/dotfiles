@@ -13,9 +13,8 @@ let
     if dunstctl is-paused | grep -q "false" ; then echo $ENABLED; else echo $DISABLED; fi
   '';
 in
-with lib;
 {
-  config = mkIf osConfig.sway.enable {
+  config = lib.mkIf osConfig.sway.enable {
     programs.waybar = {
       enable = true;
       settings = {
@@ -26,7 +25,7 @@ with lib;
             "clock"
             "sway/workspaces"
             "custom/scratchpad"
-            "custom/github"
+            # "custom/github"
             # "systemd-failed-units"
           ];
           modules-center = [ ];
@@ -81,14 +80,13 @@ with lib;
             on-click = "exec swaymsg 'scratchpad show'";
             on-click-right = "exec swaymsg 'move scratchpad'";
           };
-          "custom/github" = {
-            format = " {}";
-            return-type = "json";
-            interval = 300;
-            # TODO: Github in waybar
-            exec = "~/.config/waybar/scripts/github";
-            on-click = "xdg-open https://github.com/notifications";
-          };
+          # "custom/github" = {
+          #   format = " {}";
+          #   return-type = "json";
+          #   interval = 300;
+          #   exec = "~/.config/waybar/scripts/github";
+          #   on-click = "xdg-open https://github.com/notifications";
+          # };
           # systemd-failed-units = {
           #   format = " {nr_failed}";
           #   on-click = "exec foot --app-id=\"foot-ps\" /bin/bash -c \"systemctl list-units --state=failed && systemctl --user list-units --state=failed; read\"";

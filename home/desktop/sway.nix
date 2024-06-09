@@ -6,8 +6,6 @@
   osConfig,
   ...
 }:
-with lib;
-with builtins;
 let
   swayfxConfig =
     if osConfig.sway.swayfx then
@@ -53,19 +51,19 @@ let
   '';
 in
 {
-  config = mkIf config.wayland.enable (
-    mkIf osConfig.sway.enable {
+  config = lib.mkIf config.wayland.enable (
+    lib.mkIf osConfig.sway.enable {
       wayland.windowManager.sway =
         let
           mod = "Mod4";
-          workspaces = lists.range 0 9;
-          jumpToWorkspace = listToAttrs (
+          workspaces = lib.lists.range 0 9;
+          jumpToWorkspace = lib.listToAttrs (
             map (v: {
               name = "${mod}+${toString v}";
               value = "workspace number ${toString v}";
             }) workspaces
           );
-          moveToWorkspace = listToAttrs (
+          moveToWorkspace = lib.listToAttrs (
             map (v: {
               name = "${mod}+Shift+${toString v}";
               value = "move container to workspace number ${toString v}";
@@ -76,7 +74,7 @@ in
           enable = true;
 
           # Swayfx, a fork of sway with eye candy
-          package = mkIf osConfig.sway.swayfx inputs.swayfx.packages.${pkgs.system}.default;
+          package = lib.mkIf osConfig.sway.swayfx inputs.swayfx.packages.${pkgs.system}.default;
 
           config = rec {
             # Global settings
@@ -101,8 +99,8 @@ in
               # External monitor
               "DP-1" =
                 let
-                  resX = strings.toInt (elemAt (split "x" osConfig.sway.resolution) 0);
-                  scaledResX = elemAt (split "." (toString (resX / osConfig.sway.scale))) 0;
+                  resX = lib.strings.toInt (lib.elemAt (builtins.split "x" osConfig.sway.resolution) 0);
+                  scaledResX = lib.elemAt (builtins.split "." (builtins.toString (resX / osConfig.sway.scale))) 0;
                 in
                 {
                   resolution = "3840x2160";
@@ -173,7 +171,7 @@ in
               };
             };
 
-            keybindings = mkMerge [
+            keybindings = lib.mkMerge [
               jumpToWorkspace
               moveToWorkspace
               {

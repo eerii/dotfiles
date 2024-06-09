@@ -4,9 +4,8 @@
   pkgs,
   ...
 }:
-with lib;
 {
-  config = mkIf config.wayland.enable {
+  config = lib.mkIf config.wayland.enable {
     services.dunst = {
       enable = true;
       iconTheme = {

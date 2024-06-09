@@ -4,13 +4,12 @@
   pkgs,
   ...
 }:
-with lib;
 {
   options = {
-    office.enable = mkEnableOption "enable office";
+    office.enable = lib.mkEnableOption "enable office";
   };
 
-  config = mkIf config.office.enable {
+  config = lib.mkIf config.office.enable {
     home.packages = with pkgs; [ libreoffice-fresh ];
 
     # Impermanence

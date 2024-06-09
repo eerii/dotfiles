@@ -5,7 +5,6 @@
   pkgs,
   ...
 }:
-with lib;
 {
   imports = extra.importFiles ./.;
 

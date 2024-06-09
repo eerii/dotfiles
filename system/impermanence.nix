@@ -5,14 +5,13 @@
   config,
   ...
 }:
-with lib;
 {
-  options.impermanence.enable = mkEnableOption "enable impermanence";
+  options.impermanence.enable = lib.mkEnableOption "enable impermanence";
 
   imports = [ inputs.impermanence.nixosModules.impermanence ];
 
-  config = mkMerge [
-    (mkIf config.impermanence.enable {
+  config = lib.mkMerge [
+    (lib.mkIf config.impermanence.enable {
       # This specifies which directories should be kept between reboots
       # NOTE: Anything that is not here will be wiped!
       environment.persistence."/persist" = {
@@ -93,6 +92,6 @@ with lib;
       '';
     })
 
-    (mkIf (!config.impermanence.enable) { environment.persistence = { }; })
+    (lib.mkIf (!config.impermanence.enable) { environment.persistence = { }; })
   ];
 }

@@ -4,13 +4,12 @@
   config,
   ...
 }:
-with lib;
 {
   options = {
-    gnome-apps.enable = mkEnableOption "enable gnome apps";
+    gnome-apps.enable = lib.mkEnableOption "enable gnome apps";
   };
 
-  config = mkIf config.gnome-apps.enable {
+  config = lib.mkIf config.gnome-apps.enable {
     home.packages = with pkgs; [
       gnome.nautilus # file explorer
       gnome.sushi # file previewer

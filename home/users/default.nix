@@ -4,9 +4,9 @@
   config,
   ...
 }:
-with lib;
 let
   home = config.home.homeDirectory;
+  inherit (lib) mkDefault;
 in
 {
   # User specific configuration

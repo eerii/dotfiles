@@ -1,5 +1,4 @@
 { pkgs, lib, ... }:
-with lib;
 {
   boot = {
     # Latest kernel
@@ -13,8 +12,8 @@ with lib;
 
     # UEFI bootloader
     loader = {
-      systemd-boot.enable = mkDefault true;
-      efi.canTouchEfiVariables = mkDefault true;
+      systemd-boot.enable = lib.mkDefault true;
+      efi.canTouchEfiVariables = lib.mkDefault true;
       timeout = 0;
     };
 

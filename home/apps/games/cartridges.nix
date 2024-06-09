@@ -4,13 +4,12 @@
   config,
   ...
 }:
-with lib;
 {
   options = {
-    cartridges.enable = mkEnableOption "enable cartridges";
+    cartridges.enable = lib.mkEnableOption "enable cartridges";
   };
 
-  config = mkIf config.cartridges.enable {
+  config = lib.mkIf config.cartridges.enable {
     home.packages = with pkgs; [ cartridges ];
 
     # Impermanence

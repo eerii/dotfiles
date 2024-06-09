@@ -4,13 +4,12 @@
   config,
   ...
 }:
-with lib;
 {
   options = {
-    bottles.enable = mkEnableOption "enable bottles";
+    bottles.enable = lib.mkEnableOption "enable bottles";
   };
 
-  config = mkIf config.bottles.enable {
+  config = lib.mkIf config.bottles.enable {
     home.packages = with pkgs; [ bottles ];
 
     # Impermanence

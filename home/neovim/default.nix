@@ -5,7 +5,6 @@
   pkgs,
   ...
 }:
-with lib;
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   neovim-nightly = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
@@ -13,10 +12,10 @@ let
 in
 {
   options = {
-    neovim.enable = mkEnableOption "enable neovim";
+    neovim.enable = lib.mkEnableOption "enable neovim";
   };
 
-  config = mkIf config.neovim.enable {
+  config = lib.mkIf config.neovim.enable {
     # Enable neovim and set if as the default editor
     programs.neovim = {
       enable = true;

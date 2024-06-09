@@ -4,13 +4,12 @@
   pkgs,
   ...
 }:
-with lib;
 {
   options = {
-    matrix.enable = mkEnableOption "enable matrix";
+    matrix.enable = lib.mkEnableOption "enable matrix";
   };
 
-  config = mkIf config.matrix.enable {
+  config = lib.mkIf config.matrix.enable {
     home.packages = with pkgs; [ fractal ];
 
     # Impermanence

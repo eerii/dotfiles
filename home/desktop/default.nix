@@ -1,15 +1,12 @@
 {
   lib,
   extra,
-  config,
-  pkgs,
   ...
 }:
-with lib;
 {
   imports = extra.importFiles ./.;
 
   options = {
-    wayland.enable = mkEnableOption "enable wayland";
+    wayland.enable = lib.mkEnableOption "enable wayland";
   };
 }

@@ -4,13 +4,12 @@
   config,
   ...
 }:
-with lib;
 {
   options = {
-    movies.enable = mkEnableOption "enable movies";
+    movies.enable = lib.mkEnableOption "enable movies";
   };
 
-  config = mkIf config.movies.enable {
+  config = lib.mkIf config.movies.enable {
     home.packages = with pkgs; [
       stremio # watch movies and shows
       celluloid # mvp frontend

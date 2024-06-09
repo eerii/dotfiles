@@ -1,16 +1,9 @@
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  sys,
-  ...
-}:
-with lib;
-with builtins;
-{
-  options.steam.enable = mkEnableOption "enable steam";
+  options.steam.enable = lib.mkEnableOption "enable steam";
 
   # Steam should be enabled on the system level since it needs to change the environment
-  config = mkIf config.steam.enable {
+  config = lib.mkIf config.steam.enable {
     nixpkgs.config.allowUnfreePredicate =
       pkg:
       builtins.elem (lib.getName pkg) [

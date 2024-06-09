@@ -1,11 +1,10 @@
 { lib, config, ... }:
-with lib;
 {
   options = {
-    foot.enable = mkEnableOption "enable foot";
+    foot.enable = lib.mkEnableOption "enable foot";
   };
 
-  config = mkIf config.foot.enable {
+  config = lib.mkIf config.foot.enable {
     # Foot terminal (simple and fast wayland term)
     programs.foot = {
       enable = true;

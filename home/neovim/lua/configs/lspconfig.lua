@@ -78,9 +78,11 @@ local servers = {
 	bashls = {},
 
 	nixd = {
-		diagnostic = {
-			suppress = {
-				"sema-escaping-with",
+		settings = {
+			diagnostic = {
+				suppress = {
+					"sema-escaping-with",
+				},
 			},
 		},
 	},

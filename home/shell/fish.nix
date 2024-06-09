@@ -4,13 +4,12 @@
   pkgs,
   ...
 }:
-with lib;
 {
   options = {
-    fish.enable = mkEnableOption "enable fish";
+    fish.enable = lib.mkEnableOption "enable fish";
   };
 
-  config = mkIf config.fish.enable {
+  config = lib.mkIf config.fish.enable {
     programs.fish = {
       enable = true;
       plugins = [

@@ -6,7 +6,6 @@
   sys,
   ...
 }:
-with lib;
 let
   nix-packages-url = "https://search.nixos.org/packages?channel=unstable&type=packages&query={searchTerms}";
   nix-options-url = "https://search.nixos.org/options?channel=unstable&type=options&query={searchTerms}";
@@ -15,10 +14,10 @@ let
 in
 {
   options = {
-    firefox.enable = mkEnableOption "enable firefox";
+    firefox.enable = lib.mkEnableOption "enable firefox";
   };
 
-  config = mkIf config.firefox.enable {
+  config = lib.mkIf config.firefox.enable {
     # Firefox browser with sane defaults
     programs.firefox = {
       enable = true;
@@ -294,7 +293,7 @@ in
     };
 
     # Browserpass host binary
-    programs.browserpass = mkIf config.pass.enable {
+    programs.browserpass = lib.mkIf config.pass.enable {
       enable = true;
       browsers = [ "firefox" ];
     };

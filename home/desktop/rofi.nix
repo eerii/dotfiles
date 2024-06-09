@@ -4,9 +4,8 @@
   pkgs,
   ...
 }:
-with lib;
 {
-  config = mkIf config.wayland.enable {
+  config = lib.mkIf config.wayland.enable {
     programs.rofi = {
       enable = true;
       package = pkgs.rofi-wayland-unwrapped;

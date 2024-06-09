@@ -7,14 +7,13 @@
   osConfig,
   ...
 }:
-with lib;
 {
   options.persistence = {
-    dirs = mkOption {
+    dirs = lib.mkOption {
       default = [ ];
       description = "home persistence directories";
     };
-    files = mkOption {
+    files = lib.mkOption {
       default = [ ];
       description = "home persistence files";
     };
@@ -28,7 +27,7 @@ with lib;
     home.stateVersion = "24.05";
 
     # Impermanence setup
-    home.persistence."/persist/home/${sys.username}" = mkIf osConfig.impermanence.enable {
+    home.persistence."/persist/home/${sys.username}" = lib.mkIf osConfig.impermanence.enable {
       allowOther = true;
       directories = config.persistence.dirs;
       files = config.persistence.files;

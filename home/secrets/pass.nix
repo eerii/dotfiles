@@ -4,16 +4,15 @@
   config,
   ...
 }:
-with lib;
 let
   dir = config.home.homeDirectory + "/.password-store";
 in
 {
   options = {
-    pass.enable = mkEnableOption "enable password store";
+    pass.enable = lib.mkEnableOption "enable password store";
   };
 
-  config = mkIf config.pass.enable {
+  config = lib.mkIf config.pass.enable {
     # Use password store as a secret manager
     programs.password-store = {
       enable = true;

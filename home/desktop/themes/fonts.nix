@@ -2,9 +2,9 @@
   inputs,
   lib,
   config,
+  pkgs,
   ...
 }:
-with lib;
 let
   # Allow unfree font packages
   unpkgs = import inputs.nixpkgs {
@@ -14,23 +14,25 @@ let
 in
 {
   options = {
-    microsoft-fonts.enable = mkEnableOption "enable microsoft fonts";
+    microsoft-fonts.enable = lib.mkEnableOption "enable microsoft fonts";
   };
 
-  config = {
-    fonts.fontconfig.enable = true;
+  config = lib.mkMerge [
+    {
+      fonts.fontconfig.enable = true;
 
-    home.packages =
-      with unpkgs;
-      [
+      home.packages = with pkgs; [
         # Console fonts
         jetbrains-mono
         (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-      ]
-      ++ (optionals config.microsoft-fonts.enable [
+      ];
+    }
+    (lib.mkIf config.microsoft-fonts.enable {
+      home.packages = with unpkgs; [
         # Microsoft fonts
         corefonts
         vistafonts
-      ]);
-  };
+      ];
+    })
+  ];
 }

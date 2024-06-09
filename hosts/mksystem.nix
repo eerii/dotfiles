@@ -1,10 +1,9 @@
 {
   inputs,
-  extra,
   lib,
+  extra,
   ...
 }:
-with lib;
 {
   # System settings
   #   - username: The name of the main user
@@ -34,7 +33,7 @@ with lib;
           {
             nixpkgs.overlays = [
               inputs.nur.overlay
-	      inputs.nix-your-shell.overlays.default
+              inputs.nix-your-shell.overlays.default
             ];
           }
           # Per host configuration
@@ -42,7 +41,7 @@ with lib;
           # Default system modules
           ../system
         ]
-        ++ (optionals sys.homeManager or true [
+        ++ (lib.optionals sys.homeManager or true [
           # Use home manager to manage the user packages
           inputs.home-manager.nixosModules.home-manager
           {
