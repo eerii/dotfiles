@@ -17,6 +17,7 @@ in
   config = lib.mkIf osConfig.sway.enable {
     programs.waybar = {
       enable = true;
+
       settings = {
         mainBar = {
           layer = "top";

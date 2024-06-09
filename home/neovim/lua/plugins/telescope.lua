@@ -11,7 +11,7 @@ return {
 				i = {
 					["<C-j>"] = require("telescope.actions").move_selection_next,
 					["<Esc>"] = require("telescope.actions").close,
-					["<C-t>"] = require("trouble.providers.telescope").open_with_trouble,
+					["<C-t>"] = require("trouble.sources.telescope").open,
 				},
 			}
 

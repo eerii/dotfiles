@@ -33,7 +33,6 @@
   };
 
   # Brightness
-  programs.light.enable = true;
   users.users.${sys.username}.extraGroups = [ "video" ];
 
   # Dconf

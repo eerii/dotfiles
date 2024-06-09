@@ -117,8 +117,9 @@ in
 
             startup = [
               { command = "waybar"; }
-              { command = "swww-daemon"; }
               { command = "dunst"; }
+              { command = "swww-daemon"; }
+              { command = "swayosd-server"; }
               { command = "autotiling-rs"; }
               { command = "wl-paste --type text --watch cliphist store"; }
               { command = "wl-paste --type image --watch cliphist store"; }
@@ -190,9 +191,9 @@ in
                 # Show clipboard history
                 "${mod}+v" = "exec pkill rofi || cliphist list | ${menu} | cliphist decode | wl-copy";
 
-                # Utils
-                "${mod}+p" = # Screenshot
-                  ''exec grim -g "$(slurp)" - | satty -f -'';
+                # Screenshot
+                "${mod}+p" = ''exec grim -g "$(slurp)" - | satty -f -'';
+                "Print" = ''exec grim -g "$(slurp)" - | satty -f -'';
 
                 # System
                 "${mod}+q" = "kill";
@@ -229,16 +230,18 @@ in
                 "${mod}+Shift+minus" = "move scratchpad";
 
                 # Laptop keys
-                "XF86MonBrightnessDown" = "exec light -U 5";
-                "XF86MonBrightnessUp" = "exec light -A 5";
+                "XF86MonBrightnessDown" = "exec swayosd-client --brightness lower";
+                "XF86MonBrightnessUp" = "exec swayosd-client --brightness raise";
 
-                "XF86AudioRaiseVolume" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.0";
-                "XF86AudioLowerVolume" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.0";
-                "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+                "XF86AudioRaiseVolume" = "exec swayosd-client --output-volume raise";
+                "XF86AudioLowerVolume" = "exec swayosd-client --output-volume lower";
+                "XF86AudioMute" = "exec swayosd-client --output-volume mute-toggle";
 
                 "XF86AudioPlay" = "exec playerctl play-pause";
                 "XF86AudioNext" = "exec playerctl next";
                 "XF86AudioPrev" = "exec playerctl previous";
+
+                "XF86Tools" = "exec";
               }
             ];
           };
@@ -258,27 +261,14 @@ in
           # Temporary fix for swayfx 0.4 / sway 1.9
           checkConfig = false;
 
-          # Environment
-          extraSessionCommands = ''
-            export SDL_VIDEODRIVER=wayland
-            export QT_QPA_PLATFORM=wayland
-            export QT_QPA_PLATFORMTHEME=gtk2
-            export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-            export _JAVA_AWT_WM_NONREPARENTING=1 
-          '';
-
           swaynag.enable = true;
         };
 
-      # Clipboard history
       services = {
+        # Clipboard history
         cliphist = {
           enable = true;
           systemdTarget = "sway-session.target";
-        };
-        gnome-keyring = {
-          enable = true;
-          components = [ "secrets" ];
         };
       };
 
@@ -296,7 +286,10 @@ in
 
         # Wallpapers
         swww
-      ];
+
+        # Volume and brighness indicators
+        swayosd
+      ]; 
 
       # Impermanence
       persistence.dirs = [ ".cache/swww" ];

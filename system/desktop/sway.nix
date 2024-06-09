@@ -27,5 +27,15 @@
       enable = true;
       package = if config.sway.swayfx then pkgs.swayfx else pkgs.sway;
     };
+
+    # Environment
+    environment.sessionVariables = {
+      SDL_VIDEODRIVER = "wayland";
+      QT_QPA_PLATFORM = "wayland";
+      QT_QPA_PLATFORMTHEME = "gtk2";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
+      _JAVA_AWT_WM_NONREPARENTING = 1;
+      NIXOS_OZONE_WL = 1;
+    };
   };
 }
