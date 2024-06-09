@@ -7,7 +7,7 @@
     userEmail = "eri@inventati.org";
     extraConfig = {
       push.autoSetupRemote = true;
-      credential.helper = "keychain";
+      # credential.helper = "keychain";
     };
   };
 

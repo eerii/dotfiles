@@ -43,6 +43,9 @@
 
         # Only clean failed commands on exit
         set sponge_purge_only_on_exit true
+
+        # Load passwords
+        set -x (gnome-keyring-daemon --start 2> /dev/null | string split "=")
       '';
       shellAbbrs = {
         # Git
