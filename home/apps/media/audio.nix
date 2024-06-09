@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   sys,
@@ -24,5 +25,12 @@ with builtins;
       name = "nyx.json";
       sha256 = "1j432lqrhyqk2p7aib5yfj6c67s8lr75hffrp36zzr067gs15vsd";
     };
+
+    home.packages = with pkgs; [
+      spot # native spotify client
+      # amberol # music player
+    ];
+
+    persistence.dirs = [ ".cache/spot" ];
   };
 }

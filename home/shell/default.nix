@@ -1,9 +1,4 @@
-{
-  extra,
-  pkgs,
-  sys,
-  ...
-}:
+{ extra, pkgs, ... }:
 {
   imports = extra.importFiles ./.;
 
@@ -24,6 +19,8 @@
     aria2 # downloads
 
     nix-inspect # see nix derivations
+
+    cool-retro-term # cool shell to use sometimes
   ];
 
   # Jump between directories

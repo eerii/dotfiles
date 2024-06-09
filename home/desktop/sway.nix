@@ -178,9 +178,9 @@ in
               moveToWorkspace
               {
                 # Applications
-                "${mod}+t" = "exec ${terminal}";
-                "${mod}+Shift+t" = "exec cool-retro-term";
-                "${mod}+b" = "exec firefox";
+                "${mod}+s" = "exec ${terminal}";
+                "${mod}+Shift+s" = "exec cool-retro-term";
+                "${mod}+w" = "exec firefox";
                 "${mod}+a" = "exec nautilus";
 
                 # Launcher
@@ -193,7 +193,7 @@ in
                 "${mod}+v" = "exec pkill rofi || cliphist list | ${menu} | cliphist decode | wl-copy";
 
                 # Utils
-                "${mod}+Shift+s" = # Screenshot
+                "${mod}+p" = # Screenshot
                   ''exec grim -g "$(slurp)" - | satty -f -'';
 
                 # System

@@ -8,5 +8,6 @@
   matrix.enable = true;
   microsoft-fonts.enable = true;
   movies.enable = true;
+  office.enable = true;
   thunderbird.enable = true;
 }
