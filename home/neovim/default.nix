@@ -58,6 +58,11 @@ in
     home.sessionVariables.EDITOR = "nvim";
 
     # Impermanence
-    persistence.dirs = [ ".local/share/nvim" ];
+    persistence.dirs = [
+      {
+    	directory = ".local/share/nvim";
+	method = "symlink";
+      }
+    ];
   };
 }

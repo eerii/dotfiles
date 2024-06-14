@@ -17,5 +17,10 @@
   ];
 
   # Create per folder development environments with .envrc
-  programs.direnv.enable = true;
+  programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+  };
+
+  persistence.dirs = [ ".local/share/direnv" ];
 }

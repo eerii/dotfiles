@@ -24,8 +24,6 @@ let
         shadow_color #bc83e35F
 
         scratchpad_minimize enable
-
-        output * adaptive_sync on
       ''
     else
       "";
@@ -79,7 +77,6 @@ in
           config = rec {
             # Global settings
             modifier = mod;
-            floating.modifier = mod;
             terminal = "foot";
             menu = "rofi -dmenu";
 
@@ -140,7 +137,7 @@ in
 
             window = {
               titlebar = false;
-              border = 0;
+              border = 1;
               commands = [
                 {
                   command = "move scratchpad";
@@ -150,7 +147,7 @@ in
                 }
               ];
             };
-            floating.border = 0;
+            floating.border = 1;
 
             gaps.inner = 8;
 
@@ -162,7 +159,6 @@ in
                 repeat_delay = "220";
                 repeat_rate = "40";
                 tap = "enabled";
-                drag = "enabled";
                 natural_scroll = "enabled";
               };
             };
@@ -225,6 +221,7 @@ in
 
                 "${mod}+f" = "fullscreen";
                 "${mod}+d" = "floating toggle";
+                "${mod}+r" = ''mode "resize"'';
 
                 "${mod}+minus" = "scratchpad show";
                 "${mod}+Shift+minus" = "move scratchpad";
@@ -254,6 +251,12 @@ in
             bindgesture swipe:left exec ${swayWorkspaces}/bin/swayWorkspaces next
 
             bindsym ${mod}+m [app_id="org.gnome.Fractal"] scratchpad show
+
+            for_window [app_id=".*"] opacity 0.95
+
+            floating_modifier ${mod} inverse
+
+            output * adaptive_sync on
 
             ${swayfxConfig}
           '';
@@ -289,7 +292,7 @@ in
 
         # Volume and brighness indicators
         swayosd
-      ]; 
+      ];
 
       # Impermanence
       persistence.dirs = [ ".cache/swww" ];

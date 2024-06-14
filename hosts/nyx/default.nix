@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ... }:
+{ inputs, ... }:
 {
   # This is the computer specific hardware configuration
   imports = [
@@ -13,6 +13,8 @@
   impermanence.enable = true;
   sway.enable = true;
   steam.enable = true;
+  waydroid.enable = true;
+  wireshark.enable = true;
 
   # Drivers
   services.xserver.videoDrivers = [ "amdgpu" ];

@@ -22,6 +22,9 @@ in
     programs.firefox = {
       enable = true;
       profiles.${sys.username} = {
+        id = 0;
+        isDefault = true;
+
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           adnauseam
           browserpass
@@ -283,6 +286,16 @@ in
           #main-window[titlepreface*="​"] #titlebar { height: 0 !important; }
           #main-window[titlepreface*="​"] #tabbrowser-tabs { z-index: 0 !important; }
         '';
+      };
+
+      profiles.debug = {
+        id = 1;
+
+        settings = {
+          "devtools.chrome.enabled" = true;
+          "devtools.debugger.remote-enabled" = true;
+          "devtools.debugger.prompt-connection" = false;
+        };
       };
     };
 

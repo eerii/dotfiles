@@ -24,18 +24,10 @@
       options = "--delete-older-than 1w";
     };
 
-    # Use Aux, a community fork of Nix
-    registry.nixpkgs = {
-      from = {
-        id = "nixpkgs";
-        type = "indirect";
-      };
-      to = {
-        owner = "auxolotl";
-        repo = "nixpkgs";
-        type = "github";
-      };
-    };
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
   };
 
   # Don't change this
