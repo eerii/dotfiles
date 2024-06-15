@@ -11,6 +11,7 @@ let
   nix-options-url = "https://search.nixos.org/options?channel=unstable&type=options&query={searchTerms}";
   nix-wiki-url = "https://wiki.nixos.org/index.php?search={searchTerms}";
   home-manager-url = "https://home-manager-options.extranix.com/?query={searchTerms}&release=master";
+  searxng-url = "https://searxng.site/searxng/search?q={searchTerms}&categories=general";
 in
 {
   options = {
@@ -26,12 +27,13 @@ in
         isDefault = true;
 
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          adnauseam
+          adaptive-tab-bar-colour
           browserpass
           duckduckgo-privacy-essentials
           return-youtube-dislikes
           refined-github
           sponsorblock
+          ublock-origin
         ];
 
         # Settings based on Betterfox
@@ -242,7 +244,12 @@ in
 
         search = {
           force = true;
+          default = "Searx";
           engines = {
+            "Searx" = {
+              urls = [ { template = searxng-url; } ];
+              definedAliases = [ "@sx" ];
+            };
             "Nix Packages" = {
               urls = [ { template = nix-packages-url; } ];
               icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";

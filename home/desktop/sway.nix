@@ -57,8 +57,14 @@ in
           workspaces = lib.lists.range 0 9;
           jumpToWorkspace = lib.listToAttrs (
             map (v: {
-              name = "${mod}+${toString v}";
-              value = "workspace number ${toString v}";
+              name = "--no-repeat ${mod}+${toString v}";
+              value = ''workspace number ${toString v}; exec "echo 1 > /tmp/sovpipe"'';
+            }) workspaces
+          );
+          releaseWorkspace = lib.listToAttrs (
+            map (v: {
+              name = "--release ${mod}+${toString v}";
+              value = ''exec "echo 0 > /tmp/sovpipe"'';
             }) workspaces
           );
           moveToWorkspace = lib.listToAttrs (
@@ -118,12 +124,14 @@ in
               { command = "swww-daemon"; }
               { command = "swayosd-server"; }
               { command = "autotiling-rs"; }
+              { command = "powerprofilesctl set power-saver"; }
               { command = "wl-paste --type text --watch cliphist store"; }
               { command = "wl-paste --type image --watch cliphist store"; }
               { command = "firefox --name=firefox-main"; }
               { command = "thunderbird"; }
               { command = "gtk-launch org.gnome.Fractal"; }
               { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
+              { command = "rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov -t 500"; }
             ];
 
             bars = [ ]; # Disable swaybar
@@ -171,6 +179,7 @@ in
             keybindings = lib.mkMerge [
               jumpToWorkspace
               moveToWorkspace
+              releaseWorkspace
               {
                 # Applications
                 "${mod}+s" = "exec ${terminal}";
@@ -286,6 +295,9 @@ in
         grim
         slurp
         satty
+
+        # Show desktop
+        sov
 
         # Wallpapers
         swww

@@ -1,5 +1,5 @@
 {
-  pkgs,
+  inputs,
   lib,
   config,
   ...
@@ -10,6 +10,8 @@
   };
 
   config = lib.mkIf config.switch.enable {
-    home.packages = with pkgs.nur.repos.chigyutendies; [ suyu-dev ];
+    home.packages = [ inputs.suyu.packages."x86_64-linux".default ];
+
+    persistence.dirs = [ ".local/share/suyu" ];
   };
 }
