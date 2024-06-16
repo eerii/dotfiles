@@ -33,6 +33,7 @@ in
           modules-right = [
             "tray"
             "custom/dunst"
+            "custom/recording"
             "custom/fans"
             "custom/timer"
             "pulseaudio"
@@ -100,6 +101,11 @@ in
             exec = "${waybarDunst}/bin/waybarDunst";
             on-click = "dunstctl set-paused toggle";
             restart-interval = 5;
+          };
+          "custom/recording" = {
+            exec = ''pgrep -x "wl-screenrec" > /dev/null && echo "" || echo ""'';
+            on-click = "pkill wl-screenrec";
+            restart-interval = 1;
           };
           pulseaudio = {
             format = "{icon}";
@@ -194,6 +200,7 @@ in
         }
         #custom-fans,
         #pulseaudio,
+        #custom-recording,
         #network {
           border-radius: 0;
           padding: 0 12px 0 0;
@@ -209,8 +216,6 @@ in
         #custom-arch,
         #workspaces,
         #custom-scratchpad,
-        #custom-github,
-        #custom-timer,
         #tray {
           margin-right: 8px;
         }

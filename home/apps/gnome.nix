@@ -19,6 +19,7 @@
       gnome.dconf-editor # inspect settings
       gnome.gnome-calculator # calculator
       resources # system resources
+      overskride # bluetooth
 
       loupe # image viewer
       switcheroo # image converter

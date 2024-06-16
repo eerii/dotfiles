@@ -16,7 +16,7 @@
       description = "internal display resolution";
     };
     scale = lib.mkOption {
-      default = 1.33;
+      default = 1.3333;
       description = "internal display scale";
     };
   };
@@ -36,6 +36,12 @@
       QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
       _JAVA_AWT_WM_NONREPARENTING = 1;
       NIXOS_OZONE_WL = 1;
+    };
+
+    xdg.portal = {
+      enable = true;
+      wlr.enable = true;
+      config.sway.default = [ "wlr" ];
     };
   };
 }

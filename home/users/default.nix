@@ -38,8 +38,6 @@ in
         XDG_CODE_DIR = "${home}/Code";
       };
     };
-
-    # TODO: Xdg portal
   };
 
   # Impermanence

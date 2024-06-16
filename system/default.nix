@@ -37,4 +37,7 @@
 
   # Dconf
   programs.dconf.enable = true;
+
+  # Virtualization
+  virtualisation.spiceUSBRedirection.enable = true;
 }

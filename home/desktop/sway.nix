@@ -127,18 +127,17 @@ in
               { command = "powerprofilesctl set power-saver"; }
               { command = "wl-paste --type text --watch cliphist store"; }
               { command = "wl-paste --type image --watch cliphist store"; }
+              { command = "rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov -t 500"; }
               { command = "firefox --name=firefox-main"; }
               { command = "thunderbird"; }
               { command = "gtk-launch org.gnome.Fractal"; }
               { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
-              { command = "rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov -t 500"; }
             ];
 
             bars = [ ]; # Disable swaybar
 
             defaultWorkspace = "workspace number 2";
             workspaceAutoBackAndForth = true;
-            # workspaceOutputAssign = [];
 
             # Graphics
             colors = { };
@@ -161,7 +160,7 @@ in
 
             # Input
             input = {
-              "*" = {
+              "type:touchpad" = {
                 xkb_layout = "us(altgr-intl),es";
                 xkb_options = "ctrl:nocaps";
                 repeat_delay = "220";
@@ -191,17 +190,16 @@ in
 
                 # Run app
                 "${mod}+space" = "exec pkill rofi || rofi -show drun -show-icons | xargs swaymsg exec --";
-                # Open directory
-                "Ctrl+space" = ''exec pkill rofi || ${terminal} -D "$(zoxide query --list | ${menu})"'';
                 # Show clipboard history
                 "${mod}+v" = "exec pkill rofi || cliphist list | ${menu} | cliphist decode | wl-copy";
 
                 # Screenshot
                 "${mod}+p" = ''exec grim -g "$(slurp)" - | satty -f -'';
+                "${mod}+o" = ''exec pkill wl-screenrec || wl-screenrec --codec hevc -f "/home/eri/Videos/Grabaciones/$(date '+%Y-%m-%d@%H:%M:%S').mp4"'';
                 "Print" = ''exec grim -g "$(slurp)" - | satty -f -'';
 
                 # System
-                "${mod}+q" = "kill";
+                "--no-repeat ${mod}+q" = "kill";
                 "${mod}+Shift+c" = "reload";
                 "${mod}+Shift+q" = ''
                   exec swaynag -t "warning" -m "Exit Sway?" -b "Exit" "swaymsg exit" -b "Reload" "swaymsg reload"
@@ -295,6 +293,9 @@ in
         grim
         slurp
         satty
+
+        # Screen recording
+        wl-screenrec
 
         # Show desktop
         sov

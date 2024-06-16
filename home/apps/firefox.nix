@@ -27,7 +27,6 @@ in
         isDefault = true;
 
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          adaptive-tab-bar-colour
           browserpass
           duckduckgo-privacy-essentials
           return-youtube-dislikes
@@ -276,6 +275,46 @@ in
             "Google".metaData.alias = "@g";
           };
         };
+
+        containers = {
+          general = {
+            name = "General";
+            color = "turquoise";
+            icon = "circle";
+            id = 1;
+          };
+          social = {
+            name = "Social";
+            color = "yellow";
+            icon = "circle";
+            id = 2;
+          };
+          work = {
+            name = "Work";
+            color = "purple";
+            icon = "circle";
+            id = 3;
+          };
+          university = {
+            name = "University";
+            color = "blue";
+            icon = "circle";
+            id = 4;
+          };
+          downloads = {
+            name = "Downloads";
+            color = "orange";
+            icon = "circle";
+            id = 5;
+          };
+          shop = {
+            name = "Shop";
+            color = "red";
+            icon = "circle";
+            id = 6;
+          };
+        };
+        containersForce = true;
 
         userChrome = ''
           /* GTK Theme */

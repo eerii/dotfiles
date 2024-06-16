@@ -32,7 +32,6 @@ in
       nixd
       rust-analyzer-unwrapped
       taplo
-      nodePackages.bash-language-server
 
       # Formatters
       stylua
