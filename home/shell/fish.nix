@@ -75,7 +75,16 @@
         n = "nvim";
 
         # Nix
-        ns = "nix shell nixpkgs#";
+        ns = {
+          expansion = "nix shell nixpkgs#%";
+          setCursor = true;
+        };
+
+        # Direnv
+        dev = {
+          expansion = ''nix flake init -t "github:the-nix-way/dev-templates#%" && direnv allow'';
+          setCursor = true;
+        };
 
         # Other
         todo = ''rg TODO -NI --trim | sed "s/.*TODO:/- [ ]/"'';

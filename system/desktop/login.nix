@@ -14,6 +14,8 @@
       desktopManager.xterm.enable = false;
     };
 
+    services.displayManager.defaultSession = lib.mkIf config.sway.enable "sway";
+
     # Unlock keyring with gdm
     security.pam.services.gdm.enableGnomeKeyring = true;
   };

@@ -4,6 +4,14 @@
   pkgs,
   ...
 }:
+let
+  lowBattery = pkgs.writeShellScriptBin "lowBattery" ''
+    BAT_PCT=`${pkgs.acpi}/bin/acpi -b | grep -Po '[0-9]+(?=%)'`
+    BAT_STA=`${pkgs.acpi}/bin/acpi -b | grep -Po '\w+(?=,)'`
+    test $BAT_PCT -le 15 && test $BAT_PCT -gt 5 && test $BAT_STA = "Discharging" && dunstify -u normal "Low Battery" "Please get the charger 🥺"
+    test $BAT_PCT -le 5 && test $BAT_STA = "Discharging" && dunstify -u critical "Critical Battery" "I'm dying 💀"
+  '';
+in
 {
   options.sway = {
     enable = lib.mkEnableOption "enable sway";
@@ -43,5 +51,8 @@
       wlr.enable = true;
       config.sway.default = [ "wlr" ];
     };
+
+    # Low battery
+    services.cron.systemCronJobs = [ "*/3 * * * * ${lowBattery}/bin/lowBattery 2>&1" ];
   };
 }

@@ -30,12 +30,12 @@ in
       # LSP
       lua-language-server
       nixd
-      rust-analyzer-unwrapped
+      # rust-analyzer-unwrapped
       taplo
 
       # Formatters
       stylua
-      rustfmt
+      # rustfmt
       nodePackages.prettier
       black
       nixfmt-rfc-style
@@ -59,8 +59,8 @@ in
     # Impermanence
     persistence.dirs = [
       {
-    	directory = ".local/share/nvim";
-	method = "symlink";
+        directory = ".local/share/nvim";
+        method = "symlink";
       }
     ];
   };

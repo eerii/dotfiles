@@ -28,25 +28,9 @@ let
     else
       "";
 
-  swayWorkspaces = pkgs.writeShellScriptBin "swayWorkspaces" ''
-    ACTIVE_WS=$(swaymsg -t get_workspaces | ${pkgs.jq}/bin/jq --raw-output 'map(select(.focused == true)) | .[0].name' | awk '{print $1}')
-    MAX_WS=$(swaymsg -t get_workspaces | ${pkgs.jq}/bin/jq --raw-output 'map(select(.representation)) | max_by (.num) | .num' | awk '{print $1}')
+  swayWorkspaces = pkgs.writeShellScriptBin "swayWorkspaces" (builtins.readFile ./scripts/workspaces.sh);
 
-    if [ "$1" = "window" ]; then
-    	CMD="swaymsg move window to workspace"
-    	shift
-    else
-    	CMD="swaymsg workspace number"
-    fi
-
-    if [ "$1" = "next" ]; then
-    	test $ACTIVE_WS -gt $MAX_WS && exit 1
-    	$CMD $((ACTIVE_WS + 1))
-    elif [ "$1" = "prev" ]; then
-    	test $ACTIVE_WS -eq 0 && exit 1
-    	$CMD $((ACTIVE_WS - 1))
-    fi
-  '';
+  osd = pkgs.writeShellScriptBin "osd" (builtins.readFile ./scripts/osd.sh);
 in
 {
   config = lib.mkIf config.wayland.enable (
@@ -128,8 +112,8 @@ in
               { command = "wl-paste --type text --watch cliphist store"; }
               { command = "wl-paste --type image --watch cliphist store"; }
               { command = "rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov -t 500"; }
-              { command = "firefox --name=firefox-main"; }
-              { command = "thunderbird"; }
+              { command = "gtk-launch firefox --name=firefox-main"; }
+              { command = "gtk-launch thunderbird"; }
               { command = "gtk-launch org.gnome.Fractal"; }
               { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; }
             ];
@@ -154,18 +138,23 @@ in
                 }
               ];
             };
+
             floating.border = 1;
 
             gaps.inner = 8;
 
             # Input
             input = {
-              "type:touchpad" = {
+              "*" = {
                 xkb_layout = "us(altgr-intl),es";
                 xkb_options = "ctrl:nocaps";
                 repeat_delay = "220";
                 repeat_rate = "40";
+              };
+              "type:touchpad" = {
                 tap = "enabled";
+                drag = "enabled";
+                click_method = "clickfinger";
                 natural_scroll = "enabled";
               };
             };
@@ -234,16 +223,16 @@ in
                 "${mod}+Shift+minus" = "move scratchpad";
 
                 # Laptop keys
-                "XF86MonBrightnessDown" = "exec swayosd-client --brightness lower";
-                "XF86MonBrightnessUp" = "exec swayosd-client --brightness raise";
+                "XF86MonBrightnessUp" = "exec ${osd}/bin/osd brightness_up";
+                "XF86MonBrightnessDown" = "exec ${osd}/bin/osd brightness_down";
 
-                "XF86AudioRaiseVolume" = "exec swayosd-client --output-volume raise";
-                "XF86AudioLowerVolume" = "exec swayosd-client --output-volume lower";
-                "XF86AudioMute" = "exec swayosd-client --output-volume mute-toggle";
+                "XF86AudioRaiseVolume" = "exec ${osd}/bin/osd volume_up";
+                "XF86AudioLowerVolume" = "exec ${osd}/bin/osd volume_down";
+                "XF86AudioMute" = "exec ${osd}/bin/osd volume_mute";
 
-                "XF86AudioPlay" = "exec playerctl play-pause";
-                "XF86AudioNext" = "exec playerctl next";
-                "XF86AudioPrev" = "exec playerctl previous";
+                "XF86AudioPlay" = "exec ${osd}/bin/osd play_pause";
+                "XF86AudioNext" = "exec ${osd}/bin/osd next_track";
+                "XF86AudioPrev" = "exec ${osd}/bin/osd prev_track";
 
                 "XF86Tools" = "exec";
               }
@@ -258,10 +247,6 @@ in
             bindgesture swipe:left exec ${swayWorkspaces}/bin/swayWorkspaces next
 
             bindsym ${mod}+m [app_id="org.gnome.Fractal"] scratchpad show
-
-            for_window [app_id=".*"] opacity 0.95
-
-            floating_modifier ${mod} inverse
 
             output * adaptive_sync on
 
@@ -303,8 +288,9 @@ in
         # Wallpapers
         swww
 
-        # Volume and brighness indicators
-        swayosd
+        # Scripts
+        playerctl
+        jq
       ];
 
       # Impermanence

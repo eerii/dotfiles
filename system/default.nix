@@ -33,6 +33,7 @@
   };
 
   # Brightness
+  programs.light.enable = true;
   users.users.${sys.username}.extraGroups = [ "video" ];
 
   # Dconf
@@ -40,4 +41,7 @@
 
   # Virtualization
   virtualisation.spiceUSBRedirection.enable = true;
+
+  # Cronjobs
+  services.cron.enable = true;
 }

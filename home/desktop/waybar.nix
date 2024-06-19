@@ -137,6 +137,7 @@ in
               warning = 30;
               critical = 15;
             };
+            full-at = 90;
             format = "{icon}";
             format-icons = [
               "󰂎"
