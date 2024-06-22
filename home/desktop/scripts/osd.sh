@@ -74,18 +74,7 @@ function get_album_art {
 function show_volume_notif {
     volume=$(get_mute)
     get_volume_icon
-
-    if [[ $show_music_in_volume_indicator == "true" ]]; then
-        current_song=$(playerctl -f "{{title}}" metadata)
-
-        if [[ $show_album_art == "true" ]]; then
-            get_album_art
-        fi
-
-        dunstify -t $notification_timeout -h string:x-dunst-stack-tag:volume_notif -h int:value:$volume -i "$album_art" "$volume_icon $volume%" "$current_song"
-    else
-        dunstify -t $notification_timeout -h string:x-dunst-stack-tag:volume_notif -h int:value:$volume "$volume_icon $volume%"
-    fi
+    dunstify -t $notification_timeout -h string:x-dunst-stack-tag:volume_notif -h int:value:$volume "$volume_icon $volume%"
 }
 
 # Displays a music notification
@@ -114,14 +103,14 @@ case $1 in
     volume_up)
     # Unmutes and increases volume, then displays the notification
     wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
-    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.0
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5
     show_volume_notif
     ;;
 
     volume_down)
     # Raises volume and displays the notification
     wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
-    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.0
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1.5
     show_volume_notif
     ;;
 

@@ -1,13 +1,13 @@
 {
   lib,
-  inputs,
+  # inputs,
   config,
   pkgs,
   ...
 }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
-  neovim-nightly = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+  # neovim-nightly = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
   dotfiles = "${config.xdg.userDirs.extraConfig.XDG_CODE_DIR}/dotfiles";
 in
 {
@@ -20,7 +20,10 @@ in
     programs.neovim = {
       enable = true;
       defaultEditor = true;
-      package = neovim-nightly;
+
+      # I'm using stable now
+      # package = neovim-nightly;
+
       # Do I need to add treesitter here or does it already work?
       # plugins = with pkgs.vimPlugins; [ ];
     };
@@ -30,12 +33,12 @@ in
       # LSP
       lua-language-server
       nixd
-      # rust-analyzer-unwrapped
+      rust-analyzer
       taplo
 
       # Formatters
       stylua
-      # rustfmt
+      rustfmt
       nodePackages.prettier
       black
       nixfmt-rfc-style

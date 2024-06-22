@@ -7,9 +7,9 @@
   cartridges.enable = true;
   darktable.enable = true;
   firefox.enable = true;
+  gimp.enable = true;
   gnome-apps.enable = true;
   inkscape.enable = true;
-  krita.enable = true;
   matrix.enable = true;
   microsoft-fonts.enable = true;
   movies.enable = true;

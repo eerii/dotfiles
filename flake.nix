@@ -62,7 +62,7 @@
     { self, nixpkgs, ... }@inputs:
     let
       inherit (inputs.nixpkgs) lib;
-      extra = import ./lib { inherit lib; };
+      extra = import ./lib { inherit lib inputs; };
       sys = import ./hosts/mksystem.nix { inherit inputs extra lib; };
     in
     {

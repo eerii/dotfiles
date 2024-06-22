@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, inputs, ... }:
 {
   # Let the path be relative to the project root
   fromRoot = lib.path.append ../.;
@@ -19,4 +19,11 @@
           ) (builtins.readDir path)
         )
       );
+
+  pkgs = import ./pkgs { inherit inputs; };
+
+  unpkgs = import inputs.nixpkgs {
+    system = "x86_64-linux";
+    config.allowUnfree = true;
+  };
 }

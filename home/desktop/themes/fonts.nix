@@ -1,17 +1,10 @@
 {
-  inputs,
   lib,
   config,
   pkgs,
+  extra,
   ...
 }:
-let
-  # Allow unfree font packages
-  unpkgs = import inputs.nixpkgs {
-    system = "x86_64-linux";
-    config.allowUnfree = true;
-  };
-in
 {
   options = {
     microsoft-fonts.enable = lib.mkEnableOption "enable microsoft fonts";
@@ -28,7 +21,7 @@ in
       ];
     }
     (lib.mkIf config.microsoft-fonts.enable {
-      home.packages = with unpkgs; [
+      home.packages = with extra.unpkgs; [
         # Microsoft fonts
         corefonts
         vistafonts

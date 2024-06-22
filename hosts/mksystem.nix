@@ -34,6 +34,7 @@
             nixpkgs.overlays = [
               inputs.nur.overlay
               inputs.nix-your-shell.overlays.default
+              extra.pkgs.overlays.default
             ];
           }
           # Per host configuration

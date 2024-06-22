@@ -243,7 +243,7 @@ in
 
         search = {
           force = true;
-          default = "Searx";
+          # default = "Searx";
           engines = {
             "Searx" = {
               urls = [ { template = searxng-url; } ];
