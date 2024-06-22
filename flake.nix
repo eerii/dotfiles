@@ -55,6 +55,16 @@
       url = "github:rafaelmardojai/thunderbird-gnome-theme";
       flake = false;
     };
+
+    gimp = {
+      url = "gitlab:GNOME/gimp?host=gitlab.gnome.org";
+      flake = false;
+    };
+
+    gimp-data = {
+      url = "gitlab:GNOME/gimp-data?host=gitlab.gnome.org";
+      flake = false;
+    };
   };
 
   # Outputs returns an attribute set with the system configuration

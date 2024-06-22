@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, inputs }:
 pkgs.callPackage (
   {
     stdenv,
@@ -11,7 +11,6 @@ pkgs.callPackage (
     bashInteractive,
     cairo,
     desktop-file-utils,
-    fetchurl,
     findutils,
     gdk-pixbuf,
     gegl,
@@ -60,21 +59,19 @@ pkgs.callPackage (
   in
   stdenv.mkDerivation (finalAttrs: {
     pname = "gimp";
-    version = "2.99.18";
+    version = "2.99.19";
 
     outputs = [
       "out"
       "dev"
     ];
 
-    src = fetchurl {
-      url = "http://download.gimp.org/pub/gimp/v${lib.versions.majorMinor finalAttrs.version}/gimp-${finalAttrs.version}.tar.xz";
-      hash = "sha256-jBu3qUrA1NDN5NcB2LNWOHwuzYervTW799Ii1A9t224=";
-    };
+    src = inputs.gimp;
 
     patches = [
       ./meson-gtls.diff
       ./pygimp-interp.diff
+      ./splash.diff
     ];
 
     nativeBuildInputs = [
@@ -138,7 +135,20 @@ pkgs.callPackage (
       libgudev
     ];
 
-    preConfigure = "patchShebangs tools/gimp-mkenums app/tests/create_test_env.sh plug-ins/script-fu/scripts/ts-helloworld.scm";
+    prePatch = ''
+      # Workaround because submodules don't seem to work
+      rm -rf gimp-data
+      cp -r ${inputs.gimp-data} gimp-data
+      find gimp-data -type f | xargs chmod -v 644
+      find gimp-data -type d | xargs chmod -v 755
+
+      # Fix some paths
+      mkdir -p $out/share/locale
+    '';
+
+    preConfigure = "patchShebangs tools plug-ins app/tests/create_test_env.sh";
+
+    HOME = "/home/eri";
 
     mesonFlags = [ "-Dilbm=disabled" ];
 
