@@ -6,5 +6,11 @@
       inherit inputs;
       pkgs = prev;
     };
+
+    # Beaver notes
+    beaver-notes = import ./beaver-notes {
+      inherit inputs;
+      pkgs = prev;
+    };
   };
 }

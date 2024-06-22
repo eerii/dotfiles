@@ -1,4 +1,4 @@
-{ sys, ... }:
+{ sys, lib, ... }:
 {
   networking = {
     # Hostname
@@ -8,11 +8,9 @@
     networkmanager.enable = true;
 
     # Firewall
-    firewall.enable = true;
+    firewall.enable = lib.mkDefault true;
 
     # Hosts file
-    extraHosts = ''
-      192.168.1.152 next.conflor.es
-    '';
+    extraHosts = "";
   };
 }

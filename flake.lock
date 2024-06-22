@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "beaver-notes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1718809815,
+        "narHash": "sha256-EyE9/ebMAeU93Q7sHY5+JqCR3Wb3/IjJVsjeLTe+f74=",
+        "owner": "Beaver-Notes",
+        "repo": "Beaver-Notes",
+        "rev": "267d4e1ccc57ab8d0a115c5eca4d91000e5c1077",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Beaver-Notes",
+        "repo": "Beaver-Notes",
+        "type": "github"
+      }
+    },
     "crane": {
       "inputs": {
         "nixpkgs": [
@@ -330,6 +346,22 @@
         "type": "github"
       }
     },
+    "nextcloud-extras": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1711735384,
+        "narHash": "sha256-2oFPzoL5QfC6bifttaUku2ENv9ATv6umH6qhZY4A7T8=",
+        "owner": "onny",
+        "repo": "nixos-nextcloud-testumgebung",
+        "rev": "fa6f062830b4bc3cedb9694c1dbf01d5fdf775ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "onny",
+        "repo": "nixos-nextcloud-testumgebung",
+        "type": "github"
+      }
+    },
     "nix-your-shell": {
       "inputs": {
         "advisory-db": "advisory-db",
@@ -418,6 +450,7 @@
     },
     "root": {
       "inputs": {
+        "beaver-notes": "beaver-notes",
         "disko": "disko",
         "firefox-gnome-theme": "firefox-gnome-theme",
         "gimp": "gimp",
@@ -425,6 +458,7 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
+        "nextcloud-extras": "nextcloud-extras",
         "nix-your-shell": "nix-your-shell",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

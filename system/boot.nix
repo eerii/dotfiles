@@ -19,9 +19,7 @@
 
     # Plymouth (graphical boot)
     # TODO: Add a plymouth theme
-    plymouth = {
-      enable = true;
-    };
+    plymouth.enable = true;
 
     # Maybe add secure boot
     # Single password prompt https://discourse.nixos.org/t/encrypted-root-with-single-password-prompt/17054/8

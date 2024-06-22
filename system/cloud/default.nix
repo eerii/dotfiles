@@ -1,0 +1,4 @@
+{ extra, ... }:
+{
+  imports = extra.importFiles ./.;
+}

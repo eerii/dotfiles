@@ -65,6 +65,16 @@
       url = "gitlab:GNOME/gimp-data?host=gitlab.gnome.org";
       flake = false;
     };
+
+    beaver-notes = {
+      url = "github:Beaver-Notes/Beaver-Notes";
+      flake = false;
+    };
+
+    nextcloud-extras = {
+      url = "github:onny/nixos-nextcloud-testumgebung";
+      flake = false;
+    };
   };
 
   # Outputs returns an attribute set with the system configuration
@@ -88,6 +98,15 @@
           device = "/dev/nvme0n1";
           swap = "32G";
           extraModules = [ inputs.nixos-hardware.nixosModules.framework-16-7040-amd ];
+        };
+
+        # Home server
+        melinoe = sys.mkSystem {
+          username = "eri";
+          hostname = "melinoe";
+          device = "/dev/nvme0n1";
+          swap = "4G";
+          extraModules = [ inputs.nixos-hardware.nixosModules.raspberry-pi-4 ];
         };
       };
     };
